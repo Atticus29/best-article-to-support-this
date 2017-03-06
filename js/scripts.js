@@ -33,6 +33,12 @@ function test(){
   var user3 = "Chance";
   var irrelevantReply = new Reply (user3, "check out my new rap album!");
   obnoxiousComment.replies.push(irrelevantReply);
+  Claim1.claimComments.push(obnoxiousComment);
+  var user4 = "Mark";
+  Claim1.upVoteArray.push(user4);
+  console.log(Claim1.upCount);
+  console.log(Claim1.downCount);
+  console.log(Claim1);
 
 
 }
