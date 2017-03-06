@@ -1,4 +1,10 @@
 // Back End
+function Support(){
+  this.proSupport = [];
+  this.conSupport = [];
+  this.source = [];
+  this.supportcomments = [];
+}
 
 function Reply(replier, userReply){
   this.replier = replier;
@@ -39,8 +45,13 @@ function test(){
   console.log(Claim1.upCount);
   console.log(Claim1.downCount);
   console.log(Claim1);
+}
 
-
+function Source(link, sourcer){
+  this.upVote = [];
+  this.downVote = [];
+  this.link = [];
+  this.sourcer = sourcer;
 }
 
 // Front End
