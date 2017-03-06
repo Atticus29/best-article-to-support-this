@@ -1,4 +1,10 @@
 // Back End
+function Support(){
+  this.proSupport = [];
+  this.conSupport = [];
+  this.source = [];
+  this.supportcomments = [];
+}
 
 function Reply(replier, userReply){
   this.replier = replier;
@@ -33,8 +39,13 @@ function test(){
   var user3 = "Chance";
   var irrelevantReply = new Reply (user3, "check out my new rap album!");
   obnoxiousComment.replies.push(irrelevantReply);
+}
 
-
+function Source(link, sourcer){
+  this.upVote = [];
+  this.downVote = [];
+  this.link = [];
+  this.sourcer = sourcer;
 }
 
 // Front End
