@@ -182,9 +182,12 @@ $("#signout-btn").click(function(){
   //claimComments
   $("#commentForm").submit(function(){
     event.preventDefault();
-    console.log($("#commentSection").append("<p>" + userName + "commented" +($("#comments").val())));
+      if (userName.length > 1) {
+        $("#commentSection").append("<p>" + userName + " commented" + $("#comments").val() + "</p>");
+      } else {
+        alert("You must be logged in to comment")
+      }
   });
-
 });
 
 
