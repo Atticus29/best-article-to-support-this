@@ -61,11 +61,11 @@ function Source(link, sourcer){
   this.sourcer = sourcer;
 }
 
-//newClaim. must know userID, store a string as a new claim. Dynamically interact with HTML.
+//claimText. must know userID, store a string as a new claim. Dynamically interact with HTML.
 //frontEnd: upon click function, store userID.
 // function  NewClaim(userID, newclaim){
 //   this.userID = userID;
-//   this.newClaim = newClaim;
+//   this.claimText = claimText;
 
 function User(userName, password){
   this.userName = userName;
@@ -105,27 +105,30 @@ function isNewUserName (userName){
   return returnVal;
 }
 
+
 // Front End
 $(function(){
+  claimArray = [];
   $("#newClaimButton").click(function(){
     event.preventDefault();
     //instead prompt, place ansewrs in initially hidden form
     $("#newClaimForm").show();
     var newClaimSender = $("input#newClaimSender").val();
-    var newClaim = $("input#newClaim").val();
+    var claimText = $("input#claimText").val();
     // var newClaimer = prompt("What is your username?")
-    // var newClaim =  prompt("Please enter a claim")
-    // if (newClaim != null && newClaimer!=null)
-    //   $("#newClaimArea").append("<h4>" + newClaim + "</h4>");
+    // var claimText =  prompt("Please enter a claim")
+    // if (claimText != null && newClaimer!=null)
+    //   $("#newClaimArea").append("<h4>" + claimText + "</h4>");
 
-    var createClaim = new Claim (newClaimer, newClaim);
+    var newestClaim = new Claim (newClaimer, claimText);
+    claimArray.push(newestClaim);
   });
 
   $("#newClaimSubmit").click(function(){
     event.preventDefault();
     var newClaimSender = $("input#newClaimSender").val();
-    var newClaim = $("input#newClaim").val();
-    var createClaim = new Claim (newClaimer, newClaim);
+    var claimText = $("input#claimText").val();
+    var newestClaim = new Claim (newClaimer, claimText);
   });
 
 
@@ -178,6 +181,8 @@ $("#signout-btn").click(function(){
   $("#userPassword").val("");
 
   });
+
+
 });
 
 
