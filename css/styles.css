@@ -15,3 +15,11 @@
 .jumbotron {
   text-align: center;
 }
+#loginGatherer{
+  /*text-align: center;*/
+  padding-left: 40%;
+}
+
+#row1{
+  display: none;
+}

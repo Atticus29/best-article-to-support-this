@@ -61,9 +61,34 @@ function Source(link, sourcer){
   this.sourcer = sourcer;
 }
 
+function User(userName, password){
+  this.userName = userName;
+  this.password = password;
+}
+
+var validatedUsers = [user1 = new User("Jahan", "Jahan123"), user2 = new User("Chance", "Chance123"), user3 = new User("Oliver", "Oliver123"), user4 = new User("Mark", "Mark123")];
+
+function validateLogin (userName, password){
+  var truthCounter = 0;
+  validatedUsers.forEach(function(validatedUser){
+    if(validatedUser.userName === userName && validatedUser.password === password){
+      truthCounter ++;
+    }
+  });
+  return truthCounter;
+}
+
 // Front End
 $(function(){
-
+  $("#loginForm").submit(function(){
+    event.preventDefault();
+    var userName = $("#userName").val();
+    var userPassword = $("#userPassword").val();
+    if(validateLogin(userName, userPassword)){
+      console.log("Got in");
+      // $("#row1").show();
+    }
+  });
 });
 
 
