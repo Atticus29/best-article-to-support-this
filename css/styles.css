@@ -18,11 +18,13 @@
 
 .jumbotron {
   text-align: center;
+  margin-bottom: -10px;
 }
-#loginGatherer{
+
+/*#loginGatherer{
   /*text-align: center;*/
-  padding-left: 40%;
-}
+  /*padding-left: 40%;
+}*/
 
 /*#row1{
   display: none;
@@ -45,4 +47,21 @@
 p.navbar-brand{
   padding-left: 50%;
 
+}
+
+#testRow {
+  background-color: red;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+#testRow2 {
+  background-color: salmon;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 15px;
+}
+
+#dropdownMenuButton {
+  margin-left: 15px;
 }
