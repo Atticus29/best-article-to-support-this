@@ -178,6 +178,7 @@ $("#signout-btn").click(function(){
   $("#userPassword").val("");
 
   });
+ 
 });
 
 
