@@ -1,7 +1,5 @@
 // Back End
 function Support(){
-  // this.proSupport = [];
-  // this.conSupport = [];
   this.sources = [];
   this.supportcomments = [];
 }
@@ -104,9 +102,8 @@ function validateLogin (userName, password){
 function isNewUserName (userName){
   var returnVal = true;
   validatedUsers.forEach(function(validatedUser){
-    // console.log(validatedUser.userName);
     if(validatedUser.userName === userName){
-      // console.log("this truth statement happened");
+
       returnVal = false;
     }
   });
@@ -274,7 +271,6 @@ $("#signout-btn").click(function(){
   $("#userPassword").val("");
 
   });
-
 
 });
 
