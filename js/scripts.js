@@ -74,6 +74,15 @@ function User(userName, password){
 
 validatedUsers = [user1 = new User("Jahan", "Jahan123"), user2 = new User("Chance", "Chance123"), user3 = new User("Oliver", "Oliver123"), user4 = new User("Mark", "Mark123")];
 
+function isEmpty(userName, password){
+  if(!userName || !password){
+    alert("Please enter a valid Username and password");
+    return true;
+  } else{
+    return false;
+  }
+}
+
 function validateLogin (userName, password){
   var truthCounter = 0;
   validatedUsers.forEach(function(validatedUser){
@@ -123,9 +132,9 @@ $(function(){
 $("#loginForm").submit(function(){
   event.preventDefault();
   console.log("submit happened");
-  var userName = $("#userName").val();
-  var userPassword = $("#userPassword").val();
-  if(validateLogin(userName, userPassword)){
+  userName = $("#userName").val();
+  userPassword = $("#userPassword").val();
+  if(validateLogin(userName, userPassword) && !isEmpty(userName, userPassword)){
     console.log("Got in");
     $("#signout-form").show();
     $("#loginForm").hide();
@@ -134,21 +143,43 @@ $("#loginForm").submit(function(){
   }
 });
 
+$("#loginBtn").click(function(){
+  userName = $("#userName").val();
+  userPassword = $("#userPassword").val();
+  var dummyVariable = isEmpty(userName, userPassword);
+  console.log(dummyVariable);
+});
+
 
 $("#registerBtn").click(function(){
+  // Do not add an event.preventDefault(); here
   console.log("Register happened");
-  var userName = $("#userName").val();
-  var userPassword = $("#userPassword").val();
-  // check whether the userName already exists. If it does, make registration unsuccessful and alert the user
-  if(isNewUserName(userName)){
-    var newUser = new User(userName, userPassword);
-    validatedUsers.push(newUser);
-  } else{
-    // console.log("Was not a new user");
-    alert("Username already exists. Please try another username. If your password was valid, we'll log you in anyway.")
+  userName = $("#userName").val();
+  userPassword = $("#userPassword").val();
+  if(!isEmpty(userName, userPassword)){
+    // check whether the userName already exists. If it does, make registration unsuccessful and alert the user
+    if(isNewUserName(userName)){
+      var newUser = new User(userName, userPassword);
+      validatedUsers.push(newUser);
+      console.log("added to validated users");
+    } else{
+      alert("Username already exists. Please try another username. If your password was valid, we'll log you in anyway.")
+    }
   }
-
 });
+
+$("#signout-btn").click(function(){
+  event.preventDefault();
+  $("#signout-form").hide();
+  $("#loginForm").show();
+  $("#existing-user-welcome").hide();
+  userName = undefined;
+  userPassword = undefined;
+  $("#userName").val("");
+  $("#userPassword").val("");
+
+})
+
 // $(".dropdown-toggle").dropdown();
 });
 
