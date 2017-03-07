@@ -105,6 +105,45 @@ function isNewUserName (userName){
   return returnVal;
 }
 
+function getClaimWithMostUpvotes(arrayOfClaims){
+  // if there's a tie, will return the latest one in the array
+  if(arrayOfClaims.length >0){
+    var currentMaxUpvoteCount = 0;
+    var currentMostPopularClaim = arrayOfClaims[0];
+    for (var i = 0; i<arrayOfClaims.length; i++){
+      arrayOfClaims[i].updateVotes();
+      if(arrayOfClaims[i].upCount >=  currentMaxUpvoteCount){
+        currentMaxUpvoteCount = arrayOfClaims[i].upCount;
+        currentMostPopularClaim = arrayOfClaims[i];
+      }
+    }
+    return currentMostPopularClaim;
+  } else{
+    console.log("Array of claims is empty");
+    return undefined;
+  }
+}
+
+function testGetClaimWithMostUpvotes(){
+  var claim1 = new Claim("Mark", "Water is weird");
+  claim1.upVoteArray.push("Jahan");
+  var claim2 = new Claim("Mark", "Water is delicious");
+  claim2.upVoteArray.push("Jahan");
+  claim2.upVoteArray.push("Oliver");
+  var claim3 = new Claim("Mark", "Water is delicious");
+  claim3.upVoteArray.push("Jahan");
+  claim3.upVoteArray.push("Oliver");
+  claim3.upVoteArray.push("Chance");
+  var claim4 = new Claim("Mark", "Water is a drug");
+  claim4.upVoteArray.push("Jahan");
+  claim4.upVoteArray.push("Oliver");
+  claim4.upVoteArray.push("Mark");
+  var testClaims = [claim1, claim2, claim3, claim4];
+  console.log(testClaims);
+  var mostPopularClaim = getClaimWithMostUpvotes(testClaims);
+  console.log(mostPopularClaim);
+}
+
 
 // Front End
 $(function(){
