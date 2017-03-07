@@ -270,7 +270,20 @@ $("#signout-btn").click(function(){
 
   });
 
+  
+  $(".down").click(function(){
+  var idOfDownVote = $(this).attr("id");
+  console.log(thing);
+  var newidOfDownVote = new CountVotes(/*userName,*/ thing);
+  //push to this.variables.
+})
+$(".up").click(function(){
+  var thing = $(this).attr("id");
+  console.log(thing);
 });
+});
+
+
 
 
 
