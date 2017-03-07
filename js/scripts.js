@@ -2,7 +2,7 @@
 function Support(){
   // this.proSupport = [];
   // this.conSupport = [];
-  this.source = [];
+  this.sources = [];
   this.supportcomments = [];
 }
 
@@ -38,7 +38,7 @@ function test(){
   var userID = "Jahan";
   var claim1 = new Claim(userID, "The ninth floor bathroom is better than the eighth floor bathroom");
   console.log(claim1);
-  claim1.pro.source.push(new Source("http://www.google.com",userID))
+  claim1.pro.sources.push(new Source("http://www.google.com",userID))
   var user2 = "Oliver";
   var obnoxiousComment = new Comment (user2, "You suck, Jahan!");
   var user3 = "Chance";
@@ -146,7 +146,7 @@ function testGetClaimWithMostUpvotes(){
 
 function getSourceWithMostUpvotes(claim, isPro){
   if(isPro){
-    var
+    var arrayOfSources = claim.pro.sourc
   }
 }
 
