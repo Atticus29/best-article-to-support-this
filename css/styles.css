@@ -65,3 +65,24 @@ p.navbar-brand{
 #dropdownMenuButton {
   margin-left: 15px;
 }
+
+#commentSection {
+  text-align: left;
+}
+
+#commentForm, #comments {
+  /*width: 590px;*/
+  column-fill: 100%;
+  text-align: center;
+}
+
+#comments {
+  font-family:sans-serif;
+  font-size:1.2em
+}
+
+textarea {
+  width: 300px;
+  height: 60px;
+  text-align: left;
+}

@@ -197,26 +197,55 @@ function generateHTMLforSource (citationLink, sourcer){
 
 }
 
+function generateHTMLforClaim(claimObj){
+  $("#claim-space").prepend("<div class='claim' id='claim1'>" +
+                            "<div class='row' id='row1'>" +
+                            "<div class='col-md-offset-3 col-md-6'>" +
+                            "<h2 id='claim" + claimArray.length + "'>" +
+                            claimObj.userClaim + "</h2>" +
+                            "</div></div><div class='row' id='row2'>" +
+                            "<div class='col-md-offset-3 col-md-3' id='topConSource'>" +
+                            "<div class='row'><h2>Evidence against</h2></div>" +
+                            "<button class='btn btn-success' type='button' id='con-source-btn'>Add Source</button>" +
+                            "<a href='" + getSourceWithMostUpvotes(claimObj, false).citationLink +"' target='_blank'>" + getSourceWithMostUpvotes(claimObj, false).citationLink + "</a>" +
+                            "</div><div class='col-md-3' id='topProSource'><div><h2>Evidence in favor</h2></div>" +
+                            "<button class='btn btn-success' type='button' id='pro-source-btn'>Add Source</button>" +
+                            "<a href='" + getSourceWithMostUpvotes(claimObj, true).citationLink +"' target='_blank'>" + getSourceWithMostUpvotes(claimObj, true).citationLink + "</a>" +
+                            "</div><div class='row'><div class='col-md-offset-3 col-md-6'>" +
+                            "</div></div></div></div>");
+}
+
 
 // Front End
 $(function(){
   claimArray = [];
+  userName = $("#userName").val();
+  userPassword = $("#userPassword").val();
   // testGetClaimWithMostUpvotes();
-  testGetSourceWithMostUpvotes();
-  $("#newClaimButton").click(function(){
-    event.preventDefault();
-    $("#newClaimForm").show();
-    var newClaimSender = $("input#newClaimSender").val();
-    var claimText = $("input#claimText").val();
-    var newestClaim = new Claim (newClaimer, claimText);
-    claimArray.push(newestClaim);
-  });
+  // testGetSourceWithMostUpvotes();
+  // $("#dropDownForm").submit(function(){
+  //   event.preventDefault();
+  //   $("#newClaimForm").show();
+  // });
 
-  $("#newClaimSubmit").click(function(){
+  $("#dropDownForm").submit(function(){
     event.preventDefault();
-    var newClaimSender = $("input#newClaimSender").val();
-    var claimText = $("input#claimText").val();
-    var newestClaim = new Claim (newClaimer, claimText);
+    console.log(userName);
+    console.log(userPassword);
+    if(!isMissingUsernameOrPassword(userName, userPassword)){
+      var newClaimSender = userName;
+      var claimText = $("input#claimQuestion").val();
+      var optionalDigitalOriginOfClaim = $("input#claimLink").val();
+      var newestClaim = new Claim (newClaimSender, claimText);
+      newestClaim.pro.sources.push(new Source("http://news.nationalgeographic.com/news/2010/03/100310/why-tap-water-is-better/", "Mark"));
+      newestClaim.con.sources.push(new Source("http://www.mayoclinic.org/healthy-lifestyle/nutrition-and-healthy-eating/expert-answers/tap-vs-bottled-water/faq-20058017", "Chance"));
+      claimArray.push(newestClaim);
+      console.log(claimArray);
+
+      generateHTMLforClaim(newestClaim);
+    } else{
+      console.log("You forgot to log in");
+    }
   });
 
 
@@ -270,7 +299,7 @@ $("#signout-btn").click(function(){
 
   });
 
-  
+
   $(".down").click(function(){
   var idOfDownVote = $(this).attr("id");
   console.log(thing);
@@ -280,6 +309,18 @@ $("#signout-btn").click(function(){
 $(".up").click(function(){
   var thing = $(this).attr("id");
   console.log(thing);
+
+  //claimComments
+  $("#commentForm").submit(function(){
+    event.preventDefault();
+
+      if (userName.length > 1) {
+        $("#commentSection").append("<p>" + userName + " commented" + $("#comments").val() + "</p>");
+        $('#commentForm textarea').val('');
+      } else {
+        alert("You must be logged in to comment")
+      }
+  });
 });
 });
 
