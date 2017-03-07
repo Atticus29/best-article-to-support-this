@@ -193,6 +193,10 @@ function testGetSourceWithMostUpvotes(){
   console.log(mostPopularSource);
 }
 
+function generateHTMLforSource (citationLink, sourcer){
+
+}
+
 
 // Front End
 $(function(){
@@ -201,15 +205,9 @@ $(function(){
   testGetSourceWithMostUpvotes();
   $("#newClaimButton").click(function(){
     event.preventDefault();
-    //instead prompt, place ansewrs in initially hidden form
     $("#newClaimForm").show();
     var newClaimSender = $("input#newClaimSender").val();
     var claimText = $("input#claimText").val();
-    // var newClaimer = prompt("What is your username?")
-    // var claimText =  prompt("Please enter a claim")
-    // if (claimText != null && newClaimer!=null)
-    //   $("#newClaimArea").append("<h4>" + claimText + "</h4>");
-
     var newestClaim = new Claim (newClaimer, claimText);
     claimArray.push(newestClaim);
   });
