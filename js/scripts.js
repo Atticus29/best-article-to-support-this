@@ -59,7 +59,7 @@ function Source(link, sourcer){
   this.downVote = [];
   this.upCount = this.upVote.length;
   this.downCount = this.downVote.length;
-  this.link = [];
+  this.link = this.link;
   this.sourcer = sourcer;
 }
 
@@ -158,13 +158,48 @@ function getSourceWithMostUpvotes(claim, isPro){
   } else{
     var arrayOfSources = claim.con.sources;
   }
+  if(arrayOfSources.length>0){
+    var currentMaxUpvoteCount = 0;
+    var currentMostPopularSource = arrayOfSources[0];
+    for (var i = 0; i<arrayOfSources.length; i++){
+      arrayOfSources[i].updateVotes();
+      if(arrayOfSources[i].upCount >=  currentMaxUpvoteCount){
+        currentMaxUpvoteCount = arrayOfSources[i].upCount;
+        currentMostPopularSource = arrayOfSources[i];
+      }
+    }
+    return currentMostPopularSource;
+  } else{
+    console.log("Array of sources is empty");
+    return undefined;
+  }
+}
 
+function testGetSourceWithMostUpvotes(){
+  var claim1 = new Claim("Mark", "Water is weird");
+  claim1.upVoteArray.push("Jahan");
+  var source1 = new Source("google", "Jahan");
+  source1.upVote.push("Mark");
+  var source2 = new Source("your mom", "Jahan");
+  source2.upVote.push("Mark");
+  source2.upVote.push("Chance");
+  var source3 = new Source("I asked an old man", "Jahan");
+  source3.upVote.push("Mark");
+  source3.upVote.push("Chance");
+  claim1.con.sources.push(source1);
+  claim1.con.sources.push(source2);
+  claim1.con.sources.push(source3);
+  console.log(claim1);
+  var mostPopularSource = getSourceWithMostUpvotes(claim1, false);
+  console.log(mostPopularSource);
 }
 
 
 // Front End
 $(function(){
   claimArray = [];
+  testGetClaimWithMostUpvotes();
+  testGetSourceWithMostUpvotes();
   $("#newClaimButton").click(function(){
     event.preventDefault();
     //instead prompt, place ansewrs in initially hidden form
