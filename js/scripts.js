@@ -97,17 +97,17 @@ $(function(){
     // if (newClaim != null && newClaimer!=null)
     //   $("#newClaimArea").append("<h4>" + newClaim + "</h4>");
       var createClaim = new Claim (newClaimer, newClaim);
-    }
+    });
 
   $("#newClaimSubmit").click(function(){
     event.preventDefault();
     var newClaimSender = $("input#newClaimSender").val();
     var newClaim = $("input#newClaim").val();
     var createClaim = new Claim (newClaimer, newClaim);
-  })
+  });
 
 
-  })
+
   $("#loginForm").submit(function(){
     event.preventDefault();
     var userName = $("#userName").val();
@@ -117,7 +117,6 @@ $(function(){
       // $("#row1").show();
     }
   });
-  // $(".dropdown-toggle").dropdown();
 });
 
 
