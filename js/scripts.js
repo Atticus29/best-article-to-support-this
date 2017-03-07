@@ -72,7 +72,7 @@ function User(userName, password){
   this.password = password;
 }
 
-var validatedUsers = [user1 = new User("Jahan", "Jahan123"), user2 = new User("Chance", "Chance123"), user3 = new User("Oliver", "Oliver123"), user4 = new User("Mark", "Mark123")];
+validatedUsers = [user1 = new User("Jahan", "Jahan123"), user2 = new User("Chance", "Chance123"), user3 = new User("Oliver", "Oliver123"), user4 = new User("Mark", "Mark123")];
 
 function validateLogin (userName, password){
   var truthCounter = 0;
@@ -82,6 +82,18 @@ function validateLogin (userName, password){
     }
   });
   return truthCounter;
+}
+
+function isNewUserName (userName){
+  var returnVal = true;
+  validatedUsers.forEach(function(validatedUser){
+    // console.log(validatedUser.userName);
+    if(validatedUser.userName === userName){
+      // console.log("this truth statement happened");
+      returnVal = false;
+    }
+  });
+  return returnVal;
 }
 
 // Front End
@@ -96,28 +108,47 @@ $(function(){
     // var newClaim =  prompt("Please enter a claim")
     // if (newClaim != null && newClaimer!=null)
     //   $("#newClaimArea").append("<h4>" + newClaim + "</h4>");
-      var createClaim = new Claim (newClaimer, newClaim);
-    }
+    var createClaim = new Claim (newClaimer, newClaim);
+  });
 
   $("#newClaimSubmit").click(function(){
     event.preventDefault();
     var newClaimSender = $("input#newClaimSender").val();
     var newClaim = $("input#newClaim").val();
     var createClaim = new Claim (newClaimer, newClaim);
-  })
-
-
-  })
-  $("#loginForm").submit(function(){
-    event.preventDefault();
-    var userName = $("#userName").val();
-    var userPassword = $("#userPassword").val();
-    if(validateLogin(userName, userPassword)){
-      console.log("Got in");
-      // $("#row1").show();
-    }
   });
-  // $(".dropdown-toggle").dropdown();
+
+
+
+$("#loginForm").submit(function(){
+  event.preventDefault();
+  console.log("submit happened");
+  var userName = $("#userName").val();
+  var userPassword = $("#userPassword").val();
+  if(validateLogin(userName, userPassword)){
+    console.log("Got in");
+    $("#signout-form").show();
+    $("#loginForm").hide();
+    // $("#row1").show();
+  }
+});
+
+
+$("#registerBtn").click(function(){
+  console.log("Register happened");
+  var userName = $("#userName").val();
+  var userPassword = $("#userPassword").val();
+  // check whether the userName already exists. If it does, make registration unsuccessful and alert the user
+  if(isNewUserName(userName)){
+    var newUser = new User(userName, userPassword);
+    validatedUsers.push(newUser);
+  } else{
+    // console.log("Was not a new user");
+    alert("Username already exists. Please try another username. If your password was valid, we'll log you in anyway.")
+  }
+
+});
+// $(".dropdown-toggle").dropdown();
 });
 
 
