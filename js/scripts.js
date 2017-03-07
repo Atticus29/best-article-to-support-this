@@ -63,6 +63,7 @@ function Source(link, sourcer){
 
 // Front End
 $(function(){
+  $(".dropdown-toggle").dropdown();
 
 });
 
