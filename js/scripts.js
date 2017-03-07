@@ -129,7 +129,8 @@ $("#loginForm").submit(function(){
     console.log("Got in");
     $("#signout-form").show();
     $("#loginForm").hide();
-    // $("#row1").show();
+    $("#welcome-user-name").text(userName);
+    $("#existing-user-welcome").show();
   }
 });
 

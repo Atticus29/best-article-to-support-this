@@ -31,3 +31,12 @@
 #signout-form{
   display: none;
 }
+
+#existing-user-welcome{
+  display: none;
+  text-align: right;
+}
+
+p.navbar-brand{
+  padding-left: 50%;
+}
