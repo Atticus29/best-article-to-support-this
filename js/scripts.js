@@ -1,8 +1,6 @@
 // Back End
 function Support(){
-  this.proSupport = [];
-  this.conSupport = [];
-  this.source = [];
+  this.sources = [];
   this.supportcomments = [];
 }
 
@@ -38,7 +36,7 @@ function test(){
   var userID = "Jahan";
   var claim1 = new Claim(userID, "The ninth floor bathroom is better than the eighth floor bathroom");
   console.log(claim1);
-  claim1.pro.source.push(new Source("http://www.google.com",userID))
+  claim1.pro.sources.push(new Source("http://www.google.com",userID))
   var user2 = "Oliver";
   var obnoxiousComment = new Comment (user2, "You suck, Jahan!");
   var user3 = "Chance";
@@ -54,18 +52,26 @@ function test(){
   console.log(claim1);
 }
 
-function Source(link, sourcer){
+function Source(citationLink, sourcer){
   this.upVote = [];
   this.downVote = [];
-  this.link = [];
+  this.upCount = this.upVote.length;
+  this.downCount = this.downVote.length;
+  this.citationLink = citationLink;
   this.sourcer = sourcer;
 }
 
-//newClaim. must know userID, store a string as a new claim. Dynamically interact with HTML.
+Source.prototype.updateVotes = function() {
+  this.upCount = this.upVote.length;
+  this.downCount = this.downVote.length;
+}
+
+
+//claimText. must know userID, store a string as a new claim. Dynamically interact with HTML.
 //frontEnd: upon click function, store userID.
 // function  NewClaim(userID, newclaim){
 //   this.userID = userID;
-//   this.newClaim = newClaim;
+//   this.claimText = claimText;
 
 function User(userName, password){
   this.userName = userName;
@@ -96,36 +102,121 @@ function validateLogin (userName, password){
 function isNewUserName (userName){
   var returnVal = true;
   validatedUsers.forEach(function(validatedUser){
-    // console.log(validatedUser.userName);
     if(validatedUser.userName === userName){
-      // console.log("this truth statement happened");
+
       returnVal = false;
     }
   });
   return returnVal;
 }
 
+function getClaimWithMostUpvotes(arrayOfClaims){
+  // if there's a tie, will return the latest one in the array
+  if(arrayOfClaims.length >0){
+    var currentMaxUpvoteCount = 0;
+    var currentMostPopularClaim = arrayOfClaims[0];
+    for (var i = 0; i<arrayOfClaims.length; i++){
+      arrayOfClaims[i].updateVotes();
+      if(arrayOfClaims[i].upCount >=  currentMaxUpvoteCount){
+        currentMaxUpvoteCount = arrayOfClaims[i].upCount;
+        currentMostPopularClaim = arrayOfClaims[i];
+      }
+    }
+    return currentMostPopularClaim;
+  } else{
+    console.log("Array of claims is empty");
+    return undefined;
+  }
+}
+
+function testGetClaimWithMostUpvotes(){
+  var claim1 = new Claim("Mark", "Water is weird");
+  claim1.upVoteArray.push("Jahan");
+  var claim2 = new Claim("Mark", "Water is delicious");
+  claim2.upVoteArray.push("Jahan");
+  claim2.upVoteArray.push("Oliver");
+  var claim3 = new Claim("Mark", "Water is delicious");
+  claim3.upVoteArray.push("Jahan");
+  claim3.upVoteArray.push("Oliver");
+  claim3.upVoteArray.push("Chance");
+  var claim4 = new Claim("Mark", "Water is a drug");
+  claim4.upVoteArray.push("Jahan");
+  claim4.upVoteArray.push("Oliver");
+  claim4.upVoteArray.push("Mark");
+  var testClaims = [claim1, claim2, claim3, claim4];
+  console.log(testClaims);
+  var mostPopularClaim = getClaimWithMostUpvotes(testClaims);
+  console.log(mostPopularClaim);
+}
+
+function getSourceWithMostUpvotes(claim, isPro){
+  if(isPro){
+    var arrayOfSources = claim.pro.sources;
+  } else{
+    var arrayOfSources = claim.con.sources;
+  }
+  if(arrayOfSources.length>0){
+    var currentMaxUpvoteCount = 0;
+    var currentMostPopularSource = arrayOfSources[0];
+    for (var i = 0; i<arrayOfSources.length; i++){
+      arrayOfSources[i].updateVotes();
+      if(arrayOfSources[i].upCount >=  currentMaxUpvoteCount){
+        currentMaxUpvoteCount = arrayOfSources[i].upCount;
+        currentMostPopularSource = arrayOfSources[i];
+      }
+    }
+    return currentMostPopularSource;
+  } else{
+    console.log("Array of sources is empty");
+    return undefined;
+  }
+}
+
+function testGetSourceWithMostUpvotes(){
+  var claim1 = new Claim("Mark", "Water is weird");
+  claim1.upVoteArray.push("Jahan");
+  var source1 = new Source("google", "Jahan");
+  console.log(source1);
+  source1.upVote.push("Mark");
+  var source2 = new Source("your mom", "Jahan");
+  console.log(source2);
+  source2.upVote.push("Mark");
+  source2.upVote.push("Chance");
+  var source3 = new Source("I asked an old man", "Jahan");
+  source3.upVote.push("Mark");
+  source3.upVote.push("Chance");
+  claim1.con.sources.push(source1);
+  claim1.con.sources.push(source3);
+  claim1.con.sources.push(source2);
+  console.log(claim1);
+  var mostPopularSource = getSourceWithMostUpvotes(claim1, false);
+  console.log(mostPopularSource);
+}
+
+function generateHTMLforSource (citationLink, sourcer){
+
+}
+
+
 // Front End
 $(function(){
+  claimArray = [];
+  // testGetClaimWithMostUpvotes();
+  testGetSourceWithMostUpvotes();
   $("#newClaimButton").click(function(){
     event.preventDefault();
-    //instead prompt, place ansewrs in initially hidden form
     $("#newClaimForm").show();
     var newClaimSender = $("input#newClaimSender").val();
-    var newClaim = $("input#newClaim").val();
-    // var newClaimer = prompt("What is your username?")
-    // var newClaim =  prompt("Please enter a claim")
-    // if (newClaim != null && newClaimer!=null)
-    //   $("#newClaimArea").append("<h4>" + newClaim + "</h4>");
-
-    var createClaim = new Claim (newClaimer, newClaim);
+    var claimText = $("input#claimText").val();
+    var newestClaim = new Claim (newClaimer, claimText);
+    claimArray.push(newestClaim);
   });
 
   $("#newClaimSubmit").click(function(){
     event.preventDefault();
     var newClaimSender = $("input#newClaimSender").val();
-    var newClaim = $("input#newClaim").val();
-    var createClaim = new Claim (newClaimer, newClaim);
+    var claimText = $("input#claimText").val();
+    var newestClaim = new Claim (newClaimer, claimText);
   });
 
 
@@ -178,6 +269,7 @@ $("#signout-btn").click(function(){
   $("#userPassword").val("");
 
   });
+
 
   //claimComments
   $("#commentForm").submit(function(){
