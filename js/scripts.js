@@ -178,7 +178,13 @@ $("#signout-btn").click(function(){
   $("#userPassword").val("");
 
   });
- 
+
+  //claimComments
+  $("#commentForm").submit(function(){
+    event.preventDefault();
+    console.log($("#commentSection").append("<p>" + userName + "commented" +($("#comments").val())));
+  });
+
 });
 
 
