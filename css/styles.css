@@ -1,0 +1,29 @@
+#question {
+  background-color: green;
+}
+
+#topConSource {
+  background-color: blue;
+  text-align: center;
+}
+
+#topProSource {
+  background-color: pink;
+  text-align: center;
+}
+
+#question {
+  text-align: center;
+}
+
+.jumbotron {
+  text-align: center;
+}
+#loginGatherer{
+  /*text-align: center;*/
+  padding-left: 40%;
+}
+
+/*#row1{
+  display: none;
+}*/

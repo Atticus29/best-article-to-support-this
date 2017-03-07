@@ -12,15 +12,20 @@ function Reply(replier, userReply){
 }
 
 function Claim (claimer, userClaim){
-  this. claimer = claimer;
-  this. userClaim = userClaim;
+  this.claimer = claimer;
+  this.userClaim = userClaim;
   this.upVoteArray = [];
   this.downVoteArray = [];
-  this.upCount = this.upVoteArray.length;
-  this.downCount = this.downVoteArray.length;
+  this.upCount = 0;
+  this.downCount = 0;
   this.pro = new Support();
   this.con = new Support();
   this.claimComments = [];
+}
+
+Claim.prototype.updateVotes = function() {
+  this.upCount = this.upVoteArray.length;
+  this.downCount = this.downVoteArray.length;
 }
 
 function Comment(commenter, userComment){
@@ -31,22 +36,22 @@ function Comment(commenter, userComment){
 
 function test(){
   var userID = "Jahan";
-  var Claim1 = new Claim(userID, "The ninth floor bathroom is better than the eighth floor bathroom");
-  console.log(Claim1);
-  Claim1.pro.source.push(new Source("http://www.google.com",userID))
+  var claim1 = new Claim(userID, "The ninth floor bathroom is better than the eighth floor bathroom");
+  console.log(claim1);
+  claim1.pro.source.push(new Source("http://www.google.com",userID))
   var user2 = "Oliver";
   var obnoxiousComment = new Comment (user2, "You suck, Jahan!");
   var user3 = "Chance";
   var irrelevantReply = new Reply (user3, "check out my new rap album!");
   obnoxiousComment.replies.push(irrelevantReply);
-  Claim1.claimComments.push(obnoxiousComment);
+  claim1.claimComments.push(obnoxiousComment);
   var user4 = "Mark";
-  Claim1.upVoteArray.push(user4);
-  console.log(Claim1.upCount);
-  console.log(Claim1.downCount);
-  console.log(Claim1);
-  //test newClaim
-  var newClaim = new NewClaim("Jahan", "Tap water is safer than bottled water");
+  claim1.upVoteArray.push(user4);
+  console.log(claim1.upCount);
+  console.log(claim1.downCount);
+  console.log(claim1);
+  claim1.updateVotes();
+  console.log(claim1);
 }
 
 function Source(link, sourcer){
@@ -62,17 +67,31 @@ function Source(link, sourcer){
 //   this.userID = userID;
 //   this.newClaim = newClaim;
 
+function User(userName, password){
+  this.userName = userName;
+  this.password = password;
+}
+
+var validatedUsers = [user1 = new User("Jahan", "Jahan123"), user2 = new User("Chance", "Chance123"), user3 = new User("Oliver", "Oliver123"), user4 = new User("Mark", "Mark123")];
+
+function validateLogin (userName, password){
+  var truthCounter = 0;
+  validatedUsers.forEach(function(validatedUser){
+    if(validatedUser.userName === userName && validatedUser.password === password){
+      truthCounter ++;
+    }
+  });
+  return truthCounter;
 }
 
 // Front End
 $(function(){
   $("#newClaimButton").click(function(){
+    event.preventDefault();
     //instead prompt, place ansewrs in initially hidden form
     $("#newClaimForm").show();
     var newClaimSender = $("input#newClaimSender").val();
     var newClaim = $("input#newClaim").val();
-
-
     // var newClaimer = prompt("What is your username?")
     // var newClaim =  prompt("Please enter a claim")
     // if (newClaim != null && newClaimer!=null)
@@ -81,6 +100,7 @@ $(function(){
     }
 
   $("#newClaimSubmit").click(function(){
+    event.preventDefault();
     var newClaimSender = $("input#newClaimSender").val();
     var newClaim = $("input#newClaim").val();
     var createClaim = new Claim (newClaimer, newClaim);
@@ -88,8 +108,18 @@ $(function(){
 
 
   })
+  $("#loginForm").submit(function(){
+    event.preventDefault();
+    var userName = $("#userName").val();
+    var userPassword = $("#userPassword").val();
+    if(validateLogin(userName, userPassword)){
+      console.log("Got in");
+      // $("#row1").show();
+    }
+  });
+  // $(".dropdown-toggle").dropdown();
 });
 
 
-
-Claim1.pro.push(source1)
+// test();
+//claim1.pro.push(source1)
