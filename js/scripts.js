@@ -74,7 +74,7 @@ function User(userName, password){
 
 validatedUsers = [user1 = new User("Jahan", "Jahan123"), user2 = new User("Chance", "Chance123"), user3 = new User("Oliver", "Oliver123"), user4 = new User("Mark", "Mark123")];
 
-function isEmpty(userName, password){
+function isMissingUsernameOrPassword(userName, password){
   if(!userName || !password){
     alert("Please enter a valid Username and password");
     return true;
@@ -134,7 +134,7 @@ $("#loginForm").submit(function(){
   console.log("submit happened");
   userName = $("#userName").val();
   userPassword = $("#userPassword").val();
-  if(validateLogin(userName, userPassword) && !isEmpty(userName, userPassword)){
+  if(validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
     console.log("Got in");
     $("#signout-form").show();
     $("#loginForm").hide();
@@ -146,7 +146,7 @@ $("#loginForm").submit(function(){
 $("#loginBtn").click(function(){
   userName = $("#userName").val();
   userPassword = $("#userPassword").val();
-  var dummyVariable = isEmpty(userName, userPassword);
+  var dummyVariable = isMissingUsernameOrPassword(userName, userPassword);
   console.log(dummyVariable);
 });
 
@@ -156,7 +156,7 @@ $("#registerBtn").click(function(){
   console.log("Register happened");
   userName = $("#userName").val();
   userPassword = $("#userPassword").val();
-  if(!isEmpty(userName, userPassword)){
+  if(!isMissingUsernameOrPassword(userName, userPassword)){
     // check whether the userName already exists. If it does, make registration unsuccessful and alert the user
     if(isNewUserName(userName)){
       var newUser = new User(userName, userPassword);
