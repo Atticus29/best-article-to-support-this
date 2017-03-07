@@ -54,12 +54,12 @@ function test(){
   console.log(claim1);
 }
 
-function Source(link, sourcer){
+function Source(citationLink, sourcer){
   this.upVote = [];
   this.downVote = [];
   this.upCount = this.upVote.length;
   this.downCount = this.downVote.length;
-  this.link = this.link;
+  this.citationLink = citationLink;
   this.sourcer = sourcer;
 }
 
@@ -179,16 +179,18 @@ function testGetSourceWithMostUpvotes(){
   var claim1 = new Claim("Mark", "Water is weird");
   claim1.upVoteArray.push("Jahan");
   var source1 = new Source("google", "Jahan");
+  console.log(source1);
   source1.upVote.push("Mark");
   var source2 = new Source("your mom", "Jahan");
+  console.log(source2);
   source2.upVote.push("Mark");
   source2.upVote.push("Chance");
   var source3 = new Source("I asked an old man", "Jahan");
   source3.upVote.push("Mark");
   source3.upVote.push("Chance");
   claim1.con.sources.push(source1);
-  claim1.con.sources.push(source2);
   claim1.con.sources.push(source3);
+  claim1.con.sources.push(source2);
   console.log(claim1);
   var mostPopularSource = getSourceWithMostUpvotes(claim1, false);
   console.log(mostPopularSource);
@@ -198,7 +200,7 @@ function testGetSourceWithMostUpvotes(){
 // Front End
 $(function(){
   claimArray = [];
-  testGetClaimWithMostUpvotes();
+  // testGetClaimWithMostUpvotes();
   testGetSourceWithMostUpvotes();
   $("#newClaimButton").click(function(){
     event.preventDefault();
