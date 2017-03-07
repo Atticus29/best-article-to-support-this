@@ -72,7 +72,16 @@ function User(userName, password){
   this.password = password;
 }
 
-var validatedUsers = [user1 = new User("Jahan", "Jahan123"), user2 = new User("Chance", "Chance123"), user3 = new User("Oliver", "Oliver123"), user4 = new User("Mark", "Mark123")];
+validatedUsers = [user1 = new User("Jahan", "Jahan123"), user2 = new User("Chance", "Chance123"), user3 = new User("Oliver", "Oliver123"), user4 = new User("Mark", "Mark123")];
+
+function isMissingUsernameOrPassword(userName, password){
+  if(!userName || !password){
+    alert("Please enter a valid Username and password");
+    return true;
+  } else{
+    return false;
+  }
+}
 
 function validateLogin (userName, password){
   var truthCounter = 0;
@@ -82,6 +91,18 @@ function validateLogin (userName, password){
     }
   });
   return truthCounter;
+}
+
+function isNewUserName (userName){
+  var returnVal = true;
+  validatedUsers.forEach(function(validatedUser){
+    // console.log(validatedUser.userName);
+    if(validatedUser.userName === userName){
+      // console.log("this truth statement happened");
+      returnVal = false;
+    }
+  });
+  return returnVal;
 }
 
 // Front End
@@ -96,8 +117,9 @@ $(function(){
     // var newClaim =  prompt("Please enter a claim")
     // if (newClaim != null && newClaimer!=null)
     //   $("#newClaimArea").append("<h4>" + newClaim + "</h4>");
-      var createClaim = new Claim (newClaimer, newClaim);
-    });
+
+    var createClaim = new Claim (newClaimer, newClaim);
+  });
 
   $("#newClaimSubmit").click(function(){
     event.preventDefault();
@@ -107,17 +129,57 @@ $(function(){
   });
 
 
+$("#loginForm").submit(function(){
+  event.preventDefault();
+  console.log("submit happened");
+  userName = $("#userName").val();
+  userPassword = $("#userPassword").val();
+  if(validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
+    console.log("Got in");
+    $("#signout-form").show();
+    $("#loginForm").hide();
+    $("#welcome-user-name").text(userName);
+    $("#existing-user-welcome").show();
+  }
+});
 
-  $("#loginForm").submit(function(){
-    event.preventDefault();
-    var userName = $("#userName").val();
-    var userPassword = $("#userPassword").val();
-    if(validateLogin(userName, userPassword)){
-      console.log("Got in");
-      // $("#row1").show();
+$("#loginBtn").click(function(){
+  userName = $("#userName").val();
+  userPassword = $("#userPassword").val();
+  var dummyVariable = isMissingUsernameOrPassword(userName, userPassword);
+  console.log(dummyVariable);
+});
+
+$("#registerBtn").click(function(){
+  // Do not add an event.preventDefault(); here
+  console.log("Register happened");
+  userName = $("#userName").val();
+  userPassword = $("#userPassword").val();
+  if(!isMissingUsernameOrPassword(userName, userPassword)){
+    // check whether the userName already exists. If it does, make registration unsuccessful and alert the user
+    if(isNewUserName(userName)){
+      var newUser = new User(userName, userPassword);
+      validatedUsers.push(newUser);
+      console.log("added to validated users");
+    } else{
+      alert("Username already exists. Please try another username. If your password was valid, we'll log you in anyway.")
     }
+  }
+});
+
+$("#signout-btn").click(function(){
+  event.preventDefault();
+  $("#signout-form").hide();
+  $("#loginForm").show();
+  $("#existing-user-welcome").hide();
+  userName = undefined;
+  userPassword = undefined;
+  $("#userName").val("");
+  $("#userPassword").val("");
+
   });
 });
+
 
 
 // test();

@@ -20,9 +20,9 @@
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <form class="navbar-form navbar-left">
           <div class="form-group">
-            <input type="text" class="form-control" placeholder="Search">
+            <input type="text" class="form-control" placeholder="">
           </div>
-          <button type="submit" class="btn btn-default">Submit</button>
+          <button type="submit" class="btn btn-default">Search</button>
         </form>
       </div>
       <form class="navbar-form navbar-right" role="search" id="loginForm">
@@ -32,13 +32,14 @@
         <div class="form-group">
           <input type="password" class="form-control" name="password" placeholder="Password" id="userPassword">
         </div>
-        <button type="submit" class="btn btn-warning">Log In</button>
+        <button type="submit" class="btn btn-warning" id="loginBtn">Log In</button>
+        <button type="submit" class="btn btn-warning" id="registerBtn">Register New Account</button>
       </form>
       <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           New Claim
       </button>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="dropDownNewClaimForm">
-        <form class="dropDownForm">
+        <form id="dropDownForm">
           <div class="form-group">
             <label for="url-input" class="newClaim">New Claim Question</label>
             <input class="form-control" type="text" value="" id="claimQuestion">
