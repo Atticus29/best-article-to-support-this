@@ -57,9 +57,17 @@ function test(){
 function Source(link, sourcer){
   this.upVote = [];
   this.downVote = [];
+  this.upCount = this.upVote.length;
+  this.downCount = this.downVote.length;
   this.link = [];
   this.sourcer = sourcer;
 }
+
+Source.prototype.updateVotes = function() {
+  this.upCount = this.upVote.length;
+  this.downCount = this.downVote.length;
+}
+
 
 //claimText. must know userID, store a string as a new claim. Dynamically interact with HTML.
 //frontEnd: upon click function, store userID.
@@ -146,8 +154,11 @@ function testGetClaimWithMostUpvotes(){
 
 function getSourceWithMostUpvotes(claim, isPro){
   if(isPro){
-    var arrayOfSources = claim.pro.sourc
+    var arrayOfSources = claim.pro.sources;
+  } else{
+    var arrayOfSources = claim.con.sources;
   }
+
 }
 
 
