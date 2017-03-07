@@ -1,7 +1,7 @@
 // Back End
 function Support(){
-  this.proSupport = [];
-  this.conSupport = [];
+  // this.proSupport = [];
+  // this.conSupport = [];
   this.source = [];
   this.supportcomments = [];
 }
@@ -142,6 +142,12 @@ function testGetClaimWithMostUpvotes(){
   console.log(testClaims);
   var mostPopularClaim = getClaimWithMostUpvotes(testClaims);
   console.log(mostPopularClaim);
+}
+
+function getSourceWithMostUpvotes(claim, isPro){
+  if(isPro){
+    var
+  }
 }
 
 
