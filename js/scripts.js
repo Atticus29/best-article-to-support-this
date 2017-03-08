@@ -361,9 +361,6 @@ $(function(){
     }
   });
 
-  $("#con-source-btn").click(function(){
-
-  })
 });
 
 
