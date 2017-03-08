@@ -206,6 +206,13 @@ function getIndexInArrayOfClaims(claimObj, arrayOfClaimObjs){
   // return index;
 }
 
+function displayAllClaims(){
+  $("#claim-space").empty();
+  for (var i = 0; i<claimArray.length; i++){
+    generateHTMLforClaim(claimArray[i]);
+  }
+}
+
 function getIndexOfClaimThisClickOccurredIn (jQueryObj){
   var claimID = jQueryObj.parents(".claim").attr("id");
   var regExID = /claim(\d+)/;
@@ -432,6 +439,10 @@ $(function(){
     } else {
       alert("You must be logged in to comment")
     }
+  });
+
+  $("#all-claims-btn").click(function(){
+    displayAllClaims();
   });
 
 });
