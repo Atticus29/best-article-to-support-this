@@ -213,6 +213,28 @@ function displayAllClaims(){
   }
 }
 
+function displayAllSources(claimID, claimObj){
+  // pro
+  $("#claim" + claimID + " #pro-source-container").empty();
+  if(claimObj.pro.sources.length === 0){
+    tmpSource = new Source("There are currently no sources supporting this claim","http://www.google.com" ,"Mark")
+    $("#claim" + claimID + " #pro-source-container").append("<a href='" + tmpSource.citationLink +"' target='_blank'>" + tmpSource.citationTitle + "</a><br>")
+  } else{
+    for (var i = 0; i<claimObj.pro.sources.length; i++){
+      $("#claim" + claimID + " #pro-source-container").append("<a href='" + claimObj.pro.sources[i].citationLink +"' target='_blank'>" + claimObj.pro.sources[i].citationTitle + "</a><br>")
+    }
+  }
+  // con
+  if(claimObj.con.sources.length === 0){
+    tmpSource = new Source("There are currently no sources supporting this claim","http://www.google.com" ,"Mark")
+    $("#claim" + claimID + " #con-source-container").append("<a href='" + tmpSource.citationLink +"' target='_blank'>" + tmpSource.citationTitle + "</a><br>")
+  } else{
+    for (var i = 0; i<claimObj.con.sources.length; i++){
+      $("#claim" + claimID + " #con-source-container").append("<a href='" + claimObj.con.sources[i].citationLink +"' target='_blank'>" + claimObj.con.sources[i].citationTitle + "</a><br>")
+    }
+  }
+}
+
 function getIndexOfClaimThisClickOccurredIn (jQueryObj){
   var claimID = jQueryObj.parents(".claim").attr("id");
   var regExID = /claim(\d+)/;
@@ -234,6 +256,20 @@ function testGetIndexInArrayOfClaims(){
   claim4.upVoteArray.push("Jahan");
   claim4.upVoteArray.push("Oliver");
   claim4.upVoteArray.push("Mark");
+  claim1.upVoteArray.push("Jahan");
+  var source1 = new Source("google","http:/www.google.com", "Jahan");
+  console.log(source1);
+  source1.upVote.push("Mark");
+  var source2 = new Source("your mom","http://www.yourmom.com" ,"Jahan");
+  console.log(source2);
+  source2.upVote.push("Mark");
+  source2.upVote.push("Chance");
+  var source3 = new Source("I asked an old man","http://www.oldman.com", "Jahan");
+  source3.upVote.push("Mark");
+  source3.upVote.push("Chance");
+  claim4.con.sources.push(source1);
+  claim4.con.sources.push(source3);
+  claim4.con.sources.push(source2);
   claimArray = [claim1, claim2, claim3, claim4];
   var idx = getIndexInArrayOfClaims(claim4, claimArray);
   // console.log(idx);
@@ -264,9 +300,9 @@ function generateHTMLforClaim(claimObj){
     "<br><h4 class='original-asker'>Originally asked by: " + claimObj.claimer + "</h4>" +
     "</div>" +
     "</div>" +
-    "<div class='row' id='row2'>" +
-    "<div class='col-md-offset-3 col-md-3' id='topProSource'>" +
-    "<div class='row'>" +
+    "<div class='row row-sources' id='row2'>" +
+    "<div class='col-md-offset-3 col-md-3' id='topConSource'>" +
+    "<div class='row row-sources'>" +
     "<div class='well'>" +
     "<div class='row' id='proVoteUp'>" +
     "<h4>Vote Pro Up</h4>" +
@@ -281,6 +317,10 @@ function generateHTMLforClaim(claimObj){
     "</div>" +
     "<h2>Evidence in favor</h2>" +
     "</div>" +
+    "<div id='pro-source-container'>" +
+    "<a href='" + getSourceWithMostUpvotes(claimObj, true).citationLink +"' target='_blank'>" + getSourceWithMostUpvotes(claimObj, true).citationTitle + "</a><br>" +
+    "</div>" +
+    "<button class='btn btn-info' type='button' id='pro-view-all-btn'>View all sources</button>" +
     "<button class='btn btn-success dropdown-toggle' type='button' id='pro-source-btn' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Add Source</button>" +
     "<div class='dropdown-menu' aria-labelledby='pro-source-btn' id='dropDownProSource'>" +
     "<form id='dropDownProSourceForm' novalidate>" +
@@ -297,10 +337,9 @@ function generateHTMLforClaim(claimObj){
     "</div>" +
     "</form>" +
     "</div>" +
-    "<a href='" + getSourceWithMostUpvotes(claimObj, true).citationLink +"' target='_blank'>" + getSourceWithMostUpvotes(claimObj, true).citationTitle + "</a>" +
     "</div>" +
     "<div class='col-md-3' id='topProSource'>" +
-    "<div class='row'>" +
+    "<div class='row row-sources'>" +
     "<div class='well'>" +
     "<div class='row' id='proVoteUp'>" +
     "<h4>Vote Pro Up</h4>" +
@@ -315,6 +354,10 @@ function generateHTMLforClaim(claimObj){
     "</div>" +
     "<h2>Evidence in opposition</h2>" +
     "</div>" +
+    "<div id='con-source-container'>" +
+    "<a href='" + getSourceWithMostUpvotes(claimObj, false).citationLink +"' target='_blank'>" + getSourceWithMostUpvotes(claimObj, false).citationTitle + "</a><br>" +
+    "</div>" +
+    "<button class='btn btn-info' type='button' id='con-view-all-btn'>View all sources</button>" +
     "<button class='btn btn-success dropdown-toggle' type='button' id='con-source-btn' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Add Source</button>" +
     "<div class='dropdown-menu' aria-labelledby='con-source-btn' id='dropDownConSource'>" +
     "<form id='dropDownConSourceForm' novalidate>" +
@@ -330,7 +373,7 @@ function generateHTMLforClaim(claimObj){
     "<button id='submitNewConSource' type='submit' name='button' class='btn btn-info'>Submit Source</button>" +
     "</div>" +
     "</form>" +
-    "<a href='" + getSourceWithMostUpvotes(claimObj, false).citationLink +"' target='_blank'>" + getSourceWithMostUpvotes(claimObj, false).citationTitle + "</a>" +
+
     "</div>" +
     "</div>" +
     "</div>" +
@@ -587,6 +630,15 @@ function generateHTMLforClaim(claimObj){
 
     $("#all-claims-btn").click(function(){
       displayAllClaims();
+    });
+
+    $("#pro-view-all-btn").click(function(){
+      event.preventDefault();
+      var claimID = getIndexOfClaimThisClickOccurredIn($(this));
+      console.log("claimID is: " + claimID);
+      var currentClaim = claimArray[claimID];
+      console.log("Current claim is: " + currentClaim.userClaim);
+      displayAllSources(claimID, currentClaim);
     });
 
   });
