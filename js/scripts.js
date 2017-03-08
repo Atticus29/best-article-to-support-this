@@ -199,20 +199,20 @@ function generateHTMLforSource (citationLink, sourcer){
 
 function generateHTMLforClaim(claimObj){
   $("#claim-space").prepend("<div class='claim' id='claim1'>" +
-                            "<div class='row' id='row1'>" +
-                            "<div class='col-md-offset-3 col-md-6'>" +
-                            "<h2 id='claim" + claimArray.length + "'>" +
-                            claimObj.userClaim + "</h2>" +
-                            "</div></div><div class='row' id='row2'>" +
-                            "<div class='col-md-offset-3 col-md-3' id='topConSource'>" +
-                            "<div class='row'><h2>Evidence against</h2></div>" +
-                            "<button class='btn btn-success' type='button' id='con-source-btn'>Add Source</button>" +
-                            "<a href='" + getSourceWithMostUpvotes(claimObj, false).citationLink +"' target='_blank'>" + getSourceWithMostUpvotes(claimObj, false).citationLink + "</a>" +
-                            "</div><div class='col-md-3' id='topProSource'><div><h2>Evidence in favor</h2></div>" +
-                            "<button class='btn btn-success' type='button' id='pro-source-btn'>Add Source</button>" +
-                            "<a href='" + getSourceWithMostUpvotes(claimObj, true).citationLink +"' target='_blank'>" + getSourceWithMostUpvotes(claimObj, true).citationLink + "</a>" +
-                            "</div><div class='row'><div class='col-md-offset-3 col-md-6'>" +
-                            "</div></div></div></div>");
+  "<div class='row' id='row1'>" +
+  "<div class='col-md-offset-3 col-md-6'>" +
+  "<h2 id='claim" + claimArray.length + "'>" +
+  claimObj.userClaim + "</h2>" +
+  "</div></div><div class='row' id='row2'>" +
+  "<div class='col-md-offset-3 col-md-3' id='topConSource'>" +
+  "<div class='row'><h2>Evidence against</h2></div>" +
+  "<button class='btn btn-success' type='button' id='con-source-btn'>Add Source</button>" +
+  "<a href='" + getSourceWithMostUpvotes(claimObj, false).citationLink +"' target='_blank'>" + getSourceWithMostUpvotes(claimObj, false).citationLink + "</a>" +
+  "</div><div class='col-md-3' id='topProSource'><div><h2>Evidence in favor</h2></div>" +
+  "<button class='btn btn-success' type='button' id='pro-source-btn'>Add Source</button>" +
+  "<a href='" + getSourceWithMostUpvotes(claimObj, true).citationLink +"' target='_blank'>" + getSourceWithMostUpvotes(claimObj, true).citationLink + "</a>" +
+  "</div><div class='row'><div class='col-md-offset-3 col-md-6'>" +
+  "</div></div></div></div>");
 }
 
 
@@ -249,73 +249,94 @@ $(function(){
   });
 
 
-$("#loginForm").submit(function(){
-  event.preventDefault();
-  console.log("submit happened");
-  userName = $("#userName").val();
-  userPassword = $("#userPassword").val();
-  if(validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
-    console.log("Got in");
-    $("#signout-form").show();
-    $("#loginForm").hide();
-    $("#welcome-user-name").text(userName);
-    $("#existing-user-welcome").show();
-  }
-});
-
-$("#loginBtn").click(function(){
-  userName = $("#userName").val();
-  userPassword = $("#userPassword").val();
-  var dummyVariable = isMissingUsernameOrPassword(userName, userPassword);
-  console.log(dummyVariable);
-});
-
-$("#registerBtn").click(function(){
-  // Do not add an event.preventDefault(); here
-  console.log("Register happened");
-  userName = $("#userName").val();
-  userPassword = $("#userPassword").val();
-  if(!isMissingUsernameOrPassword(userName, userPassword)){
-    // check whether the userName already exists. If it does, make registration unsuccessful and alert the user
-    if(isNewUserName(userName)){
-      var newUser = new User(userName, userPassword);
-      validatedUsers.push(newUser);
-      console.log("added to validated users");
-    } else{
-      alert("Username already exists. Please try another username. If your password was valid, we'll log you in anyway.")
+  $("#loginForm").submit(function(){
+    event.preventDefault();
+    console.log("submit happened");
+    userName = $("#userName").val();
+    userPassword = $("#userPassword").val();
+    if(validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
+      console.log("Got in");
+      $("#signout-form").show();
+      $("#loginForm").hide();
+      $("#welcome-user-name").text(userName);
+      $("#existing-user-welcome").show();
     }
-  }
-});
+  });
 
-$("#signout-btn").click(function(){
-  event.preventDefault();
-  $("#signout-form").hide();
-  $("#loginForm").show();
-  $("#existing-user-welcome").hide();
-  userName = undefined;
-  userPassword = undefined;
-  $("#userName").val("");
-  $("#userPassword").val("");
+  $("#loginBtn").click(function(){
+    userName = $("#userName").val();
+    userPassword = $("#userPassword").val();
+    var dummyVariable = isMissingUsernameOrPassword(userName, userPassword);
+    console.log(dummyVariable);
+  });
+
+  $("#registerBtn").click(function(){
+    // Do not add an event.preventDefault(); here
+    console.log("Register happened");
+    userName = $("#userName").val();
+    userPassword = $("#userPassword").val();
+    if(!isMissingUsernameOrPassword(userName, userPassword)){
+      // check whether the userName already exists. If it does, make registration unsuccessful and alert the user
+      if(isNewUserName(userName)){
+        var newUser = new User(userName, userPassword);
+        validatedUsers.push(newUser);
+        console.log("added to validated users");
+      } else{
+        alert("Username already exists. Please try another username. If your password was valid, we'll log you in anyway.")
+      }
+    }
+  });
+
+  $("#signout-btn").click(function(){
+    event.preventDefault();
+    $("#signout-form").hide();
+    $("#loginForm").show();
+    $("#existing-user-welcome").hide();
+    userName = undefined;
+    userPassword = undefined;
+    $("#userName").val("");
+    $("#userPassword").val("");
 
   });
-//for showing comment section
+
+  //for showing comment section
   $("#commentsShow").click(function(){
     console.log("got here");
-      event.preventDefault();
+    event.preventDefault();
     $("#commentSection").show();
-  })
+  });
 
   //reply to Comments
-  $("#replyForm").submit(function(){
-    event.preventDefault();
-      if (userName.length > 1) {
-        $("#commentSection").append("<p>" + userName + " replied" + $("#replyForm").val() + "</p>");
-        $('#replyForm textarea').val('');
-      } else {
-        alert("You must be logged in to comment")
-      }
+  //$("#replyForm").submit(function(){
+
+
+
+  $(".down").click(function(){
+    var idOfDownVote = $(this).attr("id");
+    console.log(thing);
+    var newidOfDownVote = new CountVotes(/*userName,*/ thing);
+    //push to this.variables.
   });
+
+  $(".up").click(function(){
+    var thing = $(this).attr("id");
+    console.log(thing);
+  });
+
+  //claimComments
+  $("#commentForm").submit(function(){
+    event.preventDefault();
+    if (userName.length > 1) {
+      $("#commentSection").append("<p>" + userName + " replied" + $("#replyForm").val() + "</p>");
+      $('#replyForm textarea').val('');
+    } else {
+      alert("You must be logged in to comment")
+    }
+  });
+
 });
+
+
 
 
 
