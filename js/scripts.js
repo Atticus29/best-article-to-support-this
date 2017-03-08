@@ -280,7 +280,7 @@ $(function(){
       // console.log(claimArray);
       $("#claim-space").empty();
       generateHTMLforClaim(newestClaim);
-      console.log(newestClaim);
+      // console.log(newestClaim);
     } else{
       console.log("You forgot to log in");
     }
@@ -288,7 +288,7 @@ $(function(){
 
   $("#dropDownConSourceForm").submit(function(){
     event.preventDefault();
-    console.log("got here");
+    // console.log("got here");
     var sourceTitleInput = $("#sourceTitle-con").val();
     var sourceURLinput = $("#sourceURL-con").val() ;
     var newSource = new Source(sourceTitleInput, sourceURLinput, userName);
@@ -309,11 +309,11 @@ $(function(){
 
   $("#loginForm").submit(function(){
     event.preventDefault();
-    console.log("submit happened");
+    // console.log("submit happened");
     userName = $("#userName").val();
     userPassword = $("#userPassword").val();
     if(validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
-      console.log("Got in");
+      // console.log("Got in");
       $("#signout-form").show();
       $("#loginForm").hide();
       $("#welcome-user-name").text(userName);
@@ -325,13 +325,13 @@ $(function(){
     userName = $("#userName").val();
     userPassword = $("#userPassword").val();
     var dummyVariable = isMissingUsernameOrPassword(userName, userPassword);
-    console.log(dummyVariable);
+    // console.log(dummyVariable);
   });
 
 
   $("#registerBtn").click(function(){
     // Do not add an event.preventDefault(); here
-    console.log("Register happened");
+    // console.log("Register happened");
     userName = $("#userName").val();
     userPassword = $("#userPassword").val();
     if(!isMissingUsernameOrPassword(userName, userPassword)){
@@ -387,10 +387,3 @@ $(function(){
     }
   });
 });
-
-
-
-
-
-// test();
-//claim1.pro.push(source1)
