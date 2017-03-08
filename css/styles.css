@@ -3,11 +3,28 @@
 h1 {
   font-family: Diplomata SC;
   size: 20px;
+  text-align: left;
+}
+
+#image-and-text-box{
+  display: flex;
+  justify-content: center;
+}
+
+#bats{
+  height: 125px;
+  width: auto;
+  float: left;
+  /*margin-left: 22%;*/
+  margin-right: 0;
+  padding-bottom: 2%;
 }
 
 .lowerCaseH1{
-  font-family: monospace;
+  font-family: sans-serif;
+  font-size: 50%;
   size: 6px;
+  color: #808080;
 }
 
 #topConSource {
@@ -29,16 +46,6 @@ h1 {
   text-align: center;
   margin-bottom: -10px;
 }
-
-/*#loginGatherer{
-  /*text-align: center;*/
-  /*padding-left: 40%;
-}*/
-
-/*#row1{
-  display: none;
-}*/
-
 
 #dropDownNewClaimForm {
   padding: 10px;
@@ -80,8 +87,6 @@ p.navbar-brand{
 }
 
 #commentForm, #comments {
-  /*width: 590px;*/
-  /*column-fill: 100%;*/
   text-align: center;
   margin-top: 80px;
 }
