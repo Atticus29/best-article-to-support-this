@@ -325,32 +325,40 @@ $(function(){
 
   $("#claim-space").first().on("submit", "#dropDownConSourceForm", function(){
     event.preventDefault();
-    var sourceTitleInput = $("#sourceTitle-con").val();
-    var sourceURLinput = $("#sourceURL-con").val() ;
-    var newSource = new Source(sourceTitleInput, sourceURLinput, userName);
-    var claimThisRefersTo = claimArray[getIndexOfClaimThisClickOccurredIn($(this))];
-    console.log(claimThisRefersTo);
-    if(claimThisRefersTo){
-      claimThisRefersTo.con.sources.push(newSource);
+    if(!isMissingUsernameOrPassword(userName, userPassword)){
+      var sourceTitleInput = $("#sourceTitle-con").val();
+      var sourceURLinput = $("#sourceURL-con").val() ;
+      var newSource = new Source(sourceTitleInput, sourceURLinput, userName);
+      var claimThisRefersTo = claimArray[getIndexOfClaimThisClickOccurredIn($(this))];
+      console.log(claimThisRefersTo);
+      if(claimThisRefersTo){
+        claimThisRefersTo.con.sources.push(newSource);
+      }
+      // $("#claim-space").empty();
+      // generateHTMLforClaim(newestClaim);
+      refresh();
+    } else{
+      console.log("You forgot to log in");
     }
-    // $("#claim-space").empty();
-    // generateHTMLforClaim(newestClaim);
-    refresh();
   });
 
   $("#claim-space").first().on("submit", "#dropDownProSourceForm", function(){
     event.preventDefault();
-    console.log("got into the submission event");
-    var sourceTitleInput = $("#sourceTitle-pro").val();
-    var sourceURLinput = $("#sourceURL-pro").val() ;
-    var newSource = new Source(sourceTitleInput, sourceURLinput, userName);
-    var claimThisRefersTo = claimArray[getIndexOfClaimThisClickOccurredIn($(this))];
-    if(claimThisRefersTo){
-      claimThisRefersTo.pro.sources.push(newSource);
+    if(!isMissingUsernameOrPassword(userName, userPassword)){
+      console.log("got into the submission event");
+      var sourceTitleInput = $("#sourceTitle-pro").val();
+      var sourceURLinput = $("#sourceURL-pro").val() ;
+      var newSource = new Source(sourceTitleInput, sourceURLinput, userName);
+      var claimThisRefersTo = claimArray[getIndexOfClaimThisClickOccurredIn($(this))];
+      if(claimThisRefersTo){
+        claimThisRefersTo.pro.sources.push(newSource);
+      }
+      // $("#claim-space").empty();
+      // generateHTMLforClaim(newestClaim);
+      refresh();
+    } else{
+      console.log("You forgot to log in");
     }
-    // $("#claim-space").empty();
-    // generateHTMLforClaim(newestClaim);
-    refresh();
   });
 
 
