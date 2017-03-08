@@ -242,11 +242,6 @@ function generateHTMLforClaim(claimObj){
   "</form>" +
   "</div>" +
   "<a href='" + getSourceWithMostUpvotes(claimObj, true).citationLink +"' target='_blank'>" + getSourceWithMostUpvotes(claimObj, true).citationTitle + "</a>" +
-  // "<button class='btn btn-success' type='button' id='con-source-btn'>Add Source</button>" +
-  // "<a href='" + getSourceWithMostUpvotes(claimObj, false).citationLink +"' target='_blank'>" + getSourceWithMostUpvotes(claimObj, false).citationLink + "</a>" +
-  // "</div><div class='col-md-3' id='topProSource'><div><h2>Evidence in favor</h2></div>" +
-  // "<button class='btn btn-success' type='button' id='pro-source-btn'>Add Source</button>" +
-  // "<a href='" + getSourceWithMostUpvotes(claimObj, true).citationLink +"' target='_blank'>" + getSourceWithMostUpvotes(claimObj, true).citationLink + "</a>" +
   "</div><div class='row'><div class='col-md-offset-3 col-md-6'>" +
   "</div></div></div></div>");
 }
@@ -265,34 +260,34 @@ $(function(){
   // });
   $("#dropDownForm").submit(function(){
     event.preventDefault();
-    // console.log(userName);
-    // console.log(userPassword);
     if(!isMissingUsernameOrPassword(userName, userPassword)){
       var newClaimSender = userName;
       var claimText = $("input#claimQuestion").val();
       var optionalDigitalOriginOfClaim = $("input#claimLink").val();
       newestClaim = new Claim (newClaimSender, claimText);
-      // newestClaim.pro.sources.push(new Source("http://news.nationalgeographic.com/news/2010/03/100310/why-tap-water-is-better/", "Mark"));
-      // newestClaim.con.sources.push(new Source("http://www.mayoclinic.org/healthy-lifestyle/nutrition-and-healthy-eating/expert-answers/tap-vs-bottled-water/faq-20058017", "Chance"));
       claimArray.push(newestClaim);
-      // console.log(claimArray);
+      console.log("got here");
       $("#claim-space").empty();
       generateHTMLforClaim(newestClaim);
-      console.log(newestClaim);
     } else{
       console.log("You forgot to log in");
     }
   });
 
-  $("#dropDownConSourceForm").submit(function(){
+  $("#claim-space").first().on("submit", "#dropDownConSourceForm", function(){
     event.preventDefault();
-    console.log("got here");
+    console.log("got into the submission event");
     var sourceTitleInput = $("#sourceTitle-con").val();
     var sourceURLinput = $("#sourceURL-con").val() ;
     var newSource = new Source(sourceTitleInput, sourceURLinput, userName);
+    console.log(sourceTitleInput);
+    console.log(sourceURLinput);
+    console.log(newSource);
     if(newestClaim){
       newestClaim.con.sources.push(newSource);
     }
+    $("#claim-space").empty();
+    generateHTMLforClaim(newestClaim);
   });
 
   $("#dropDownProSourceForm").submit(function(){
@@ -307,11 +302,11 @@ $(function(){
 
   $("#loginForm").submit(function(){
     event.preventDefault();
-    console.log("submit happened");
+    // console.log("submit happened");
     userName = $("#userName").val();
     userPassword = $("#userPassword").val();
     if(validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
-      console.log("Got in");
+      // console.log("Got in");
       $("#signout-form").show();
       $("#loginForm").hide();
       $("#welcome-user-name").text(userName);
@@ -323,13 +318,12 @@ $(function(){
     userName = $("#userName").val();
     userPassword = $("#userPassword").val();
     var dummyVariable = isMissingUsernameOrPassword(userName, userPassword);
-    console.log(dummyVariable);
   });
 
 
   $("#registerBtn").click(function(){
     // Do not add an event.preventDefault(); here
-    console.log("Register happened");
+    // console.log("Register happened");
     userName = $("#userName").val();
     userPassword = $("#userPassword").val();
     if(!isMissingUsernameOrPassword(userName, userPassword)){
@@ -353,7 +347,6 @@ $(function(){
     userPassword = undefined;
     $("#userName").val("");
     $("#userPassword").val("");
-
   });
 
   //for showing comment section
@@ -387,11 +380,5 @@ $(function(){
       alert("You must be logged in to comment")
     }
   });
+
 });
-
-
-
-
-
-// test();
-//claim1.pro.push(source1)
