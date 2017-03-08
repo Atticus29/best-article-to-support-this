@@ -300,8 +300,8 @@ $(function(){
   claimArray = [];
   userName = $("#userName").val();
   userPassword = $("#userPassword").val();
-  testGetIndexInArrayOfClaims();
-  refresh();
+  // testGetIndexInArrayOfClaims();
+  // refresh();
   console.log(claimArray);
   // testGetClaimWithMostUpvotes();
   // testGetSourceWithMostUpvotes();
@@ -508,9 +508,11 @@ $(function(){
     }
   });
 
-
   $("#all-claims-btn").click(function(){
     displayAllClaims();
   });
+
+  //sidebar
+
 
 });
