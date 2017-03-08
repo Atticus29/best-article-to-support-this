@@ -223,14 +223,14 @@ function getIndexOfClaimThisClickOccurredIn (jQueryObj){
 function testGetIndexInArrayOfClaims(){
   var claim1 = new Claim("Mark", "Water is weird");
   claim1.upVoteArray.push("Jahan");
-  var claim2 = new Claim("Mark", "Water is delicious");
+  var claim2 = new Claim("Chance", "Water is delicious");
   claim2.upVoteArray.push("Jahan");
   claim2.upVoteArray.push("Oliver");
-  var claim3 = new Claim("Mark", "Water is delicious");
+  var claim3 = new Claim("Oliver", "Water is suspicious");
   claim3.upVoteArray.push("Jahan");
   claim3.upVoteArray.push("Oliver");
   claim3.upVoteArray.push("Chance");
-  var claim4 = new Claim("Mark", "Water is a drug");
+  var claim4 = new Claim("Jahan", "Water is a drug");
   claim4.upVoteArray.push("Jahan");
   claim4.upVoteArray.push("Oliver");
   claim4.upVoteArray.push("Mark");
@@ -260,7 +260,8 @@ function generateHTMLforClaim(claimObj){
     "</div>" +
     "</div>" +
     "<div class='col-md-offset-1 col-md-6' id='topic'>" +
-    "<h2 id='question'>" + claimObj.userClaim + "</h2>" +
+    "<h2 id='question'><span class='claim-lead'>Claim:</span> " + claimObj.userClaim + "</h2>" +
+    "<br><h4 class='original-asker'>Originally asked by: " + claimObj.claimer + "</h4>" +
     "</div>" +
     "</div>" +
     "<div class='row' id='row2'>" +
@@ -268,7 +269,7 @@ function generateHTMLforClaim(claimObj){
     "<div class='row'>" +
     "<div class='well'>" +
     "<div class='row' id='proVoteUp'>" +
-    "<h4>Vote Pro up</h4>" +
+    "<h4>Vote Pro Up</h4>" +
     "</div>" +
     "<div class='proVoteUpCount'>" +
     "</div>" +
@@ -302,7 +303,7 @@ function generateHTMLforClaim(claimObj){
     "<div class='row'>" +
     "<div class='well'>" +
     "<div class='row' id='proVoteUp'>" +
-    "<h4>Vote Pro up</h4>" +
+    "<h4>Vote Pro Up</h4>" +
     "</div>" +
     "<div class='proVoteUpCount'>" +
     "</div>" +

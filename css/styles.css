@@ -6,6 +6,17 @@ h1 {
   text-align: left;
 }
 
+.claim-lead{
+  font-family: monospace;
+  font-size: 70%;
+}
+
+.original-asker{
+  font-family: monospace;
+  font-size: 95%;
+  text-align: left;
+}
+
 #image-and-text-box{
   display: flex;
   justify-content: center;
