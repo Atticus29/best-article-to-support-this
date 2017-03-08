@@ -52,11 +52,12 @@ function test(){
   console.log(claim1);
 }
 
-function Source(citationLink, sourcer){
+function Source(citationTitle, citationLink, sourcer){
   this.upVote = [];
   this.downVote = [];
   this.upCount = this.upVote.length;
   this.downCount = this.downVote.length;
+  this.citationTitle = citationTitle;
   this.citationLink = citationLink;
   this.sourcer = sourcer;
 }
@@ -168,7 +169,7 @@ function getSourceWithMostUpvotes(claim, isPro){
     return currentMostPopularSource;
   } else{
     console.log("Array of sources is empty");
-    return undefined;
+    return (new Source("There are currently no sources supporting this claim","http://www.google.com" ,"Mark"));
   }
 }
 
@@ -199,20 +200,50 @@ function generateHTMLforSource (citationLink, sourcer){
 
 function generateHTMLforClaim(claimObj){
   $("#claim-space").prepend("<div class='claim' id='claim1'>" +
-                            "<div class='row' id='row1'>" +
-                            "<div class='col-md-offset-3 col-md-6'>" +
-                            "<h2 id='claim" + claimArray.length + "'>" +
-                            claimObj.userClaim + "</h2>" +
-                            "</div></div><div class='row' id='row2'>" +
-                            "<div class='col-md-offset-3 col-md-3' id='topConSource'>" +
-                            "<div class='row'><h2>Evidence against</h2></div>" +
-                            "<button class='btn btn-success' type='button' id='con-source-btn'>Add Source</button>" +
-                            "<a href='" + getSourceWithMostUpvotes(claimObj, false).citationLink +"' target='_blank'>" + getSourceWithMostUpvotes(claimObj, false).citationLink + "</a>" +
-                            "</div><div class='col-md-3' id='topProSource'><div><h2>Evidence in favor</h2></div>" +
-                            "<button class='btn btn-success' type='button' id='pro-source-btn'>Add Source</button>" +
-                            "<a href='" + getSourceWithMostUpvotes(claimObj, true).citationLink +"' target='_blank'>" + getSourceWithMostUpvotes(claimObj, true).citationLink + "</a>" +
-                            "</div><div class='row'><div class='col-md-offset-3 col-md-6'>" +
-                            "</div></div></div></div>");
+  "<div class='row' id='row1'>" +
+  "<div class='col-md-offset-3 col-md-6'>" +
+  "<h2 id='claim" + claimArray.length + "'>" +
+  claimObj.userClaim + "</h2>" +
+  "</div></div><div class='row' id='row2'>" +
+  "<div class='col-md-offset-3 col-md-3' id='topConSource'>" +
+  "<div class='row'><h2>Evidence against</h2></div>" +
+  "<button class='btn btn-success dropdown-toggle' type='button' id='con-source-btn' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Add Source</button>" +
+  "<div class='dropdown-menu' aria-labelledby='con-source-btn' id='dropDownConSource'>" +
+  "<form id='dropDownConSourceForm' novalidate>" +
+  "<div class='form-group'>" +
+  "<label for='sourceTitle'>Source Title</label>" +
+  "<input class='form-control' type='text' value='' id='sourceTitle-con' required>" +
+  "</div>" +
+  "<div class='form-group'>" +
+  "<label for='sourceURL' class='newClaim'>Source URL</label>" +
+  "<input class='form-control' type='url' value='' id='sourceURL-con' required>" +
+  "</div>" +
+  "<div class='text-center'>" +
+  "<button id='submitNewConSource' type='submit' name='button' class='btn btn-info'>Submit Source</button>" +
+  "</div>" +
+  "</form>" +
+  "</div>" +
+  "<a href='" + getSourceWithMostUpvotes(claimObj, false).citationLink +"' target='_blank'>" + getSourceWithMostUpvotes(claimObj, false).citationTitle + "</a>" +
+  "</div><div class='col-md-3' id='topProSource'><div><h2>Evidence in favor</h2></div>" +
+  "<button class='btn btn-success dropdown-toggle' type='button' id='pro-source-btn' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Add Source</button>" +
+  "<div class='dropdown-menu' aria-labelledby='pro-source-btn' id='dropDownConSource'>" +
+  "<form id='dropDownConSourceForm' novalidate>" +
+  "<div class='form-group'>" +
+  "<label for='sourceTitle'>Source Title</label>" +
+  "<input class='form-control' type='text' value='' id='sourceTitle-pro' required>" +
+  "</div>" +
+  "<div class='form-group'>" +
+  "<label for='sourceURL' class='newClaim'>Source URL</label>" +
+  "<input class='form-control' type='url' value='' id='sourceURL-pro' required>" +
+  "</div>" +
+  "<div class='text-center'>" +
+  "<button id='submitNewProSource' type='submit' name='button' class='btn btn-info'>Submit Source</button>" +
+  "</div>" +
+  "</form>" +
+  "</div>" +
+  "<a href='" + getSourceWithMostUpvotes(claimObj, true).citationLink +"' target='_blank'>" + getSourceWithMostUpvotes(claimObj, true).citationTitle + "</a>" +
+  "</div><div class='row'><div class='col-md-offset-3 col-md-6'>" +
+  "</div></div></div></div>");
 }
 
 
@@ -227,75 +258,95 @@ $(function(){
   //   event.preventDefault();
   //   $("#newClaimForm").show();
   // });
-
   $("#dropDownForm").submit(function(){
     event.preventDefault();
-    console.log(userName);
-    console.log(userPassword);
+    // console.log(userName);
+    // console.log(userPassword);
     if(!isMissingUsernameOrPassword(userName, userPassword)){
       var newClaimSender = userName;
       var claimText = $("input#claimQuestion").val();
       var optionalDigitalOriginOfClaim = $("input#claimLink").val();
-      var newestClaim = new Claim (newClaimSender, claimText);
-      newestClaim.pro.sources.push(new Source("http://news.nationalgeographic.com/news/2010/03/100310/why-tap-water-is-better/", "Mark"));
-      newestClaim.con.sources.push(new Source("http://www.mayoclinic.org/healthy-lifestyle/nutrition-and-healthy-eating/expert-answers/tap-vs-bottled-water/faq-20058017", "Chance"));
+      newestClaim = new Claim (newClaimSender, claimText);
+      // newestClaim.pro.sources.push(new Source("http://news.nationalgeographic.com/news/2010/03/100310/why-tap-water-is-better/", "Mark"));
+      // newestClaim.con.sources.push(new Source("http://www.mayoclinic.org/healthy-lifestyle/nutrition-and-healthy-eating/expert-answers/tap-vs-bottled-water/faq-20058017", "Chance"));
       claimArray.push(newestClaim);
-      console.log(claimArray);
-
+      // console.log(claimArray);
+      $("#claim-space").empty();
       generateHTMLforClaim(newestClaim);
+      console.log(newestClaim);
     } else{
       console.log("You forgot to log in");
     }
   });
 
-
-$("#loginForm").submit(function(){
-  event.preventDefault();
-  console.log("submit happened");
-  userName = $("#userName").val();
-  userPassword = $("#userPassword").val();
-  if(validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
-    console.log("Got in");
-    $("#signout-form").show();
-    $("#loginForm").hide();
-    $("#welcome-user-name").text(userName);
-    $("#existing-user-welcome").show();
-  }
-});
-
-$("#loginBtn").click(function(){
-  userName = $("#userName").val();
-  userPassword = $("#userPassword").val();
-  var dummyVariable = isMissingUsernameOrPassword(userName, userPassword);
-  console.log(dummyVariable);
-});
-
-$("#registerBtn").click(function(){
-  // Do not add an event.preventDefault(); here
-  console.log("Register happened");
-  userName = $("#userName").val();
-  userPassword = $("#userPassword").val();
-  if(!isMissingUsernameOrPassword(userName, userPassword)){
-    // check whether the userName already exists. If it does, make registration unsuccessful and alert the user
-    if(isNewUserName(userName)){
-      var newUser = new User(userName, userPassword);
-      validatedUsers.push(newUser);
-      console.log("added to validated users");
-    } else{
-      alert("Username already exists. Please try another username. If your password was valid, we'll log you in anyway.")
+  $("#dropDownConSourceForm").submit(function(){
+    event.preventDefault();
+    console.log("got here");
+    var sourceTitleInput = $("#sourceTitle-con").val();
+    var sourceURLinput = $("#sourceURL-con").val() ;
+    var newSource = new Source(sourceTitleInput, sourceURLinput, userName);
+    if(newestClaim){
+      newestClaim.con.sources.push(newSource);
     }
-  }
-});
+  });
 
-$("#signout-btn").click(function(){
-  event.preventDefault();
-  $("#signout-form").hide();
-  $("#loginForm").show();
-  $("#existing-user-welcome").hide();
-  userName = undefined;
-  userPassword = undefined;
-  $("#userName").val("");
-  $("#userPassword").val("");
+  $("#dropDownProSourceForm").submit(function(){
+    event.preventDefault();
+    var sourceTitleInput = $("#sourceTitle-pro").val();
+    var sourceURLinput = $("#sourceURL-pro").val() ;
+    var newSource = new Source(sourceTitleInput, sourceURLinput, userName);
+    if(newestClaim){
+      newestClaim.pro.sources.push(newSource);
+    }
+  });
+
+  $("#loginForm").submit(function(){
+    event.preventDefault();
+    console.log("submit happened");
+    userName = $("#userName").val();
+    userPassword = $("#userPassword").val();
+    if(validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
+      console.log("Got in");
+      $("#signout-form").show();
+      $("#loginForm").hide();
+      $("#welcome-user-name").text(userName);
+      $("#existing-user-welcome").show();
+    }
+  });
+
+  $("#loginBtn").click(function(){
+    userName = $("#userName").val();
+    userPassword = $("#userPassword").val();
+    var dummyVariable = isMissingUsernameOrPassword(userName, userPassword);
+    console.log(dummyVariable);
+  });
+
+  $("#registerBtn").click(function(){
+    // Do not add an event.preventDefault(); here
+    console.log("Register happened");
+    userName = $("#userName").val();
+    userPassword = $("#userPassword").val();
+    if(!isMissingUsernameOrPassword(userName, userPassword)){
+      // check whether the userName already exists. If it does, make registration unsuccessful and alert the user
+      if(isNewUserName(userName)){
+        var newUser = new User(userName, userPassword);
+        validatedUsers.push(newUser);
+        console.log("added to validated users");
+      } else{
+        alert("Username already exists. Please try another username. If your password was valid, we'll log you in anyway.")
+      }
+    }
+  });
+
+  $("#signout-btn").click(function(){
+    event.preventDefault();
+    $("#signout-form").hide();
+    $("#loginForm").show();
+    $("#existing-user-welcome").hide();
+    userName = undefined;
+    userPassword = undefined;
+    $("#userName").val("");
+    $("#userPassword").val("");
 
   });
 
@@ -303,12 +354,16 @@ $("#signout-btn").click(function(){
   //claimComments
   $("#commentForm").submit(function(){
     event.preventDefault();
-      if (userName.length > 1) {
-        $("#commentSection").append("<p>" + userName + " commented" + $("#comments").val() + "</p>");
-      } else {
-        alert("You must be logged in to comment")
-      }
+    if (userName.length > 1) {
+      $("#commentSection").append("<p>" + userName + " commented" + $("#comments").val() + "</p>");
+    } else {
+      alert("You must be logged in to comment")
+    }
   });
+
+  $("#con-source-btn").click(function(){
+
+  })
 });
 
 
