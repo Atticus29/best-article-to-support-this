@@ -299,18 +299,18 @@ function generateHTMLforClaim(claimObj){
     "</div>" +
     "<a href='" + getSourceWithMostUpvotes(claimObj, true).citationLink +"' target='_blank'>" + getSourceWithMostUpvotes(claimObj, true).citationTitle + "</a>" +
     "</div>" +
-    "<div class='col-md-3' id='topProSource'>" +
+    "<div class='col-md-3' id='topConSource'>" +
     "<div class='row'>" +
     "<div class='well'>" +
-    "<div class='row' id='proVoteUp'>" +
-    "<h4>Vote Pro Up</h4>" +
+    "<div class='row' id='conVoteUp'>" +
+    "<h4>Vote Con Up</h4>" +
     "</div>" +
-    "<div class='proVoteUpCount'>" +
+    "<div class='conVoteUpCount'>" +
     "</div>" +
-    "<div class='row' id='proVoteDown'>" +
-    "<h4>Vote Pro Down</h4>" +
+    "<div class='row' id='conVoteDown'>" +
+    "<h4>Vote Con Down</h4>" +
     "</div>" +
-    "<div class='proVoteDownCount'>" +
+    "<div class='conVoteDownCount'>" +
     "</div>" +
     "</div>" +
     "<h2>Evidence in opposition</h2>" +
