@@ -194,12 +194,46 @@ function testGetSourceWithMostUpvotes(){
   console.log(mostPopularSource);
 }
 
-function generateHTMLforSource (citationLink, sourcer){
+function getIndexInArrayOfClaims(claimObj, arrayOfClaimObjs){
+  for (var i = 0; i<arrayOfClaimObjs.length; i++){
+    if(claimObj.userClaim === arrayOfClaimObjs[i].userClaim){
+      return i;
+    }
+  }
+  return -1;
+  // var index = claimArray.findIndex(x => x.userClaim==claimObj.userClaim);
+  // console.log(index);
+  // return index;
+}
 
+function getIndexOfClaimThisClickOccurredIn (jQueryObj){
+  var claimID = jQueryObj.parentsUntil(".claim").attr("id");
+  var regExID = /claim(\d+)/
+  var claimIndex = claimID.replace(regExID, '$1');
+  return claimIndex;
+}
+
+function testGetIndexInArrayOfClaims(){
+  var claim1 = new Claim("Mark", "Water is weird");
+  claim1.upVoteArray.push("Jahan");
+  var claim2 = new Claim("Mark", "Water is delicious");
+  claim2.upVoteArray.push("Jahan");
+  claim2.upVoteArray.push("Oliver");
+  var claim3 = new Claim("Mark", "Water is delicious");
+  claim3.upVoteArray.push("Jahan");
+  claim3.upVoteArray.push("Oliver");
+  claim3.upVoteArray.push("Chance");
+  var claim4 = new Claim("Mark", "Water is a drug");
+  claim4.upVoteArray.push("Jahan");
+  claim4.upVoteArray.push("Oliver");
+  claim4.upVoteArray.push("Mark");
+  var testClaims = [claim1, claim2, claim3, claim4];
+  var idx = getIndexInArrayOfClaims(claim4, testClaims);
+  console.log(idx);
 }
 
 function generateHTMLforClaim(claimObj){
-  $("#claim-space").prepend("<div class='claim' id='claim1'>" +
+  $("#claim-space").prepend("<div class='claim' id='claim" + getIndexInArrayOfClaims(claimObj, claimArray) + "'>" +
   "<div class='row' id='row1'>" +
   "<div class='col-md-offset-3 col-md-6'>" +
   "<h2 id='claim" + claimArray.length + "'>" +
@@ -246,10 +280,18 @@ function generateHTMLforClaim(claimObj){
   "</div></div></div></div>");
 }
 
+function refresh(){
+  var topClaim = getClaimWithMostUpvotes(claimArray);
+  console.log("Top ranking claim is: ", topClaim.userClaim);
+  $("#claim-space").empty();
+  generateHTMLforClaim(topClaim);
+}
+
 
 // Front End
 $(function(){
   claimArray = [];
+  testGetIndexInArrayOfClaims();
   userName = $("#userName").val();
   userPassword = $("#userPassword").val();
   // testGetClaimWithMostUpvotes();
@@ -276,6 +318,8 @@ $(function(){
 
   $("#claim-space").first().on("submit", "#dropDownConSourceForm", function(){
     event.preventDefault();
+    var testClaimID = getIndexOfClaimThisClickOccurredIn($(this));
+    console.log(testClaimID);
     var sourceTitleInput = $("#sourceTitle-con").val();
     var sourceURLinput = $("#sourceURL-con").val() ;
     var newSource = new Source(sourceTitleInput, sourceURLinput, userName);
