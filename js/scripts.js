@@ -207,7 +207,7 @@ function getIndexInArrayOfClaims(claimObj, arrayOfClaimObjs){
 }
 
 function getIndexOfClaimThisClickOccurredIn (jQueryObj){
-  var claimID = jQueryObj.parentsUntil(".claim").attr("id");
+  var claimID = jQueryObj.parents(".claim").attr("id");
   var regExID = /claim(\d+)/
   var claimIndex = claimID.replace(regExID, '$1');
   return claimIndex;
