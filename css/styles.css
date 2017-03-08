@@ -1,5 +1,13 @@
-#question {
-  background-color: green;
+@import url('https://fonts.googleapis.com/css?family=Diplomata+SC');
+
+h1 {
+  font-family: Diplomata SC;
+  size: 20px;
+}
+
+.lowerCaseH1{
+  font-family: monospace;
+  size: 6px;
 }
 
 #topConSource {
@@ -14,6 +22,7 @@
 
 #row1 {
   text-align: center;
+  background-color: green;
 }
 
 .jumbotron {
@@ -67,11 +76,30 @@ p.navbar-brand{
 }
 
 #commentSection {
-  text-align: center;
+  text-align: left;
 }
 
 #commentForm, #comments {
   /*width: 590px;*/
   column-fill: 100%;
   text-align: center;
+}
+
+#comments {
+  font-family:sans-serif;
+  font-size:1.2em
+}
+
+#commentSection {
+  display: none;
+}
+
+textarea {
+  width: 300px;
+  height: 60px;
+  text-align: left;
+}
+
+#comment-row {
+  border: 3px;
 }

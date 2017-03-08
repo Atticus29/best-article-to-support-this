@@ -125,7 +125,7 @@ function getClaimWithMostUpvotes(arrayOfClaims){
     }
     return currentMostPopularClaim;
   } else{
-    console.log("Array of claims is empty");
+    // console.log("Array of claims is empty");
     return undefined;
   }
 }
@@ -168,7 +168,7 @@ function getSourceWithMostUpvotes(claim, isPro){
     }
     return currentMostPopularSource;
   } else{
-    console.log("Array of sources is empty");
+    // console.log("Array of sources is empty");
     return (new Source("There are currently no sources supporting this claim","http://www.google.com" ,"Mark"));
   }
 }
@@ -242,6 +242,11 @@ function generateHTMLforClaim(claimObj){
   "</form>" +
   "</div>" +
   "<a href='" + getSourceWithMostUpvotes(claimObj, true).citationLink +"' target='_blank'>" + getSourceWithMostUpvotes(claimObj, true).citationTitle + "</a>" +
+  // "<button class='btn btn-success' type='button' id='con-source-btn'>Add Source</button>" +
+  // "<a href='" + getSourceWithMostUpvotes(claimObj, false).citationLink +"' target='_blank'>" + getSourceWithMostUpvotes(claimObj, false).citationLink + "</a>" +
+  // "</div><div class='col-md-3' id='topProSource'><div><h2>Evidence in favor</h2></div>" +
+  // "<button class='btn btn-success' type='button' id='pro-source-btn'>Add Source</button>" +
+  // "<a href='" + getSourceWithMostUpvotes(claimObj, true).citationLink +"' target='_blank'>" + getSourceWithMostUpvotes(claimObj, true).citationLink + "</a>" +
   "</div><div class='row'><div class='col-md-offset-3 col-md-6'>" +
   "</div></div></div></div>");
 }
@@ -321,6 +326,7 @@ $(function(){
     console.log(dummyVariable);
   });
 
+
   $("#registerBtn").click(function(){
     // Do not add an event.preventDefault(); here
     console.log("Register happened");
@@ -350,18 +356,44 @@ $(function(){
 
   });
 
+  //for showing comment section
+  $("#commentsShow").click(function(){
+    console.log("got here");
+    event.preventDefault();
+    $("#commentSection").show();
+  });
+
+  //reply to Comments
+  //$("#replyForm").submit(function(){
+
+
+
+  $(".down").click(function(){
+    var idOfDownVote = $(this).attr("id");
+    console.log(thing);
+    var newidOfDownVote = new CountVotes(/*userName,*/ thing);
+    //push to this.variables.
+  });
+
+  $(".up").click(function(){
+    var thing = $(this).attr("id");
+    console.log(thing);
+  });
 
   //claimComments
   $("#commentForm").submit(function(){
     event.preventDefault();
     if (userName.length > 1) {
-      $("#commentSection").append("<p>" + userName + " commented" + $("#comments").val() + "</p>");
+      $("#commentSection").append("<p>" + userName + " replied" + $("#replyForm").val() + "</p>");
+      $('#replyForm textarea').val('');
     } else {
       alert("You must be logged in to comment")
     }
   });
 
 });
+
+
 
 
 
