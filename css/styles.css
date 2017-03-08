@@ -47,16 +47,6 @@ h1 {
   margin-bottom: -10px;
 }
 
-/*#loginGatherer{
-  /*text-align: center;*/
-  /*padding-left: 40%;
-}*/
-
-/*#row1{
-  display: none;
-}*/
-
-
 #dropDownNewClaimForm {
   padding: 10px;
 }
@@ -97,8 +87,6 @@ p.navbar-brand{
 }
 
 #commentForm, #comments {
-  /*width: 590px;*/
-  /*column-fill: 100%;*/
   text-align: center;
   margin-top: 80px;
 }
