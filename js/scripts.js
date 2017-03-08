@@ -381,7 +381,7 @@ $(function(){
     }
   });
   //voting buttons
-
+//topic/claim votes
   var startTopicVote = 0;
   $("#topicVoteUp").click(function(){
     if (validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
@@ -392,7 +392,6 @@ $(function(){
     }
 
   });
-
   $("#topicVoteDown").click(function(){
 
     if (validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
@@ -402,5 +401,48 @@ $(function(){
       alert("Please sign in to vote")
     }
   });
+  //end topic/claim votes
+
+  //con source votes
+  var startConVote = 0;
+  $("#conVoteUp").click(function(){
+    if (validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
+      var voteUp = startConVote +=1;
+      $('.conVoteUpCount').text(voteUp);
+    } else {
+      alert("Please sign in to vote")
+    }
+
+  });
+  $("#conVoteDown").click(function(){
+
+    if (validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
+      var voteDown = startConVote -=1;
+      $('.conVoteUpCount').text(voteDown);
+    } else {
+      alert("Please sign in to vote")
+    }
+  });
+  // pro source votes
+  var startProVote = 0;
+  $("#proVoteUp").click(function(){
+    if (validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
+      var voteUp = startProVote +=1;
+      $('.proVoteUpCount').text(voteUp);
+    } else {
+      alert("Please sign in to vote")
+    }
+
+  });
+  $("#proVoteDown").click(function(){
+
+    if (validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
+      var voteDown = startProVote -=1;
+      $('.proVoteUpCount').text(voteDown);
+    } else {
+      alert("Please sign in to vote")
+    }
+  });
+
 
 });
