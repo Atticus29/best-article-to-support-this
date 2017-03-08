@@ -380,5 +380,17 @@ $(function(){
       alert("You must be logged in to comment")
     }
   });
+  //voting buttons
+  var startVoteUp = 0;
+  var startVoteDown = 0;
+  $("#conVoteUp").click(function(){
+    var voteUp = startVoteUp +=1;
+    $('.voteUpCount').text(voteUp);
+  });
+
+  $("#conVoteDown").click(function(){
+    var voteDown = startVoteDown -=1;
+    $('.voteDownCount').text(voteDown);
+  });
 
 });
