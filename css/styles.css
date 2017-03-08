@@ -90,3 +90,7 @@ textarea {
   height: 60px;
   text-align: left;
 }
+
+#comment-row {
+  border: 3px;
+}
