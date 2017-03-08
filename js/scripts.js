@@ -227,7 +227,7 @@ function generateHTMLforClaim(claimObj){
   "</div><div class='col-md-3' id='topProSource'><div><h2>Evidence in favor</h2></div>" +
   "<button class='btn btn-success dropdown-toggle' type='button' id='pro-source-btn' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Add Source</button>" +
   "<div class='dropdown-menu' aria-labelledby='pro-source-btn' id='dropDownConSource'>" +
-  "<form id='dropDownConSourceForm' novalidate>" +
+  "<form id='dropDownProSourceForm' novalidate>" +
   "<div class='form-group'>" +
   "<label for='sourceTitle'>Source Title</label>" +
   "<input class='form-control' type='text' value='' id='sourceTitle-pro' required>" +
@@ -276,15 +276,24 @@ $(function(){
 
   $("#claim-space").first().on("submit", "#dropDownConSourceForm", function(){
     event.preventDefault();
-    console.log("got into the submission event");
     var sourceTitleInput = $("#sourceTitle-con").val();
     var sourceURLinput = $("#sourceURL-con").val() ;
     var newSource = new Source(sourceTitleInput, sourceURLinput, userName);
-    console.log(sourceTitleInput);
-    console.log(sourceURLinput);
-    console.log(newSource);
     if(newestClaim){
       newestClaim.con.sources.push(newSource);
+    }
+    $("#claim-space").empty();
+    generateHTMLforClaim(newestClaim);
+  });
+
+  $("#claim-space").first().on("submit", "#dropDownProSourceForm", function(){
+    event.preventDefault();
+    console.log("got into the submission event");
+    var sourceTitleInput = $("#sourceTitle-pro").val();
+    var sourceURLinput = $("#sourceURL-pro").val() ;
+    var newSource = new Source(sourceTitleInput, sourceURLinput, userName);
+    if(newestClaim){
+      newestClaim.pro.sources.push(newSource);
     }
     $("#claim-space").empty();
     generateHTMLforClaim(newestClaim);
