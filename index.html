@@ -52,7 +52,7 @@
           New Claim
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="dropDownNewClaimForm">
-          <form id="dropDownForm" novalidate>
+          <form id="dropDownForm">
             <div class="form-group">
               <label for="url-input" class="newClaim">New Claim Question</label>
               <input class="form-control" type="text" value="" id="claimQuestion">
@@ -70,8 +70,8 @@
     </div>
   </nav>
   <div class="container">
-    <div id="claim-space">
-      <div class="claim" id="claim0">
+    <div class="claim-space">
+      <div class="claim" id="claim1">
         <div class="row" id="row1">
           <div class="col-md-offset-3 col-md-6">
             <h2 id="question">What supports the 9th floor bathroom being better than the 8th floors?</h2>
@@ -89,7 +89,7 @@
             </p>
           </div>
           <div class="col-md-3" id="topProSource">
-            <div class="row">
+            <div class="">
               <h2>For claim</h2>
             </div>
             <p>
@@ -98,16 +98,16 @@
           </div>
           <div class="row">
             <div class="col-md-offset-3 col-md-6">
-              <div class=" well commentSection" id="commentSection">
-            <!-- //text here -->
+              <div id="commentsShow">
+                <h3>Comments</h3>
               </div>
-              <button class="btn btn-secondary dropdown-toggle" type="button" id="commentsDropDownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Comments
-              </button>
-              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="dropDownComments">
-                <form id="commentForm"action="/html/tags/html_form_tag_action.cfm" method="post">
+              <div id="commentSection">
+                <ul>
+                    <li>hello</li><!-- //text here -->
+                </ul>
+                <form id="replyForm"action="/html/tags/html_form_tag_action.cfm" method="post">
                   <div>
-                    <textarea name="comments" id="comments">
+                    <textarea name="comments" id="replyComment">
                     </textarea>
                   </div>
                   <button type="submit" value="Submit">Submit comment</button>

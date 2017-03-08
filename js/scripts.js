@@ -298,15 +298,19 @@ $("#signout-btn").click(function(){
   $("#userPassword").val("");
 
   });
+//for showing comment section
+  $("#commentsShow").click(function(){
+    console.log("got here");
+      event.preventDefault();
+    $("#commentSection").show();
+  })
 
-
-  //claimComments
-  $("#commentForm").submit(function(){
+  //reply to Comments
+  $("#replyForm").submit(function(){
     event.preventDefault();
-
       if (userName.length > 1) {
-        $("#commentSection").append("<p>" + userName + " commented" + $("#comments").val() + "</p>");
-        $('#commentForm textarea').val('');
+        $("#commentSection").append("<p>" + userName + " replied" + $("#replyForm").val() + "</p>");
+        $('#replyForm textarea').val('');
       } else {
         alert("You must be logged in to comment")
       }
