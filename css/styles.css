@@ -81,8 +81,9 @@ p.navbar-brand{
 
 #commentForm, #comments {
   /*width: 590px;*/
-  column-fill: 100%;
+  /*column-fill: 100%;*/
   text-align: center;
+  margin-top: 80px;
 }
 
 #comments {
@@ -102,4 +103,22 @@ textarea {
 
 #comment-row {
   border: 3px;
+}
+
+.userSaid {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+#commentColumn {
+  background-color: orange;
+}
+
+#commentSubmit {
+  float: right;
+  border-width: thin;
+}
+
+#commentsExpandLink {
+  text-decoration: underline;
 }

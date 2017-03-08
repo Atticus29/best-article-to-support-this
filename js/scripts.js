@@ -358,15 +358,9 @@ $(function(){
 
   //for showing comment section
   $("#commentsShow").click(function(){
-    console.log("got here");
     event.preventDefault();
-    $("#commentSection").show();
+    $("#commentSection").slideToggle();
   });
-
-  //reply to Comments
-  //$("#replyForm").submit(function(){
-
-
 
   $(".down").click(function(){
     var idOfDownVote = $(this).attr("id");
@@ -383,14 +377,13 @@ $(function(){
   //claimComments
   $("#commentForm").submit(function(){
     event.preventDefault();
-    if (userName.length > 1) {
-      $("#commentSection").append("<p>" + userName + " replied" + $("#replyForm").val() + "</p>");
-      $('#replyForm textarea').val('');
+    if (userName.length >= 1) {
+      $("#userInputtedCommentList").append("<p><span class= 'userSaid'>" + userName + " said:</span>" + $("#commentForm textarea").val() + "</p>");
+      $('#commentForm textarea').val('');
     } else {
       alert("You must be logged in to comment")
     }
   });
-
 });
 
 
