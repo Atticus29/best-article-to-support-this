@@ -353,15 +353,6 @@ $(function(){
     refresh();
   });
 
-  $("#dropDownProSourceForm").submit(function(){
-    event.preventDefault();
-    var sourceTitleInput = $("#sourceTitle-pro").val();
-    var sourceURLinput = $("#sourceURL-pro").val() ;
-    var newSource = new Source(sourceTitleInput, sourceURLinput, userName);
-    if(newestClaim){
-      newestClaim.pro.sources.push(newSource);
-    }
-  });
 
   $("#loginForm").submit(function(){
     event.preventDefault();
