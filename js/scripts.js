@@ -199,7 +199,9 @@ function generateHTMLforSource (citationLink, sourcer){
 }
 
 function generateHTMLforClaim(claimObj){
-  $("#claim-space").prepend("<div class='claim' id='claim1'>" +
+  // console.log("got into function");
+  console.log(claimArray);
+  $("#claim-space").prepend("<div class='claim' id='claim" + claimArray.length + "'>" +
   "<div class='row' id='row1'>" +
   "<div class='col-md-offset-3 col-md-6'>" +
   "<h2 id='claim" + claimArray.length + "'>" +
@@ -241,12 +243,12 @@ function generateHTMLforClaim(claimObj){
   "</div>" +
   "</form>" +
   "</div>" +
-  "<a href='" + getSourceWithMostUpvotes(claimObj, true).citationLink +"' target='_blank'>" + getSourceWithMostUpvotes(claimObj, true).citationTitle + "</a>" +
-  // "<button class='btn btn-success' type='button' id='con-source-btn'>Add Source</button>" +
-  // "<a href='" + getSourceWithMostUpvotes(claimObj, false).citationLink +"' target='_blank'>" + getSourceWithMostUpvotes(claimObj, false).citationLink + "</a>" +
-  // "</div><div class='col-md-3' id='topProSource'><div><h2>Evidence in favor</h2></div>" +
-  // "<button class='btn btn-success' type='button' id='pro-source-btn'>Add Source</button>" +
-  // "<a href='" + getSourceWithMostUpvotes(claimObj, true).citationLink +"' target='_blank'>" + getSourceWithMostUpvotes(claimObj, true).citationLink + "</a>" +
+  // "<a href='" + getSourceWithMostUpvotes(claimObj, true).citationLink +"' target='_blank'>" + getSourceWithMostUpvotes(claimObj, true).citationTitle + "</a>" +
+  "<button class='btn btn-success' type='button' id='con-source-btn'>Add Source</button>" +
+  "<a href='" + getSourceWithMostUpvotes(claimObj, false).citationLink +"' target='_blank'>" + getSourceWithMostUpvotes(claimObj, false).citationLink + "</a>" +
+  "</div><div class='col-md-3' id='topProSource'><div><h2>Evidence in favor</h2></div>" +
+  "<button class='btn btn-success' type='button' id='pro-source-btn'>Add Source</button>" +
+  "<a href='" + getSourceWithMostUpvotes(claimObj, true).citationLink +"' target='_blank'>" + getSourceWithMostUpvotes(claimObj, true).citationLink + "</a>" +
   "</div><div class='row'><div class='col-md-offset-3 col-md-6'>" +
   "</div></div></div></div>");
 }
