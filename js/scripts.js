@@ -370,9 +370,12 @@ $(function(){
   //claimComments
   $("#commentForm").submit(function(){
     event.preventDefault();
+    var userInputtedComment = $("#commentForm textarea");
     if (userName.length >= 1) {
-      $("#userInputtedCommentList").append("<p><span class= 'userSaid'>" + userName + " said:</span>" + $("#commentForm textarea").val() + "</p>");
-      $('#commentForm textarea').val('');
+      if (userInputtedComment.val() === '') {
+        alert("comment input field is empty")
+      } else{ $("#userInputtedCommentList").append("<p><span class= 'userSaid'>" + userName + " commented: </span>" + $("#commentForm textarea").val() + "</p>");
+        $('#commentForm textarea').val('');}
     } else {
       alert("You must be logged in to comment")
     }
