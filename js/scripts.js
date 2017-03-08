@@ -199,9 +199,7 @@ function generateHTMLforSource (citationLink, sourcer){
 }
 
 function generateHTMLforClaim(claimObj){
-  // console.log("got into function");
-  console.log(claimArray);
-  $("#claim-space").prepend("<div class='claim' id='claim" + claimArray.length + "'>" +
+  $("#claim-space").prepend("<div class='claim' id='claim1'>" +
   "<div class='row' id='row1'>" +
   "<div class='col-md-offset-3 col-md-6'>" +
   "<h2 id='claim" + claimArray.length + "'>" +
@@ -243,12 +241,7 @@ function generateHTMLforClaim(claimObj){
   "</div>" +
   "</form>" +
   "</div>" +
-  // "<a href='" + getSourceWithMostUpvotes(claimObj, true).citationLink +"' target='_blank'>" + getSourceWithMostUpvotes(claimObj, true).citationTitle + "</a>" +
-  "<button class='btn btn-success' type='button' id='con-source-btn'>Add Source</button>" +
-  "<a href='" + getSourceWithMostUpvotes(claimObj, false).citationLink +"' target='_blank'>" + getSourceWithMostUpvotes(claimObj, false).citationLink + "</a>" +
-  "</div><div class='col-md-3' id='topProSource'><div><h2>Evidence in favor</h2></div>" +
-  "<button class='btn btn-success' type='button' id='pro-source-btn'>Add Source</button>" +
-  "<a href='" + getSourceWithMostUpvotes(claimObj, true).citationLink +"' target='_blank'>" + getSourceWithMostUpvotes(claimObj, true).citationLink + "</a>" +
+  "<a href='" + getSourceWithMostUpvotes(claimObj, true).citationLink +"' target='_blank'>" + getSourceWithMostUpvotes(claimObj, true).citationTitle + "</a>" +
   "</div><div class='row'><div class='col-md-offset-3 col-md-6'>" +
   "</div></div></div></div>");
 }
@@ -267,20 +260,15 @@ $(function(){
   // });
   $("#dropDownForm").submit(function(){
     event.preventDefault();
-    // console.log(userName);
-    // console.log(userPassword);
     if(!isMissingUsernameOrPassword(userName, userPassword)){
       var newClaimSender = userName;
       var claimText = $("input#claimQuestion").val();
       var optionalDigitalOriginOfClaim = $("input#claimLink").val();
       newestClaim = new Claim (newClaimSender, claimText);
-      // newestClaim.pro.sources.push(new Source("http://news.nationalgeographic.com/news/2010/03/100310/why-tap-water-is-better/", "Mark"));
-      // newestClaim.con.sources.push(new Source("http://www.mayoclinic.org/healthy-lifestyle/nutrition-and-healthy-eating/expert-answers/tap-vs-bottled-water/faq-20058017", "Chance"));
       claimArray.push(newestClaim);
-      // console.log(claimArray);
+      console.log("got here");
       $("#claim-space").empty();
       generateHTMLforClaim(newestClaim);
-      // console.log(newestClaim);
     } else{
       console.log("You forgot to log in");
     }
@@ -288,7 +276,6 @@ $(function(){
 
   $("#dropDownConSourceForm").submit(function(){
     event.preventDefault();
-    // console.log("got here");
     var sourceTitleInput = $("#sourceTitle-con").val();
     var sourceURLinput = $("#sourceURL-con").val() ;
     var newSource = new Source(sourceTitleInput, sourceURLinput, userName);
@@ -325,7 +312,6 @@ $(function(){
     userName = $("#userName").val();
     userPassword = $("#userPassword").val();
     var dummyVariable = isMissingUsernameOrPassword(userName, userPassword);
-    // console.log(dummyVariable);
   });
 
 
@@ -355,7 +341,6 @@ $(function(){
     userPassword = undefined;
     $("#userName").val("");
     $("#userPassword").val("");
-
   });
 
   //for showing comment section
@@ -386,4 +371,5 @@ $(function(){
       alert("You must be logged in to comment")
     }
   });
+
 });
