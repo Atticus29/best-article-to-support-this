@@ -432,11 +432,36 @@ $(function(){
   //claimComments
   $("#commentForm").submit(function(){
     event.preventDefault();
-    if (userName.length >= 1) {
-      $("#userInputtedCommentList").append("<p><span class= 'userSaid'>" + userName + " said:</span>" + $("#commentForm textarea").val() + "</p>");
-      $('#commentForm textarea').val('');
+    var userInputtedComment = $("#commentForm textarea");
+    if (validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)) {
+      if (userInputtedComment.val() === '') {
+        alert("comment input field is empty")
+      } else{ $("#userInputtedCommentList").append("<p><span class= 'userSaid'>" + userName + " commented: </span>" + $("#commentForm textarea").val() + "</p>");
+        $('#commentForm textarea').val('');}
     } else {
       alert("You must be logged in to comment")
+    }
+  });
+  //voting buttons
+
+  var startTopicVote = 0;
+  $("#topicVoteUp").click(function(){
+    if (validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
+      var voteUp = startTopicVote +=1;
+      $('.topicVoteUpCount').text(voteUp);
+    } else {
+      alert("Please sign in to vote")
+    }
+
+  });
+
+  $("#topicVoteDown").click(function(){
+
+    if (validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
+      var voteDown = startTopicVote -=1;
+      $('.topicVoteUpCount').text(voteDown);
+    } else {
+      alert("Please sign in to vote")
     }
   });
 
