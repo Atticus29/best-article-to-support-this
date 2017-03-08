@@ -67,17 +67,12 @@ Source.prototype.updateVotes = function() {
   this.downCount = this.downVote.length;
 }
 
-
-//claimText. must know userID, store a string as a new claim. Dynamically interact with HTML.
-//frontEnd: upon click function, store userID.
-// function  NewClaim(userID, newclaim){
-//   this.userID = userID;
-//   this.claimText = claimText;
-
 function User(userName, password){
   this.userName = userName;
   this.password = password;
 }
+
+// Generic functions and global variables
 
 validatedUsers = [user1 = new User("Jahan", "Jahan123"), user2 = new User("Chance", "Chance123"), user3 = new User("Oliver", "Oliver123"), user4 = new User("Mark", "Mark123")];
 
@@ -201,9 +196,6 @@ function getIndexInArrayOfClaims(claimObj, arrayOfClaimObjs){
     }
   }
   return -1;
-  // var index = claimArray.findIndex(x => x.userClaim==claimObj.userClaim);
-  // console.log(index);
-  // return index;
 }
 
 function displayAllClaims(){
@@ -272,7 +264,6 @@ function testGetIndexInArrayOfClaims(){
   claim4.con.sources.push(source2);
   claimArray = [claim1, claim2, claim3, claim4];
   var idx = getIndexInArrayOfClaims(claim4, claimArray);
-  // console.log(idx);
 }
 
 function generateHTMLforClaim(claimObj){
@@ -341,15 +332,15 @@ function generateHTMLforClaim(claimObj){
     "<div class='col-md-3' id='topProSource'>" +
     "<div class='row row-sources'>" +
     "<div class='well'>" +
-    "<div class='row' id='proVoteUp'>" +
-    "<h4>Vote Pro Up</h4>" +
+    "<div class='row' id='conVoteUp'>" +
+    "<h4>Vote Con Up</h4>" +
     "</div>" +
-    "<div class='proVoteUpCount'>" +
+    "<div class='conVoteUpCount'>" +
     "</div>" +
-    "<div class='row' id='proVoteDown'>" +
-    "<h4>Vote Pro Down</h4>" +
+    "<div class='row' id='conVoteDown'>" +
+    "<h4>Vote Con Down</h4>" +
     "</div>" +
-    "<div class='proVoteDownCount'>" +
+    "<div class='conVoteDownCount'>" +
     "</div>" +
     "</div>" +
     "<h2>Evidence in opposition</h2>" +
@@ -369,11 +360,9 @@ function generateHTMLforClaim(claimObj){
     "<label for='sourceURL' class='newClaim'>Source URL</label>" +
     "<input class='form-control' type='url' value='' id='sourceURL-con' required>" +
     "</div>" +
-    // "<div class='text-center'>" +
     "<button id='submitNewConSource' type='submit' name='button' class='btn btn-info'>Submit Source</button>" +
     "</div>" +
     "</form>" +
-
     "</div>" +
     "</div>" +
     "</div>" +
@@ -421,13 +410,7 @@ function generateHTMLforClaim(claimObj){
     userPassword = $("#userPassword").val();
     testGetIndexInArrayOfClaims();
     refresh();
-    console.log(claimArray);
-    // testGetClaimWithMostUpvotes();
-    // testGetSourceWithMostUpvotes();
-    // $("#dropDownForm").submit(function(){
-    //   event.preventDefault();
-    //   $("#newClaimForm").show();
-    // });
+
     $("#dropDownForm").submit(function(){
       event.preventDefault();
       if(!isMissingUsernameOrPassword(userName, userPassword)){
@@ -485,11 +468,9 @@ function generateHTMLforClaim(claimObj){
 
     $("#loginForm").submit(function(){
       event.preventDefault();
-      // console.log("submit happened");
       userName = $("#userName").val();
       userPassword = $("#userPassword").val();
       if(validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
-        // console.log("Got in");
         $("#signout-form").show();
         $("#loginForm").hide();
         $("#welcome-user-name").text(userName);
@@ -506,7 +487,6 @@ function generateHTMLforClaim(claimObj){
 
     $("#registerBtn").click(function(){
       // Do not add an event.preventDefault(); here
-      // console.log("Register happened");
       userName = $("#userName").val();
       userPassword = $("#userPassword").val();
       if(!isMissingUsernameOrPassword(userName, userPassword)){
@@ -563,6 +543,7 @@ function generateHTMLforClaim(claimObj){
         alert("You must be logged in to comment")
       }
     });
+
     //voting buttons
     //topic/claim votes
     var startTopicVote = 0;
@@ -575,6 +556,7 @@ function generateHTMLforClaim(claimObj){
       }
 
     });
+
     $("#topicVoteDown").click(function(){
 
       if (validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
@@ -595,10 +577,9 @@ function generateHTMLforClaim(claimObj){
       } else {
         alert("Please sign in to vote")
       }
-
     });
-    $("#conVoteDown").click(function(){
 
+    $("#conVoteDown").click(function(){
       if (validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
         var voteDown = startConVote -=1;
         $('.conVoteUpCount').text(voteDown);
@@ -606,6 +587,7 @@ function generateHTMLforClaim(claimObj){
         alert("Please sign in to vote")
       }
     });
+
     // pro source votes
     var startProVote = 0;
     $("#proVoteUp").click(function(){
@@ -615,10 +597,9 @@ function generateHTMLforClaim(claimObj){
       } else {
         alert("Please sign in to vote")
       }
-
     });
-    $("#proVoteDown").click(function(){
 
+    $("#proVoteDown").click(function(){
       if (validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
         var voteDown = startProVote -=1;
         $('.proVoteUpCount').text(voteDown);
@@ -627,12 +608,20 @@ function generateHTMLforClaim(claimObj){
       }
     });
 
-
     $("#all-claims-btn").click(function(){
       displayAllClaims();
     });
 
     $("#pro-view-all-btn").click(function(){
+      event.preventDefault();
+      var claimID = getIndexOfClaimThisClickOccurredIn($(this));
+      console.log("claimID is: " + claimID);
+      var currentClaim = claimArray[claimID];
+      console.log("Current claim is: " + currentClaim.userClaim);
+      displayAllSources(claimID, currentClaim);
+    });
+
+    $("#con-view-all-btn").click(function(){
       event.preventDefault();
       var claimID = getIndexOfClaimThisClickOccurredIn($(this));
       console.log("claimID is: " + claimID);
