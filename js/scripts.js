@@ -274,14 +274,20 @@ $(function(){
     }
   });
 
-  $("#dropDownConSourceForm").submit(function(){
+  $("#claim-space").first().on("submit", "#dropDownConSourceForm", function(){
     event.preventDefault();
+    console.log("got into the submission event");
     var sourceTitleInput = $("#sourceTitle-con").val();
     var sourceURLinput = $("#sourceURL-con").val() ;
     var newSource = new Source(sourceTitleInput, sourceURLinput, userName);
+    console.log(sourceTitleInput);
+    console.log(sourceURLinput);
+    console.log(newSource);
     if(newestClaim){
       newestClaim.con.sources.push(newSource);
     }
+    $("#claim-space").empty();
+    generateHTMLforClaim(newestClaim);
   });
 
   $("#dropDownProSourceForm").submit(function(){
