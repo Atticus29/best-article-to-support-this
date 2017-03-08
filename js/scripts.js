@@ -234,9 +234,9 @@ function testGetIndexInArrayOfClaims(){
   claim4.upVoteArray.push("Jahan");
   claim4.upVoteArray.push("Oliver");
   claim4.upVoteArray.push("Mark");
-  var testClaims = [claim1, claim2, claim3, claim4];
-  var idx = getIndexInArrayOfClaims(claim4, testClaims);
-  console.log(idx);
+  claimArray = [claim1, claim2, claim3, claim4];
+  var idx = getIndexInArrayOfClaims(claim4, claimArray);
+  // console.log(idx);
 }
 
 function generateHTMLforClaim(claimObj){
@@ -298,9 +298,11 @@ function refresh(){
 // Front End
 $(function(){
   claimArray = [];
-  testGetIndexInArrayOfClaims();
   userName = $("#userName").val();
   userPassword = $("#userPassword").val();
+  testGetIndexInArrayOfClaims();
+  refresh();
+  console.log(claimArray);
   // testGetClaimWithMostUpvotes();
   // testGetSourceWithMostUpvotes();
   // $("#dropDownForm").submit(function(){
