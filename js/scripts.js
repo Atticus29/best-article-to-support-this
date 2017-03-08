@@ -208,7 +208,7 @@ function getIndexInArrayOfClaims(claimObj, arrayOfClaimObjs){
 
 function getIndexOfClaimThisClickOccurredIn (jQueryObj){
   var claimID = jQueryObj.parents(".claim").attr("id");
-  var regExID = /claim(\d+)/
+  var regExID = /claim(\d+)/;
   var claimIndex = claimID.replace(regExID, '$1');
   return claimIndex;
 }
@@ -318,16 +318,17 @@ $(function(){
 
   $("#claim-space").first().on("submit", "#dropDownConSourceForm", function(){
     event.preventDefault();
-    var testClaimID = getIndexOfClaimThisClickOccurredIn($(this));
-    console.log(testClaimID);
     var sourceTitleInput = $("#sourceTitle-con").val();
     var sourceURLinput = $("#sourceURL-con").val() ;
     var newSource = new Source(sourceTitleInput, sourceURLinput, userName);
-    if(newestClaim){
-      newestClaim.con.sources.push(newSource);
+    var claimThisRefersTo = claimArray[getIndexOfClaimThisClickOccurredIn($(this))];
+    console.log(claimThisRefersTo);
+    if(claimThisRefersTo){
+      claimThisRefersTo.con.sources.push(newSource);
     }
-    $("#claim-space").empty();
-    generateHTMLforClaim(newestClaim);
+    // $("#claim-space").empty();
+    // generateHTMLforClaim(newestClaim);
+    refresh();
   });
 
   $("#claim-space").first().on("submit", "#dropDownProSourceForm", function(){
@@ -336,11 +337,13 @@ $(function(){
     var sourceTitleInput = $("#sourceTitle-pro").val();
     var sourceURLinput = $("#sourceURL-pro").val() ;
     var newSource = new Source(sourceTitleInput, sourceURLinput, userName);
-    if(newestClaim){
-      newestClaim.pro.sources.push(newSource);
+    var claimThisRefersTo = claimArray[getIndexOfClaimThisClickOccurredIn($(this))];
+    if(claimThisRefersTo){
+      claimThisRefersTo.pro.sources.push(newSource);
     }
-    $("#claim-space").empty();
-    generateHTMLforClaim(newestClaim);
+    // $("#claim-space").empty();
+    // generateHTMLforClaim(newestClaim);
+    refresh();
   });
 
   $("#dropDownProSourceForm").submit(function(){
