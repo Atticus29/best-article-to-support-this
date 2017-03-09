@@ -58,15 +58,21 @@ h1 {
   background-color: green;
 }
 
+nav {
+  border-top: 25px solid #3682B5;
+  margin-top: -35px;
+}
+
 #header {
   text-align: center;
   /*margin-bottom: -10px;*/
   background-color: #0063A6;
   color: #A66200;
-  border-bottom: 20px solid #593500;
+  border-bottom: 5px solid #593500;
 }
 
 #footer {
+  border-top: 5px solid #593500;
   background-color: #3682B5;
   margin-top: 60px;
 }
@@ -91,6 +97,9 @@ p.navbar-brand{
 #testRow {
   padding-top: 15px;
   padding-bottom: 15px;
+  border-bottom: 5px solid #593500;
+  background-color: #3682B5;
+  border-top: 25px solid #3682B5;
 }
 
 #testRow2 {
@@ -99,6 +108,7 @@ p.navbar-brand{
   padding-bottom: 10px;
   padding-left: 10px;
   border-top: 25px solid #3682B5;
+  bor
 }
 
 #dropdownMenuButton {
@@ -147,7 +157,7 @@ textarea {
 }
 
 #commentColumn {
-  background-color: orange;
+  border: 1px solid black;
 }
 
 #commentSubmit {
@@ -157,4 +167,5 @@ textarea {
 
 #commentsExpandLink {
   text-decoration: underline;
+  color: blue;
 }
