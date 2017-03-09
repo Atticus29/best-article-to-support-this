@@ -168,6 +168,39 @@ function getSourceWithMostUpvotes(claim, isPro){
   }
 }
 
+function getIndexOfSourceWithMostUpvotes(claim, isPro){
+  var indexTracker = undefined;
+  if(isPro){
+    var arrayOfSources = claim.pro.sources;
+  } else{
+    var arrayOfSources = claim.con.sources;
+  }
+  if(arrayOfSources.length>0){
+    var currentMaxUpvoteCount = 0;
+    var currentMostPopularSource = arrayOfSources[0];
+    for (var i = 0; i<arrayOfSources.length; i++){
+      arrayOfSources[i].updateVotes();
+      if(arrayOfSources[i].upCount >=  currentMaxUpvoteCount){
+        currentMaxUpvoteCount = arrayOfSources[i].upCount;
+        currentMostPopularSource = arrayOfSources[i];
+        indexTracker = i;
+      }
+    }
+    return indexTracker;
+  } else{
+    // console.log("Array of sources is empty");
+    return undefined;
+  }
+}
+
+function testGetIndexOfSourceWithMostUpvotes(){
+  var claimOfInterest = claimArray[3];
+  var indexOfInterest = getIndexOfSourceWithMostUpvotes(claimOfInterest, false);
+  console.log("indexOfInterest is: " + indexOfInterest);
+}
+
+
+
 function testGetSourceWithMostUpvotes(){
   var claim1 = new Claim("Mark", "Water is weird");
   claim1.upVoteArray.push("Jahan");
@@ -210,19 +243,19 @@ function displayAllSources(claimID, claimObj){
   $("#claim" + claimID).find(".pro-source-container").empty();
   if(claimObj.pro.sources.length === 0){
     tmpSource = new Source("There are currently no sources supporting this claim","http://www.google.com" ,"Mark")
-    $("#claim" + claimID).find(".pro-source-container").append(generateSourceHTML(tmpSource,true));
+    $("#claim" + claimID).find(".pro-source-container").append(generateSourceHTML(tmpSource,true, 0));
   } else{
     for (var i = 0; i<claimObj.pro.sources.length; i++){
-      $("#claim" + claimID).find(".pro-source-container").append(generateSourceHTML(claimObj.pro.sources[i], true));
+      $("#claim" + claimID).find(".pro-source-container").append(generateSourceHTML(claimObj.pro.sources[i], true, i));
     }
   }
   // con
   if(claimObj.con.sources.length === 0){
     tmpSource = new Source("There are currently no sources supporting this claim","http://www.google.com" ,"Mark")
-    $("#claim" + claimID).find(".con-source-container").append(generateSourceHTML(tmpSource, false));
+    $("#claim" + claimID).find(".con-source-container").append(generateSourceHTML(tmpSource, false, 0));
   } else{
     for (var i = 0; i<claimObj.con.sources.length; i++){
-      $("#claim" + claimID).find(".con-source-container").append(generateSourceHTML(claimObj.con.sources[i], false));
+      $("#claim" + claimID).find(".con-source-container").append(generateSourceHTML(claimObj.con.sources[i], false, i));
     }
   }
 }
@@ -232,6 +265,14 @@ function getIndexOfClaimThisClickOccurredIn (jQueryObj){
   var regExID = /claim(\d+)/;
   var claimIndex = claimID.replace(regExID, '$1');
   return claimIndex;
+}
+
+function getIndexOfSupportThisClickOccurredIn (jQueryObj){
+  var sourceID = jQueryObj.parents(".capture-me").attr("id");
+  // console.log("sourceID from function is: " + sourceID);
+  var regExID = /source-(\d+)/;
+  var sourceIndex = sourceID.replace(regExID, '$1');
+  return sourceIndex;
 }
 
 function testGetIndexInArrayOfClaims(){
@@ -266,11 +307,11 @@ function testGetIndexInArrayOfClaims(){
   var idx = getIndexInArrayOfClaims(claim4, claimArray);
 }
 
-function generateSourceHTML(source, isPro){
+function generateSourceHTML(source, isPro, indexInSources){
   // var claimObj = claimArray[claimID];
   // pro
   if(isPro){
-    return ("<div class=' row pro-source-component'>" +
+    return ("<div class=' row capture-me pro-source-component' id='source-" + indexInSources + "'>" +
     "<div class='col-md-6 counter-col'>" +
     generateCounterHTML() +
     "</div>" +
@@ -281,7 +322,7 @@ function generateSourceHTML(source, isPro){
     // "<br>" +
     "</div>");
   } else{
-    return ("<div class=' row con-source-component'>" +
+    return ("<div class=' row capture-me con-source-component' id='source-" + indexInSources + "'>" +
     "<div class='col-md-6 counter-col'>" +
     generateCounterHTML() +
     "</div>" +
@@ -297,11 +338,11 @@ function generateSourceHTML(source, isPro){
 function generateCounterHTML(){
   return ("<div class='well'>" +
   "<div class='vote circle'>" +
-  "<div class='increment up'>" +
+  "<div class='increment up support-vote'>" +
   "</div>" +
-  "<div class='increment down'>" +
+  "<div class='increment down support-vote'>" +
   "</div>" +
-  "<div class='count'>0</div>" +
+  "<div class='count'></div>" +
   "</div>" +
   "</div>");
 }
@@ -336,24 +377,45 @@ function generateSourceHeaderRowHTML(){
   "</div>");
 }
 
-function generateViewAndAddSourceButtonHTML(){
-  return("<button class='btn btn-info pro-view-all-btn' type='button'>View all sources</button>" +
-  "<button class='btn btn-success dropdown-toggle pro-source-btn' type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Add Source</button>" +
-  "<div class='dropdown-menu dropDownProSource' aria-labelledby='pro-source-btn'>" +
-  "<form class='dropDownProSourceForm' novalidate>" +
-  "<div class='form-group'>" +
-  "<label for='sourceTitle'>Source Title</label>" +
-  "<input class='form-control sourceTitle-pro' type='text' value='' required>" +
-  "</div>" +
-  "<div class='form-group'>" +
-  "<label for='sourceURL' class='newClaim'>Source URL</label>" +
-  "<input class='form-control sourceURL-pro' type='url' value='' required>" +
-  "</div>" +
-  "<div class='text-center'>" +
-  "<button type='submit' name='button' class='btn btn-info submitNewProSource'>Submit Source</button>" +
-  "</div>" +
-  "</form>" +
-  "</div>");
+function generateViewAndAddSourceButtonHTML(isPro){
+  if(isPro){
+    return("<button class='btn btn-info view-all-btn' type='button'>View all sources</button>" +
+    "<button class='btn btn-success dropdown-toggle source-btn' type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Add Source</button>" +
+    "<div class='dropdown-menu dropDownSource' aria-labelledby='-source-btn'>" +
+    "<form class='dropDownProSourceForm' novalidate>" +
+    "<div class='form-group'>" +
+    "<label for='sourceTitle-pro'>Source Title</label>" +
+    "<input class='form-control sourceTitle-pro' type='text' value='' required>" +
+    "</div>" +
+    "<div class='form-group'>" +
+    "<label for='sourceURL-pro' class='newClaim'>Source URL</label>" +
+    "<input class='form-control sourceURL-pro' type='url' value='' required>" +
+    "</div>" +
+    "<div class='text-center'>" +
+    "<button type='submit' name='button' class='btn btn-info submitNewSource'>Submit Source</button>" +
+    "</div>" +
+    "</form>" +
+    "</div>");
+  } else{
+    return("<button class='btn btn-info view-all-btn' type='button'>View all sources</button>" +
+    "<button class='btn btn-success dropdown-toggle source-btn' type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Add Source</button>" +
+    "<div class='dropdown-menu dropDownSource' aria-labelledby='-source-btn'>" +
+    "<form class='dropDownConSourceForm' novalidate>" +
+    "<div class='form-group'>" +
+    "<label for='sourceTitle-con'>Source Title</label>" +
+    "<input class='form-control sourceTitle-con' type='text' value='' required>" +
+    "</div>" +
+    "<div class='form-group'>" +
+    "<label for='sourceURL-con' class='newClaim'>Source URL</label>" +
+    "<input class='form-control sourceURL-con' type='url' value='' required>" +
+    "</div>" +
+    "<div class='text-center'>" +
+    "<button type='submit' name='button' class='btn btn-info submitNewSource'>Submit Source</button>" +
+    "</div>" +
+    "</form>" +
+    "</div>"
+    );
+  }
 }
 
 function generateCommentRowHTML(){
@@ -391,19 +453,19 @@ function generateHTMLforClaim(claimObj){
     "<div class='col-md-offset-3 col-md-3 topProSource'>" +
     "<div class='well'>" +
     "<div class='pro-source-container'>" +
-    generateSourceHTML(getSourceWithMostUpvotes(claimObj,true), true) +
+    generateSourceHTML(getSourceWithMostUpvotes(claimObj,true), true, getIndexOfSourceWithMostUpvotes(claimObj, true)) +
     "</div>" +
     "</div>" +
-    generateViewAndAddSourceButtonHTML() +
+    generateViewAndAddSourceButtonHTML(true) +
     "</div>" +
 
     "<div class='col-md-3 topConSource'>" +
     "<div class='well'>" +
     "<div class='con-source-container'>" +
-    generateSourceHTML(getSourceWithMostUpvotes(claimObj, false), false) +
+    generateSourceHTML(getSourceWithMostUpvotes(claimObj, false), false, getIndexOfSourceWithMostUpvotes(claimObj, false)) +
     "</div>" +
     "</div>" +
-    generateViewAndAddSourceButtonHTML() +
+    generateViewAndAddSourceButtonHTML(false) +
     "</div>" +
 
     "</div>" +
@@ -421,6 +483,12 @@ function generateHTMLforClaim(claimObj){
     generateHTMLforClaim(topClaim);
   }
 
+  function repopulate(){
+    $("#claim-space").empty();
+    displayAllClaims();
+
+  }
+
 
   // Front End
   $(function(){
@@ -429,6 +497,7 @@ function generateHTMLforClaim(claimObj){
     userPassword = $("#userPassword").val();
     testGetIndexInArrayOfClaims();
     refresh();
+    // testGetIndexOfSourceWithMostUpvotes();
 
     $("#dropDownForm").submit(function(){
       event.preventDefault();
@@ -446,19 +515,73 @@ function generateHTMLforClaim(claimObj){
       }
     });
 
-    $("#claim-space").first().on("submit", ".dropDownConSourceForm", function(){
+    $("#claim-space").first().on("click", ".support-vote", function(){
       event.preventDefault();
+      // console.log("Got here");
+      if(!isMissingUsernameOrPassword(userName, userPassword)){
+        var sourceID = parseInt(getIndexOfSupportThisClickOccurredIn($(this)));
+        // console.log("typeof sourceID is: " + typeof sourceID);
+        var claimID = getIndexOfClaimThisClickOccurredIn($(this));
+        var isPro = $(this).parents(".capture-me").hasClass("pro-source-component");
+        // console.log("isPro is: " + isPro);
+
+        if(isPro){
+          if($.inArray(userName,claimArray[claimID].pro.sources[sourceID].upVote) || $.inArray(userName, claimArray[claimID].pro.sources[sourceID].downVote)){
+            alert("No double dipping!");
+          } else{
+            if($(this).hasClass("up")){
+              claimArray[claimID].pro.sources[sourceID].upVote.push(userName);
+              console.log(claimArray[claimID].pro.sources[sourceID].upVote);
+              claimArray[claimID].pro.sources[sourceID].updateVotes();
+            }
+            if($(this).hasClass("down")){
+              claimArray[claimID].pro.sources[sourceID].downVote.push(userName);
+              claimArray[claimID].pro.sources[sourceID].updateVotes();
+            }
+            $(this).parents(".capture-me").find(".count").empty();
+            $(this).parents(".capture-me").find(".count").append("<h4>" + claimArray[claimID].pro.sources[sourceID].upCount - claimArray[claimID].pro.sources[sourceID].downCount+ "</h4>");
+          }
+
+
+        } else{
+          if($.inArray(userName,claimArray[claimID].con.sources[sourceID].upVote) || $.inArray(userName, claimArray[claimID].con.sources[sourceID].downVote)){
+            alert("No double dipping!");
+          } else{
+            if($(this).hasClass("up")){
+              claimArray[claimID].con.sources[sourceID].upVote.push(userName);
+              console.log(claimArray[claimID].con.sources[sourceID].upVote);
+              claimArray[claimID].con.sources[sourceID].updateVotes();
+            }
+            if($(this).hasClass("down")){
+              claimArray[claimID].con.sources[sourceID].downVote.push(userName);
+              claimArray[claimID].con.sources[sourceID].updateVotes();
+            }
+            console.log(claimArray[claimID].con.sources[sourceID].upCount);
+            console.log(claimArray[claimID].con.sources[sourceID].downCount);
+            console.log(claimArray[claimID].con.sources[sourceID].upCount - claimArray[claimID].con.sources[sourceID].downCount);
+            $(this).parents(".capture-me").find(".count").empty();
+            $(this).parents(".capture-me").find(".count").append("<h4>" + (claimArray[claimID].con.sources[sourceID].upCount - claimArray[claimID].con.sources[sourceID].downCount) + "</h4>");
+          }
+        }
+      } else{
+        console.log("You forgot to log in");
+      }
+    });
+
+    $("#claim-space").first().on("submit", ".dropDownProSourceForm", function(){
+      event.preventDefault();
+      // console.log("Got here");
       if(!isMissingUsernameOrPassword(userName, userPassword)){
         var claimID = getIndexOfClaimThisClickOccurredIn($(this));
         // console.log("claimID is " + claimID);
-        var sourceTitleInput = $("#claim" + claimID).find(".sourceTitle-con").val();
+        var sourceTitleInput = $("#claim" + claimID).find(".sourceTitle-pro").val();
         // console.log("sourceTitleInput is " + sourceTitleInput);
-        var sourceURLinput = $("#claim" + claimID).find(".sourceURL-con").val() ;
+        var sourceURLinput = $("#claim" + claimID).find(".sourceURL-pro").val() ;
         var newSource = new Source(sourceTitleInput, sourceURLinput, userName);
         var claimThisRefersTo = claimArray[getIndexOfClaimThisClickOccurredIn($(this))];
         console.log(claimThisRefersTo);
         if(claimThisRefersTo){
-          claimThisRefersTo.con.sources.push(newSource);
+          claimThisRefersTo.pro.sources.push(newSource);
         }
         // $("#claim-space").empty();
         // generateHTMLforClaim(newestClaim);
@@ -468,16 +591,17 @@ function generateHTMLforClaim(claimObj){
       }
     });
 
-    $("#claim-space").first().on("submit", ".dropDownProSourceForm", function(){
+    $("#claim-space").first().on("submit", ".dropDownConSourceForm", function(){
       event.preventDefault();
+      console.log("Got in here. Hi!");
       if(!isMissingUsernameOrPassword(userName, userPassword)){
         var claimID = getIndexOfClaimThisClickOccurredIn($(this));
-        var sourceTitleInput = $("#claim" + claimID).find(".sourceTitle-pro").val();
-        var sourceURLinput = $("#claim" + claimID).find(".sourceURL-pro").val() ;
+        var sourceTitleInput = $("#claim" + claimID).find(".sourceTitle-con").val();
+        var sourceURLinput = $("#claim" + claimID).find(".sourceURL-con").val() ;
         var newSource = new Source(sourceTitleInput, sourceURLinput, userName);
         var claimThisRefersTo = claimArray[getIndexOfClaimThisClickOccurredIn($(this))];
         if(claimThisRefersTo){
-          claimThisRefersTo.pro.sources.push(newSource);
+          claimThisRefersTo.con.sources.push(newSource);
         }
         // $("#claim-space").empty();
         // generateHTMLforClaim(newestClaim);
@@ -580,18 +704,21 @@ function generateHTMLforClaim(claimObj){
       displayAllClaims();
     });
 
-    $(".pro-view-all-btn").click(function(){
+    $("#claim-space").first().on("click",".view-all-btn", function(){
       event.preventDefault();
+      console.log("Got in!!!!");
       var claimID = getIndexOfClaimThisClickOccurredIn($(this));
       var currentClaim = claimArray[claimID];
+      console.log("Got here");
+      console.log(claimID);
       displayAllSources(claimID, currentClaim);
     });
 
-    $(".con-view-all-btn").click(function(){
-      event.preventDefault();
-      var claimID = getIndexOfClaimThisClickOccurredIn($(this));
-      var currentClaim = claimArray[claimID];
-      displayAllSources(claimID, currentClaim);
-    });
+    // $(".con-view-all-btn").click(function(){
+    //   event.preventDefault();
+    //   var claimID = getIndexOfClaimThisClickOccurredIn($(this));
+    //   var currentClaim = claimArray[claimID];
+    //   displayAllSources(claimID, currentClaim);
+    // });
 
   });
