@@ -1,9 +1,9 @@
 
 # Best Article to Support This
 
-#### 6 March., 2017, v.1.0.0
+#### 6-9 March, 2017, v.1.0.0
 
-#### By Jahan __, Oliver __, Chance Magno, and Mark Fisher
+#### By Jahan Walsh, Oliver Fu, Chance Magno, and Mark Fisher
 
 ## Description
 
@@ -12,9 +12,9 @@
 
 |Behavior|Input|Output|
 |:---:|:---:|:---:|
-|Get input text from the user and save as a string variable in front end|"evil User123!!!?"|`var usrInput = "evil Usersz123!!!?"`|
-||||
-||||
+|Users who incorrectly enter their passwords to should not be allowed to log in|Mark:Mark223|No log in|
+|User can comment on a claim|User comments on claim|Comment recorded|
+|User can comment on a claim as many times as they'd like|User comments on claim they've already commented on|Comment(s) recorded|
 ||||
 ||||
 ||||
