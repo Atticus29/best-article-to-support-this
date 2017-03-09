@@ -108,35 +108,33 @@ h1 {
   color: #A66200;
 }
 
-p.navbar-brand{
+a.navbar-brand{
   padding-left: 50%;
-  color: #A66200;
+  color: black;
 }
 
 #testRow {
   padding-top: 15px;
   padding-bottom: 15px;
   /*border-bottom: 5px solid #593500;*/
-  background-color: #3682B5;
+  background-color: #0063A6;
   /*margin-left: 4px;
   margin-right: 4px;*/
   /*border-top: 25px solid #3682B5;*/
-  background-image: radial-gradient(#fff 10%, transparent 10%),
+  /*background-image: radial-gradient(#fff 10%, transparent 10%),
 	radial-gradient(#fff 10%, transparent 10%);
 	background-size: 30px 30px;
 	background-position: 0 0, 15px 15px;
+  margin-left: -19px;*/
+
 }
 
 #testRow2 {
-  background-color: #3682B5;
+  background-color: #0063A6;
   padding-top: 10px;
   padding-bottom: 10px;
   padding-left: 10px;
-	border-top: 2px dashed #046ca3;
-	border-bottom: 1px dashed #046ca3;
-        box-shadow: inset 0 -1px 0 0 #046ca3, inset 0 1px 0 0 #046ca3, 0 1px 0 0 #046ca3, 0 -1px 0 0 #046ca3;
-	margin-bottom: 1px;
-
+  margin-left: -19px;
 }
 }
 
@@ -144,6 +142,9 @@ p.navbar-brand{
   margin-left: 15px;
 }
 
+.commentSubmit{
+  margin-bottom: 12px;
+}
 .commentSection {
   text-align: left;
 }
@@ -174,11 +175,15 @@ textarea {
 
 .question{
   font-size: 150%;
+  border: 4px solid lightgrey;
+  padding: 8px;
 }
 
 .evidenceWords{
   font-size: 150%;
   text-align: center;
+  border: 1px solid lightgrey;
+  padding: 8px;
 }
 
 .row-sources{
@@ -317,7 +322,8 @@ html, body {
     }
 
 .well{
-  background-color: #e6b8b8;
+  background-color: none;
+  border: 4px dotted #4D90C9;
 }
 
   .roundrect .up {
