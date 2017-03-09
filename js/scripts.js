@@ -380,7 +380,7 @@ function generateSourceHeaderRowHTML(){
 function generateViewAndAddSourceButtonHTML(isPro){
   if(isPro){
     return("<button class='btn btn-info view-all-btn' type='button'>View all sources</button>" +
-    "<button class='btn btn-success dropdown-toggle source-btn' type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Add Source</button>" +
+    "<button class='btn btn-danger dropdown-toggle source-btn' type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Add Source</button>" +
     "<div class='dropdown-menu dropDownSource' aria-labelledby='-source-btn'>" +
     "<form class='dropDownProSourceForm' novalidate>" +
     "<div class='form-group'>" +
@@ -398,7 +398,7 @@ function generateViewAndAddSourceButtonHTML(isPro){
     "</div>");
   } else{
     return("<button class='btn btn-info view-all-btn' type='button'>View all sources</button>" +
-    "<button class='btn btn-success dropdown-toggle source-btn' type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Add Source</button>" +
+    "<button class='btn btn-danger dropdown-toggle source-btn' type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Add Source</button>" +
     "<div class='dropdown-menu dropDownSource' aria-labelledby='-source-btn'>" +
     "<form class='dropDownConSourceForm' novalidate>" +
     "<div class='form-group'>" +
