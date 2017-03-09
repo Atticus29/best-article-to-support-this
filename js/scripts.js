@@ -707,9 +707,10 @@ function generateHTMLforClaim(claimObj){
     });
 
     //for showing comment section
-    $(".commentsShow").click(function(){
+    $("#claim-space").on('click', '.commentsShow', function(){
       event.preventDefault();
-      $(".commentSection").slideToggle();
+      var claimID = getIndexOfClaimThisClickOccurredIn($(this));
+      $("#claim" + claimID).find(".commentSection").slideToggle();
     });
 
     //claimComments
