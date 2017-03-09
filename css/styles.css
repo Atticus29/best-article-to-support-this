@@ -174,9 +174,10 @@ textarea {
 }
 
 .question{
-  font-size: 150%;
   border: 4px solid lightgrey;
   padding: 8px;
+  font-size: 25px;
+  font-family: Arial black;
 }
 
 .evidenceWords{
@@ -236,15 +237,16 @@ h2{
 }
 #part1{
   border-style:ridge;
-  border: gold solid 3px;
+  border: #0063A6 solid 3px;
   border-radius: 20px;
   margin-left: 50px;
+  padding: 10px;
 }
 
 #part2{
-  border-style: groove;
+  /*border-style: groove;
   border: silver solid 3px;
-  border-radius: 20px;
+  border-radius: 20px;*/
   margin-left: 15px;
 }
 .modal {
@@ -252,10 +254,10 @@ h2{
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
     padding-top: 100px; /* Location of the box */
-    left: 20%;
-    top: 20%;
-    width: 50%; /* Full width */
-    height: 50%; /* Full height */
+    left: 15%;
+    top: 15%;
+    width: 75%; /* Full width */
+    height: 75%; /* Full height */
     overflow: auto; /* Enable scroll if needed */
 }
 
@@ -497,4 +499,12 @@ html, body {
 
 .whiteBackground{
   background-color: white;
+
+}
+
+#screen{
+  max-width: 110%;
+
+}
+
 }*/

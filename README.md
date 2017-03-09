@@ -1,7 +1,7 @@
 
 # Best Article to Support This
 
-#### 6 March., 2017, v.1.0.0
+#### 6-9 March, 2017, v.1.0.0
 
 #### By Jahan Walsh, Oliver Fu, Chance Magno, and Mark Fisher
 
@@ -12,10 +12,17 @@
 
 |Behavior|Input|Output|
 |:---:|:---:|:---:|
+|Users who incorrectly enter their passwords to should not be allowed to log in|Mark:Mark223|No log in|
+|User can comment on a claim|User comments on claim|Comment recorded|
+|User can comment on a claim as many times as they'd like|User comments on claim they've already commented on|Comment(s) recorded|
+||||
+||||
+||||
+||||
 |Get input text from the user and save as a string variable in front end|"evil User123!!!?"|`var usrInput = "evil Usersz123!!!?"`|
 |App registers account |input [user name, password]| output [user name, password]|
 |App requires login to function|input[No log-in]|output [you must login to use this site.]|
-|App inputa links and questions|input [What is water? [water-link]]|Output [question and link output to html]|
+|App inputs links and questions|input [What is water? [water-link]]|Output [question and link output to html]|
 |App counts vote of claim up or down|Input [vote count = 3, vote up + 1]|Output [vote count = 4]|
 |App functions to append claim in html and push best claim to top of list|Input [water is good Claim-4 votes, The sky is red - 7 votes, Titan has frozen oceans - 12 votes]|Output [Titan has frozen oceans]|
 

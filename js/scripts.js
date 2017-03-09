@@ -139,6 +139,7 @@ function testGetClaimWithMostUpvotes(){
   claim4.upVoteArray.push("Jahan");
   claim4.upVoteArray.push("Oliver");
   claim4.upVoteArray.push("Mark");
+  claim4.upVoteArray.push("Chance");
   var testClaims = [claim1, claim2, claim3, claim4];
   console.log(testClaims);
   var mostPopularClaim = getClaimWithMostUpvotes(testClaims);
@@ -307,7 +308,7 @@ function testGetIndexInArrayOfClaims(){
    claim2.con.sources.push(source3);
    claim2.pro.sources.push(source4);
 
-   var claim3 = new Claim("Mark", "Drinking mild is bad for humans.");
+   var claim3 = new Claim("Mark", "Drinking milk is bad for humans.");
    claim2.upVoteArray.push("Jahan");
    claim2.upVoteArray.push("Oliver");
 
@@ -409,7 +410,7 @@ function generateViewAndAddSourceButtonHTML(isPro){
     "<input class='form-control sourceURL-pro' type='url' value='' required>" +
     "</div>" +
     "<div class='text-center'>" +
-    "<button type='submit' name='button' class='btn btn-info submitNewSource'>Submit Source</button>" +
+    "<button type='submit' name='button' class='btn btn-info Source'>Submit Source</button>" +
     "</div>" +
     "</form>" +
     "</div>");
@@ -427,7 +428,7 @@ function generateViewAndAddSourceButtonHTML(isPro){
     "<input class='form-control sourceURL-con' type='url' value='' required>" +
     "</div>" +
     "<div class='text-center'>" +
-    "<button type='submit' name='button' class='btn btn-info submitNewSource'>Submit Source</button>" +
+    "<button type='submit' name='button' class='btn btn-info Source'>Submit Source</button>" +
     "</div>" +
     "</form>" +
     "</div>"
@@ -552,27 +553,37 @@ function generateHTMLforClaim(claimObj){
   function updateAllVoteCountsAndDisplays(){
     for (var i = 0; i<claimArray.length; i++){
         claimArray[i].updateVotes();
-        console.log(claimArray[i]);
+        // console.log("Claim " + claimArray[i].userClaim + " has " + claimArray[i].upCount + " upvotes and " + claimArray[i].downCount + " downvotes");
+        // console.log("Upvoters are " + claimArray[i].upVoteArray + " and downvoters are " + claimArray[i].downVoteArray);
         var jQueryObj = $("#claim" + i).find(".claim-vote").find(".up");
-        var classStrings = jQueryObj.attr("class");
-        if(classStrings){
-          updateVoteCountsAndDisplayForClickedClaim(i,jQueryObj);
+        var currentClaimExists = jQueryObj.attr("class");
+        if (currentClaimExists){
+          jQueryObj.parents(".claim").find(".row1").find(".count").empty();
+          jQueryObj.parents(".claim").find(".row1").find(".count").append("<h4>" + (claimArray[i].upCount - claimArray[i].downCount) + "</h4>");
+        }
+        if(claimArray[i].pro.sources.length<1){
+          console.log(claimArray[i]);
+          alert("Something has gone wrong: You have a claim with no default source");
         }
       for(var jPro = 0; jPro<claimArray[i].pro.sources.length; jPro++){
         claimArray[i].pro.sources[jPro].updateVotes();
-        var jQueryObj = $("#claim" + i).find(".pro-source-component").find(".up");
-        var classStrings = jQueryObj.attr("class");
-        if(classStrings){
-          updateVoteCountsAndDisplayForClickedSource(i, jPro, true, jQueryObj);
-        }
+        console.log("Pro source " + claimArray[i].pro.sources[jPro].citationTitle +  " has " + claimArray[i].pro.sources[jPro].downCount + " downvotes and " + claimArray[i].pro.sources[jPro].upCount + " upvotes");
+        console.log("Upvoters for the source are " + claimArray[i].pro.sources[jPro].upVote + " and downvoters for the source are " + claimArray[i].pro.sources[jPro].downVote);
+        $("#source-" + jPro).find(".pro-source-component").find(".count").empty();
+        $("#source-" + jPro).find(".pro-source-component").find(".count").append("<h4>" + (claimArray[i].pro.sources[jPro].upCount - claimArray[i].pro.sources[jPro].downCount) + "</h4>");
       }
       for(var jCon = 0; jCon<claimArray[i].con.sources.length; jCon++){
         claimArray[i].con.sources[jCon].updateVotes();
-        var jQueryObj = $("#claim" + i).find(".con-source-component").find(".up");
-        var classStrings = jQueryObj.attr("class");
-        if(classStrings){
-          updateVoteCountsAndDisplayForClickedSource(i, jCon, false, jQueryObj);
-        }
+        // console.log("Con source " + claimArray[i].con.sources[jCon].citationTitle +  " has " + claimArray[i].con.sources[jCon].downCount + " downvotes and " + claimArray[i].con.sources[jCon].upCount + " upvotes");
+        // console.log("Upvoters for the source are " + claimArray[i].con.sources[jCon].upVote + " and downvoters for the source are " + claimArray[i].con.sources[jCon].downVote);
+        $("#source-" + jCon).find(".count").empty();
+        $("#source-" + jCon).find(".count").append("<h4>" + (claimArray[i].con.sources[jCon].upCount - claimArray[i].con.sources[jCon].downCount) + "</h4>");
+        // claimArray[i].con.sources[jCon].updateVotes();
+        // var jQueryObj = $("#claim" + i).find(".con-source-component").find(".up");
+        // var conSourceExistsOnScreenCurrently = jQueryObj.attr("class");
+        // if(conSourceExistsOnScreenCurrently){
+        //   updateVoteCountsAndDisplayForClickedSource(i, jCon, false, jQueryObj);
+        // }
       }
     }
   }
@@ -763,11 +774,11 @@ function generateHTMLforClaim(claimObj){
 
     $("#claim-space").first().on("click",".view-all-btn", function(){
       event.preventDefault();
-      console.log("Got in!!!!");
+      // console.log("Got in!!!!");
       var claimID = getIndexOfClaimThisClickOccurredIn($(this));
       var currentClaim = claimArray[claimID];
-      console.log("Got here");
-      console.log(claimID);
+      // console.log("Got here");
+      // console.log(claimID);
       displayAllSources(claimID, currentClaim);
     });
 
