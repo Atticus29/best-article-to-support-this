@@ -38,8 +38,9 @@ h1 {
   float: left;
   align-items: center;
   /*margin-left: 22%;*/
-  margin-left: 120px;
+  margin-left: 530px;
   padding-bottom: 2%;
+  margin-right: -660px;
 }
 
 .lowerCaseH1{
@@ -71,8 +72,8 @@ h1 {
 }
 
 #header {
-  text-align: right;
-
+  text-align: center;
+  margin-left: -18px;
   background-color: #0063A6;
   color: #A66200;
   display: block;
@@ -124,8 +125,8 @@ a.navbar-brand{
   /*background-image: radial-gradient(#fff 10%, transparent 10%),
 	radial-gradient(#fff 10%, transparent 10%);
 	background-size: 30px 30px;
-	background-position: 0 0, 15px 15px;
-  margin-left: -19px;*/
+	background-position: 0 0, 15px 15px;*/
+  margin-left: -19px;
 
 }
 
@@ -135,6 +136,8 @@ a.navbar-brand{
   padding-bottom: 10px;
   padding-left: 10px;
   margin-left: -19px;
+  margin-top: -4px;
+  margin-right: -17px;
 }
 }
 
