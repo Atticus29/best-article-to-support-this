@@ -772,4 +772,12 @@ function generateHTMLforClaim(claimObj){
     //   displayAllSources(claimID, currentClaim);
     // });
 
+    $("#myBtn").click(function(){
+      $("#bodyBackground").addClass("modalBackground");
+    })
+
+    $(".close").click(function(){
+      $("#bodyBackground").removeClass();
+    })
+
   });
