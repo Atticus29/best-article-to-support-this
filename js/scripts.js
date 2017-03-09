@@ -244,19 +244,12 @@ function generateHTMLforClaim(claimObj){
     "<div class='claim' id='claim" + getIndexInArrayOfClaims(claimObj, claimArray) + "'>" +
     "<div class='row' id='row1'>" +
     "<div class='col-md-offset-1 col-md-1'>" +
-    "<div class='row' id='topicVoteUp'>" +
-    "<h4>" +
-    "Vote up" +
-    "</h4>" +
+    "<div class='row'>" +
+    "<div class='vote roundrect'>" +
+    "<div class='increment up'></div>" +
+    "<div class='increment down'></div>" +
+    "<div class='count'>0</div>" +
     "</div>" +
-    "<div class='topicVoteUpCount'>" +
-    "</div>" +
-    "<div class='row' id='topicVoteDown'>" +
-    "<h4>" +
-    "Vote Down" +
-    "</h4>" +
-    "</div>" +
-    "<div class='topicVoteDownCount'>" +
     "</div>" +
     "</div>" +
     "<div class='col-md-offset-1 col-md-6' id='topic'>" +
@@ -268,15 +261,12 @@ function generateHTMLforClaim(claimObj){
     "<div class='col-md-offset-3 col-md-3' id='topProSource'>" +
     "<div class='row'>" +
     "<div class='well'>" +
-    "<div class='row' id='proVoteUp'>" +
-    "<h4>Vote Pro Up</h4>" +
+    "<div class='vote circle'>" +
+    "<div class='increment up'>" +
     "</div>" +
-    "<div class='proVoteUpCount'>" +
+    "<div class='increment down'>" +
     "</div>" +
-    "<div class='row' id='proVoteDown'>" +
-    "<h4>Vote Pro Down</h4>" +
-    "</div>" +
-    "<div class='proVoteDownCount'>" +
+    "<div class='count'>0</div>" +
     "</div>" +
     "</div>" +
     "<h2>Evidence in favor</h2>" +
@@ -302,15 +292,12 @@ function generateHTMLforClaim(claimObj){
     "<div class='col-md-3' id='topProSource'>" +
     "<div class='row'>" +
     "<div class='well'>" +
-    "<div class='row' id='proVoteUp'>" +
-    "<h4>Vote Pro Up</h4>" +
+    "<div class='vote circle'>" +
+    "<div class='increment up'>" +
     "</div>" +
-    "<div class='proVoteUpCount'>" +
+    "<div class='increment down'>" +
     "</div>" +
-    "<div class='row' id='proVoteDown'>" +
-    "<h4>Vote Pro Down</h4>" +
-    "</div>" +
-    "<div class='proVoteDownCount'>" +
+    "<div class='count'>0</div>" +
     "</div>" +
     "</div>" +
     "<h2>Evidence in opposition</h2>" +
@@ -495,17 +482,7 @@ function generateHTMLforClaim(claimObj){
       $("#commentSection").slideToggle();
     });
 
-    $(".down").click(function(){
-      var idOfDownVote = $(this).attr("id");
-      console.log(thing);
-      var newidOfDownVote = new CountVotes(/*userName,*/ thing);
-      //push to this.variables.
-    });
-
-    $(".up").click(function(){
-      var thing = $(this).attr("id");
-      console.log(thing);
-    });
+  
 
     //claimComments
     $("#commentForm").submit(function(){
@@ -522,67 +499,88 @@ function generateHTMLforClaim(claimObj){
     });
     //voting buttons
     //topic/claim votes
-    var startTopicVote = 0;
-    $("#topicVoteUp").click(function(){
-      if (validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
-        var voteUp = startTopicVote +=1;
-        $('.topicVoteUpCount').text(voteUp);
+    // var startTopicVote = 0;
+    // $("#topicVoteUp").click(function(){
+    //   if (validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
+    //     var voteUp = startTopicVote +=1;
+    //     $('.topicVoteUpCount').text(voteUp);
+    //   } else {
+    //     alert("Please sign in to vote")
+    //   }
+    //
+    // });
+    // $("#topicVoteDown").click(function(){
+    //
+    //   if (validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
+    //     var voteDown = startTopicVote -=1;
+    //     $('.topicVoteUpCount').text(voteDown);
+    //   } else {
+    //     alert("Please sign in to vote")
+    //   }
+    // });
+    // //end topic/claim votes
+    //
+    // //con source votes
+    // var startConVote = 0;
+    // $(".increment").click(function(){
+    //   if (validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
+    //     var voteUp = startConVote +=1;
+    //     $('.count').text(voteUp);
+    //   } else {
+    //     alert("Please sign in to vote")
+    //   }
+    //
+    // });
+    // $("#conVoteDown").click(function(){
+    //
+    //   if (validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
+    //     var voteDown = startConVote -=1;
+    //     $('.conVoteUpCount').text(voteDown);
+    //   } else {
+    //     alert("Please sign in to vote")
+    //   }
+    // });
+    // // pro source votes
+    // var startProVote = 0;
+    // $("#proVoteUp").click(function(){
+    //   if (validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
+    //     var voteUp = startProVote +=1;
+    //     $('.proVoteUpCount').text(voteUp);
+    //   } else {
+    //     alert("Please sign in to vote")
+    //   }
+    //
+    // });
+    // $("#proVoteDown").click(function(){
+    //
+    //   if (validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
+    //     var voteDown = startProVote -=1;
+    //     $('.proVoteUpCount').text(voteDown);
+    //   } else {
+    //     alert("Please sign in to vote")
+    //   }
+    // });
+
+    $(function(){
+    $(".increment").click(function(){
+      var count = parseInt($("~ .count", this).text());
+
+      if($(this).hasClass("up")) {
+        var count = count + 1;
+
+         $("~ .count", this).text(count);
       } else {
-        alert("Please sign in to vote")
+        var count = count - 1;
+         $("~ .count", this).text(count);
       }
 
-    });
-    $("#topicVoteDown").click(function(){
+      $(this).parent().addClass("bump");
 
-      if (validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
-        var voteDown = startTopicVote -=1;
-        $('.topicVoteUpCount').text(voteDown);
-      } else {
-        alert("Please sign in to vote")
-      }
+      setTimeout(function(){
+        $(this).parent().removeClass("bump");
+      }, 400);
     });
-    //end topic/claim votes
-
-    //con source votes
-    var startConVote = 0;
-    $("#conVoteUp").click(function(){
-      if (validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
-        var voteUp = startConVote +=1;
-        $('.conVoteUpCount').text(voteUp);
-      } else {
-        alert("Please sign in to vote")
-      }
-
-    });
-    $("#conVoteDown").click(function(){
-
-      if (validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
-        var voteDown = startConVote -=1;
-        $('.conVoteUpCount').text(voteDown);
-      } else {
-        alert("Please sign in to vote")
-      }
-    });
-    // pro source votes
-    var startProVote = 0;
-    $("#proVoteUp").click(function(){
-      if (validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
-        var voteUp = startProVote +=1;
-        $('.proVoteUpCount').text(voteUp);
-      } else {
-        alert("Please sign in to vote")
-      }
-
-    });
-    $("#proVoteDown").click(function(){
-
-      if (validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
-        var voteDown = startProVote -=1;
-        $('.proVoteUpCount').text(voteDown);
-      } else {
-        alert("Please sign in to vote")
-      }
-    });
+  });
 
 
     $("#all-claims-btn").click(function(){
