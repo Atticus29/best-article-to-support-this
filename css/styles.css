@@ -155,11 +155,11 @@ h1 {
   font-family: sans-serif;
   font-size: 50%;
   size: 6px;
-  color: #808080;
+  color: #A66200;
 }
 
 #topConSource {
-  background-color: blue;
+
   text-align: center;
 }
 
@@ -173,9 +173,23 @@ h1 {
   background-color: green;
 }
 
-.jumbotron {
+nav {
+  border-top: 25px solid #3682B5;
+  margin-top: -35px;
+}
+
+#header {
   text-align: center;
-  margin-bottom: -10px;
+  /*margin-bottom: -10px;*/
+  background-color: #0063A6;
+  color: #A66200;
+  border-bottom: 5px solid #593500;
+}
+
+#footer {
+  border-top: 5px solid #593500;
+  background-color: #3682B5;
+  margin-top: 60px;
 }
 
 #dropDownNewClaimForm {
@@ -193,20 +207,23 @@ h1 {
 
 p.navbar-brand{
   padding-left: 50%;
-
 }
 
 #testRow {
-  background-color: red;
   padding-top: 15px;
   padding-bottom: 15px;
+  border-bottom: 5px solid #593500;
+  background-color: #3682B5;
+  border-top: 25px solid #3682B5;
 }
 
 #testRow2 {
-  background-color: salmon;
+  background-color: #3682B5;
   padding-top: 10px;
   padding-bottom: 10px;
-  padding-left: 15px;
+  padding-left: 10px;
+  border-top: 25px solid #3682B5;
+  bor
 }
 
 #dropdownMenuButton {
@@ -241,13 +258,21 @@ textarea {
   border: 3px;
 }
 
+.row-sources{
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display:         flex;
+  flex-wrap: wrap;
+}
+
 .userSaid {
   font-weight: bold;
   font-size: 16px;
 }
 
 #commentColumn {
-  background-color: orange;
+  border: 1px solid black;
 }
 
 #commentSubmit {
@@ -257,4 +282,5 @@ textarea {
 
 #commentsExpandLink {
   text-decoration: underline;
+  color: blue;
 }
