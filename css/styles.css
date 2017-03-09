@@ -2,8 +2,6 @@
 @import url('https://fonts.googleapis.com/css?family=Suez+One');
 @import url('https://fonts.googleapis.com/css?family=Cousine');
 
-@import url(http://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic,700italic);
-/* try 50% */
 .roundrect .up {
   border-radius: 2rem 2rem 0 0;
 }
@@ -15,10 +13,10 @@
 }
 
 .circle .up {
-  border-radius: 2rem 2rem 0 0;
+  border-radius: 5rem 5rem 0 0;
 }
 .circle .down {
-  border-radius: 0 0 2rem 2rem;
+  border-radius: 0 0 5rem 5rem;
 }
 .circle .count {
   border-radius: 50%;
@@ -34,8 +32,8 @@
           flex-direction: column;
   font-family: "Noto Sans";
   position: relative;
-  width: 10rem;
-  height: 10rem;
+  width: 5rem;
+  height: 5rem;
   margin: 1rem;
 }
 
@@ -50,12 +48,12 @@
   cursor: pointer;
 }
 .increment.up {
-  background: #4BC35F;
+  background: #483D99;
   height: 50%;
   margin-bottom: 0.25rem;
 }
 .increment.down {
-  background: #C15044;
+  background: #FFA940;
   height: 50%;
 }
 .increment:hover {
@@ -65,13 +63,13 @@
 .count {
   position: absolute;
   top: 0;
-  border-radius: 0.1rem;
-  margin: 2.5rem;
+  border-radius: 0.05rem;
+  margin: 1.25rem;
   background: #F6F3E4;
-  width: 5rem;
-  font-size: 2.5rem;
+  width: 2.5rem;
+  font-size: 1.25rem;
   font-weight: bold;
-  line-height: 5rem;
+  line-height: 2.5rem;
   text-align: center;
   box-shadow: 0 0 0 0.5rem #F6F3E4;
   pointer-events: none;
@@ -109,9 +107,7 @@ html, body {
   height: 100%;
 }
 
-.well {
-  padding: 0;
-  width: 133%;
+.wellVote {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -121,7 +117,6 @@ html, body {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  background: #F6F3E4;
 }
 
 .link-col{
