@@ -402,7 +402,7 @@ function generateViewAndAddSourceButtonHTML(isPro){
     "<input class='form-control sourceURL-pro' type='url' value='' required>" +
     "</div>" +
     "<div class='text-center'>" +
-    "<button type='submit' name='button' class='btn btn-info submitNewSource'>Submit Source</button>" +
+    "<button type='submit' name='button' class='btn btn-info Source'>Submit Source</button>" +
     "</div>" +
     "</form>" +
     "</div>");
@@ -420,7 +420,7 @@ function generateViewAndAddSourceButtonHTML(isPro){
     "<input class='form-control sourceURL-con' type='url' value='' required>" +
     "</div>" +
     "<div class='text-center'>" +
-    "<button type='submit' name='button' class='btn btn-info submitNewSource'>Submit Source</button>" +
+    "<button type='submit' name='button' class='btn btn-info Source'>Submit Source</button>" +
     "</div>" +
     "</form>" +
     "</div>"
