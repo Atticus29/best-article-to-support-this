@@ -207,22 +207,22 @@ function displayAllClaims(){
 
 function displayAllSources(claimID, claimObj){
   // pro
-  $("#claim" + claimID + " #pro-source-container").empty();
+  $("#claim" + claimID).find(".pro-source-container").empty();
   if(claimObj.pro.sources.length === 0){
     tmpSource = new Source("There are currently no sources supporting this claim","http://www.google.com" ,"Mark")
-    $("#claim" + claimID + " #pro-source-container").append("<a href='" + tmpSource.citationLink +"' target='_blank'>" + tmpSource.citationTitle + "</a><br>")
+    $("#claim" + claimID).find(".pro-source-container").append("<a href='" + tmpSource.citationLink +"' target='_blank'>" + tmpSource.citationTitle + "</a><br>")
   } else{
     for (var i = 0; i<claimObj.pro.sources.length; i++){
-      $("#claim" + claimID + " #pro-source-container").append("<a href='" + claimObj.pro.sources[i].citationLink +"' target='_blank'>" + claimObj.pro.sources[i].citationTitle + "</a><br>")
+      $("#claim" + claimID).find(".pro-source-container").append("<a href='" + claimObj.pro.sources[i].citationLink +"' target='_blank'>" + claimObj.pro.sources[i].citationTitle + "</a><br>")
     }
   }
   // con
   if(claimObj.con.sources.length === 0){
     tmpSource = new Source("There are currently no sources supporting this claim","http://www.google.com" ,"Mark")
-    $("#claim" + claimID + " #con-source-container").append("<a href='" + tmpSource.citationLink +"' target='_blank'>" + tmpSource.citationTitle + "</a><br>")
+    $("#claim" + claimID).find(".con-source-container").append("<a href='" + tmpSource.citationLink +"' target='_blank'>" + tmpSource.citationTitle + "</a><br>")
   } else{
     for (var i = 0; i<claimObj.con.sources.length; i++){
-      $("#claim" + claimID + " #con-source-container").append("<a href='" + claimObj.con.sources[i].citationLink +"' target='_blank'>" + claimObj.con.sources[i].citationTitle + "</a><br>")
+      $("#claim" + claimID).find(".con-source-container").append("<a href='" + claimObj.con.sources[i].citationLink +"' target='_blank'>" + claimObj.con.sources[i].citationTitle + "</a><br>")
     }
   }
 }
@@ -361,9 +361,7 @@ function generateHTMLforClaim(claimObj){
     "<input class='form-control sourceURL-con' type='url' value='' required>" +
     "</div>" +
     "<button type='submit' name='button' class='btn btn-info submitNewConSource'>Submit Source</button>" +
-    "</div>" +
     "</form>" +
-    "</div>" +
     "</div>" +
     "</div>" +
     "</div>" +
@@ -390,7 +388,9 @@ function generateHTMLforClaim(claimObj){
     "</div>" +
     "</div>" +
     "</div>" +
-    "</div>" +
+    // "</div>" +
+    // "</div>" +
+    // "</div>" +
     "<div>" +
     "</div>");
   }
@@ -431,10 +431,10 @@ function generateHTMLforClaim(claimObj){
       event.preventDefault();
       if(!isMissingUsernameOrPassword(userName, userPassword)){
         var claimID = getIndexOfClaimThisClickOccurredIn($(this));
-        console.log("claimID is " + claimID);
-        var sourceTitleInput = $(".claim" + claimID).find("input.sourceTitle-con").val();
-        console.log("sourceTitleInput is " + sourceTitleInput);
-        var sourceURLinput = $(".claim" + claimID + ".sourceURL-con").val() ;
+        // console.log("claimID is " + claimID);
+        var sourceTitleInput = $("#claim" + claimID).find(".sourceTitle-con").val();
+        // console.log("sourceTitleInput is " + sourceTitleInput);
+        var sourceURLinput = $("#claim" + claimID).find(".sourceURL-con").val() ;
         var newSource = new Source(sourceTitleInput, sourceURLinput, userName);
         var claimThisRefersTo = claimArray[getIndexOfClaimThisClickOccurredIn($(this))];
         console.log(claimThisRefersTo);
@@ -452,9 +452,9 @@ function generateHTMLforClaim(claimObj){
     $("#claim-space").first().on("submit", ".dropDownProSourceForm", function(){
       event.preventDefault();
       if(!isMissingUsernameOrPassword(userName, userPassword)){
-        console.log("got into the submission event");
-        var sourceTitleInput = $(".sourceTitle-pro").val();
-        var sourceURLinput = $(".sourceURL-pro").val() ;
+        var claimID = getIndexOfClaimThisClickOccurredIn($(this));
+        var sourceTitleInput = $("#claim" + claimID).find(".sourceTitle-pro").val();
+        var sourceURLinput = $("#claim" + claimID).find(".sourceURL-pro").val() ;
         var newSource = new Source(sourceTitleInput, sourceURLinput, userName);
         var claimThisRefersTo = claimArray[getIndexOfClaimThisClickOccurredIn($(this))];
         if(claimThisRefersTo){
@@ -536,7 +536,11 @@ function generateHTMLforClaim(claimObj){
     //claimComments
     $(".commentForm").submit(function(){
       event.preventDefault();
-      var userInputtedComment = $("#commentForm textarea");
+      console.log("Got into comment form");
+      var claimID = getIndexOfClaimThisClickOccurredIn($(this));
+      console.log(claimID);
+      var userInputtedComment = $("#claim" + claimID).find(".commentForm textarea");
+      console.log(userInputtedComment);
       if (validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)) {
         if (userInputtedComment.val() === '') {
           alert("comment input field is empty")
@@ -554,10 +558,10 @@ function generateHTMLforClaim(claimObj){
       console.log("Get to topicVoteUp");
       if (validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
         var claimIndex = getIndexOfClaimThisClickOccurredIn($(this));
-        console.log("Hey Mark!");
-        console.log(claimIndex);
+        // console.log("Hey Mark!");
+        // console.log(claimIndex);
         var voteUp = startTopicVote +=1;
-        $("#claim" + claimIndex + " .topicVoteUpCount").text(voteUp);
+        $("#claim" + claimIndex).find(".topicVoteUpCount").text(voteUp);
       } else {
         alert("Please sign in to vote");
       }
@@ -619,21 +623,16 @@ function generateHTMLforClaim(claimObj){
     });
 
     $(".pro-view-all-btn").click(function(){
-      console.log("Mark Mark Mark Mark");
       event.preventDefault();
       var claimID = getIndexOfClaimThisClickOccurredIn($(this));
-      console.log("claimID is: " + claimID);
       var currentClaim = claimArray[claimID];
-      console.log("Current claim is: " + currentClaim.userClaim);
       displayAllSources(claimID, currentClaim);
     });
 
     $(".con-view-all-btn").click(function(){
       event.preventDefault();
       var claimID = getIndexOfClaimThisClickOccurredIn($(this));
-      console.log("claimID is: " + claimID);
       var currentClaim = claimArray[claimID];
-      console.log("Current claim is: " + currentClaim.userClaim);
       displayAllSources(claimID, currentClaim);
     });
 
