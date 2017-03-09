@@ -236,6 +236,7 @@ function displayAllClaims(){
   for (var i = 0; i<claimArray.length; i++){
     generateHTMLforClaim(claimArray[i]);
   }
+  updateAllVoteCountsAndDisplays();
 }
 
 function displayAllSources(claimID, claimObj){
@@ -258,6 +259,7 @@ function displayAllSources(claimID, claimObj){
       $("#claim" + claimID).find(".con-source-container").append(generateSourceHTML(claimObj.con.sources[i], false, i));
     }
   }
+  updateAllVoteCountsAndDisplays();
 }
 
 function getIndexOfClaimThisClickOccurredIn (jQueryObj){
@@ -484,11 +486,15 @@ function generateHTMLforClaim(claimObj){
   }
 
   function updateVoteCountsAndDisplayForClickedClaim(claimID, jQueryObj){
+    // console.log("Got in");
     if($.inArray(userName, claimArray[claimID].upVoteArray)>-1 || $.inArray(userName, claimArray[claimID].downVoteArray)>-1){
       // alert("No double dipping!");
     } else{
+      // console.log("Here I am!");
       if(jQueryObj.hasClass("up")){
+        // console.log("Hi hi hi");
         claimArray[claimID].upVoteArray.push(userName);
+        // claimArray[claimID].updateVotes();
       }
       if(jQueryObj.hasClass("down")){
         claimArray[claimID].downVoteArray.push(userName);
