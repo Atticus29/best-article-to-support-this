@@ -740,7 +740,7 @@ function generateHTMLforClaim(claimObj){
     });
 
     //claimComments
-    $(".commentForm").submit(function(){
+    $("#claim-space").on('submit', '.commentForm', function(){
       event.preventDefault();
       console.log("Got into comment form");
       var claimID = getIndexOfClaimThisClickOccurredIn($(this));
@@ -750,7 +750,7 @@ function generateHTMLforClaim(claimObj){
       if (validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)) {
         if (userInputtedComment.val() === '') {
           alert("comment input field is empty")
-        } else{ $(".userInputtedCommentList").append("<p><span class= 'userSaid'>" + userName + " commented: </span>" + $(".commentForm textarea").val() + "</p>");
+        } else{ $("#claim" + claimID).find(".userInputtedCommentList").append("<p><span class= 'userSaid'>" + userName + " commented: </span>" + $("#claim" + claimID).find(".commentForm textarea").val() + "</p>");
         $('.commentForm textarea').val('');}
       } else {
         alert("You must be logged in to comment")
