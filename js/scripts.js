@@ -361,10 +361,10 @@ function generateClaimRowHTML(claimObj){
   return("<div class='row row1'>" +
   "<div class='col-md-offset-1 col-md-1'>" +
   "<div class='row'>" +
-  "<div class='vote roundrect'>" +
+  "<div class='vote claim-vote roundrect'>" +
   "<div class='increment up'></div>" +
   "<div class='increment down'></div>" +
-  "<div class='count'>0</div>" +
+  "<div class='count'><h4>0</h4></div>" +
   "</div>" +
   "</div>" +
   "</div>" +
@@ -485,16 +485,32 @@ function generateHTMLforClaim(claimObj){
     "</div>");
   }
 
+  function updateVoteCountsAndDisplayForClickedClaim(claimID, jQueryObj){
+    // console.log("Got in");
+    if($.inArray(userName, claimArray[claimID].upVoteArray)>-1 || $.inArray(userName, claimArray[claimID].downVoteArray)>-1){
+      alert("No double dipping!");
+    } else{
+      // console.log("Here I am!");
+      console.log(jQueryObj);
+      if(jQueryObj.hasClass("up")){
+        // console.log("Hi hi hi");
+        claimArray[claimID].upVoteArray.push(userName);
+        claimArray[claimID].updateVotes();
+      }
+      if(jQueryObj.hasClass("down")){
+        claimArray[claimID].downVoteArray.push(userName);
+        claimArray[claimID].updateVotes();
+      }
+      console.log(claimArray[claimID].upVoteArray);
+      console.log(claimArray[claimID].downVoteArray);
+      console.log((claimArray[claimID].upCount - claimArray[claimID].downCount));
+      jQueryObj.parents(".claim").find(".row1").find(".count").empty();
+      jQueryObj.parents(".claim").find(".row1").find(".count").append("<h4>" + (claimArray[claimID].upCount - claimArray[claimID].downCount) + "</h4>");
+    }
+  }
+
   function updateVoteCountsAndDisplayForClickedSource(claimID, sourceID, isPro, jQueryObj){
-    // console.log("isPro is: " + isPro);
-    // console.log(claimID);
-    console.log(sourceID);
-    // console.log(claimArray[claimID].con.sources);
-    // console.log(claimArray[claimID].con.sources[sourceID]);
-    // console.log(claimArray[claimID].con.sources[sourceID].upVote);
-    // console.log(claimArray[claimID].con.sources[sourceID].downVote);
-    // console.log($.inArray(userName,claimArray[claimID].con.sources[sourceID].upVote));
-    // console.log($.inArray(userName, claimArray[claimID].con.sources[sourceID].downVote));
+
     if(isPro){
       // pro
       if($.inArray(userName,claimArray[claimID].pro.sources[sourceID].upVote)>-1 || $.inArray(userName, claimArray[claimID].pro.sources[sourceID].downVote)>-1){
@@ -502,8 +518,6 @@ function generateHTMLforClaim(claimObj){
       } else{
         if(jQueryObj.hasClass("up")){
           claimArray[claimID].pro.sources[sourceID].upVote.push(userName);
-          // console.log(claimArray[claimID].pro.sources[sourceID].upVote);
-          // console.log(claimArray[claimID].pro.sources[sourceID].downVote);
           claimArray[claimID].pro.sources[sourceID].updateVotes();
         }
         if(jQueryObj.hasClass("down")){
@@ -511,9 +525,6 @@ function generateHTMLforClaim(claimObj){
           claimArray[claimID].pro.sources[sourceID].updateVotes();
         }
         jQueryObj.parents(".capture-me").find(".count").empty();
-        // console.log(claimArray[claimID].pro.sources[sourceID].upCount);
-        // console.log(claimArray[claimID].pro.sources[sourceID].downCount);
-        // console.log(claimArray[claimID].pro.sources[sourceID].upCount - claimArray[claimID].pro.sources[sourceID].downCount);
         jQueryObj.parents(".capture-me").find(".count").append("<h4>" + (claimArray[claimID].pro.sources[sourceID].upCount - claimArray[claimID].pro.sources[sourceID].downCount) + "</h4>");
       }
     } else{
@@ -523,7 +534,6 @@ function generateHTMLforClaim(claimObj){
       } else{
         if(jQueryObj.hasClass("up")){
           claimArray[claimID].con.sources[sourceID].upVote.push(userName);
-          // console.log(claimArray[claimID].con.sources[sourceID].upVote);
           claimArray[claimID].con.sources[sourceID].updateVotes();
         }
         if(jQueryObj.hasClass("down")){
@@ -589,6 +599,19 @@ function generateHTMLforClaim(claimObj){
         var isPro = $(this).parents(".capture-me").hasClass("pro-source-component");
         var jQueryObj = $(this);
         updateVoteCountsAndDisplayForClickedSource(claimID, sourceID, isPro, jQueryObj);
+      } else{
+        console.log("You forgot to log in");
+      }
+    });
+
+    $("#claim-space").first().on("click", ".increment", function(){
+      event.preventDefault();
+      if(!isMissingUsernameOrPassword(userName, userPassword)){
+        console.log("this happens");
+        var claimID = getIndexOfClaimThisClickOccurredIn($(this));
+        console.log("claimID is: " + claimID);
+        var jQueryObj = $(this);
+        updateVoteCountsAndDisplayForClickedClaim(claimID, jQueryObj);
       } else{
         console.log("You forgot to log in");
       }
