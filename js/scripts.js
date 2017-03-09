@@ -488,7 +488,7 @@ function generateHTMLforClaim(claimObj){
   function updateVoteCountsAndDisplayForClickedClaim(claimID, jQueryObj){
     // console.log("Got in");
     if($.inArray(userName, claimArray[claimID].upVoteArray)>-1 || $.inArray(userName, claimArray[claimID].downVoteArray)>-1){
-      alert("No double dipping!");
+      // alert("No double dipping!");
     } else{
       // console.log("Here I am!");
       console.log(jQueryObj);
@@ -514,7 +514,7 @@ function generateHTMLforClaim(claimObj){
     if(isPro){
       // pro
       if($.inArray(userName,claimArray[claimID].pro.sources[sourceID].upVote)>-1 || $.inArray(userName, claimArray[claimID].pro.sources[sourceID].downVote)>-1){
-        alert("No double dipping!");
+        // alert("No double dipping!");
       } else{
         if(jQueryObj.hasClass("up")){
           claimArray[claimID].pro.sources[sourceID].upVote.push(userName);
@@ -530,7 +530,7 @@ function generateHTMLforClaim(claimObj){
     } else{
       // con
       if($.inArray(userName,claimArray[claimID].con.sources[sourceID].upVote)>-1 || $.inArray(userName, claimArray[claimID].con.sources[sourceID].downVote)>-1){
-        alert("No double dipping!");
+        // alert("No double dipping!");
       } else{
         if(jQueryObj.hasClass("up")){
           claimArray[claimID].con.sources[sourceID].upVote.push(userName);
