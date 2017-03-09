@@ -307,6 +307,9 @@ function testGetIndexInArrayOfClaims(){
   var idx = getIndexInArrayOfClaims(claim4, claimArray);
 }
 
+
+// HTML functions
+
 function generateSourceHTML(source, isPro, indexInSources){
   // var claimObj = claimArray[claimID];
   // pro
@@ -475,6 +478,54 @@ function generateHTMLforClaim(claimObj){
     "</div>");
   }
 
+  function updateVoteCountsAndDisplayForClickedSource(claimID, sourceID, isPro, jQueryObj){
+    // console.log("isPro is: " + isPro);
+    // console.log(claimID);
+    // console.log(sourceID);
+    // console.log(claimArray[claimID].con.sources);
+    // console.log(claimArray[claimID].con.sources[sourceID]);
+    // console.log(claimArray[claimID].con.sources[sourceID].upVote);
+    // console.log(claimArray[claimID].con.sources[sourceID].downVote);
+    // console.log($.inArray(userName,claimArray[claimID].con.sources[sourceID].upVote));
+    // console.log($.inArray(userName, claimArray[claimID].con.sources[sourceID].downVote));
+    if(isPro){
+      if($.inArray(userName,claimArray[claimID].pro.sources[sourceID].upVote)>-1 || $.inArray(userName, claimArray[claimID].pro.sources[sourceID].downVote)>-1){
+        alert("No double dipping!");
+      } else{
+        if(jQueryObj.hasClass("up")){
+          claimArray[claimID].pro.sources[sourceID].upVote.push(userName);
+          console.log(claimArray[claimID].pro.sources[sourceID].upVote);
+          claimArray[claimID].pro.sources[sourceID].updateVotes();
+        }
+        if(jQueryObj.hasClass("down")){
+          claimArray[claimID].pro.sources[sourceID].downVote.push(userName);
+          claimArray[claimID].pro.sources[sourceID].updateVotes();
+        }
+        jQueryObj.parents(".capture-me").find(".count").empty();
+        jQueryObj.parents(".capture-me").find(".count").append("<h4>" + claimArray[claimID].pro.sources[sourceID].upCount - claimArray[claimID].pro.sources[sourceID].downCount+ "</h4>");
+      }
+    } else{
+      if($.inArray(userName,claimArray[claimID].con.sources[sourceID].upVote)>-1 || $.inArray(userName, claimArray[claimID].con.sources[sourceID].downVote)>-1){
+        alert("No double dipping!");
+      } else{
+        if(jQueryObj.hasClass("up")){
+          claimArray[claimID].con.sources[sourceID].upVote.push(userName);
+          console.log(claimArray[claimID].con.sources[sourceID].upVote);
+          claimArray[claimID].con.sources[sourceID].updateVotes();
+        }
+        if(jQueryObj.hasClass("down")){
+          claimArray[claimID].con.sources[sourceID].downVote.push(userName);
+          claimArray[claimID].con.sources[sourceID].updateVotes();
+        }
+        console.log(claimArray[claimID].con.sources[sourceID].upCount);
+        console.log(claimArray[claimID].con.sources[sourceID].downCount);
+        console.log(claimArray[claimID].con.sources[sourceID].upCount - claimArray[claimID].con.sources[sourceID].downCount);
+        jQueryObj.parents(".capture-me").find(".count").empty();
+        jQueryObj.parents(".capture-me").find(".count").append("<h4>" + (claimArray[claimID].con.sources[sourceID].upCount - claimArray[claimID].con.sources[sourceID].downCount) + "</h4>");
+      }
+    }
+  }
+
   function refresh(){
     var topClaim = getClaimWithMostUpvotes(claimArray);
     // var topSource =;
@@ -496,6 +547,7 @@ function generateHTMLforClaim(claimObj){
     userName = $("#userName").val();
     userPassword = $("#userPassword").val();
     testGetIndexInArrayOfClaims();
+
     refresh();
     // testGetIndexOfSourceWithMostUpvotes();
 
@@ -517,52 +569,12 @@ function generateHTMLforClaim(claimObj){
 
     $("#claim-space").first().on("click", ".support-vote", function(){
       event.preventDefault();
-      // console.log("Got here");
       if(!isMissingUsernameOrPassword(userName, userPassword)){
         var sourceID = parseInt(getIndexOfSupportThisClickOccurredIn($(this)));
-        // console.log("typeof sourceID is: " + typeof sourceID);
         var claimID = getIndexOfClaimThisClickOccurredIn($(this));
         var isPro = $(this).parents(".capture-me").hasClass("pro-source-component");
-        // console.log("isPro is: " + isPro);
-
-        if(isPro){
-          if($.inArray(userName,claimArray[claimID].pro.sources[sourceID].upVote) || $.inArray(userName, claimArray[claimID].pro.sources[sourceID].downVote)){
-            alert("No double dipping!");
-          } else{
-            if($(this).hasClass("up")){
-              claimArray[claimID].pro.sources[sourceID].upVote.push(userName);
-              console.log(claimArray[claimID].pro.sources[sourceID].upVote);
-              claimArray[claimID].pro.sources[sourceID].updateVotes();
-            }
-            if($(this).hasClass("down")){
-              claimArray[claimID].pro.sources[sourceID].downVote.push(userName);
-              claimArray[claimID].pro.sources[sourceID].updateVotes();
-            }
-            $(this).parents(".capture-me").find(".count").empty();
-            $(this).parents(".capture-me").find(".count").append("<h4>" + claimArray[claimID].pro.sources[sourceID].upCount - claimArray[claimID].pro.sources[sourceID].downCount+ "</h4>");
-          }
-
-
-        } else{
-          if($.inArray(userName,claimArray[claimID].con.sources[sourceID].upVote) || $.inArray(userName, claimArray[claimID].con.sources[sourceID].downVote)){
-            alert("No double dipping!");
-          } else{
-            if($(this).hasClass("up")){
-              claimArray[claimID].con.sources[sourceID].upVote.push(userName);
-              console.log(claimArray[claimID].con.sources[sourceID].upVote);
-              claimArray[claimID].con.sources[sourceID].updateVotes();
-            }
-            if($(this).hasClass("down")){
-              claimArray[claimID].con.sources[sourceID].downVote.push(userName);
-              claimArray[claimID].con.sources[sourceID].updateVotes();
-            }
-            console.log(claimArray[claimID].con.sources[sourceID].upCount);
-            console.log(claimArray[claimID].con.sources[sourceID].downCount);
-            console.log(claimArray[claimID].con.sources[sourceID].upCount - claimArray[claimID].con.sources[sourceID].downCount);
-            $(this).parents(".capture-me").find(".count").empty();
-            $(this).parents(".capture-me").find(".count").append("<h4>" + (claimArray[claimID].con.sources[sourceID].upCount - claimArray[claimID].con.sources[sourceID].downCount) + "</h4>");
-          }
-        }
+        var jQueryObj = $(this);
+        updateVoteCountsAndDisplayForClickedSource(claimID, sourceID, isPro, jQueryObj);
       } else{
         console.log("You forgot to log in");
       }
@@ -681,24 +693,24 @@ function generateHTMLforClaim(claimObj){
       }
     });
 
-    $(function(){
-      $(".increment").click(function(){
-        var count = parseInt($("~ .count", this).text());
-
-        if($(this).hasClass("up")) {
-          var count = count + 1;
-
-          $("~ .count", this).text(count);
-        } else {
-          var count = count - 1;
-          $("~ .count", this).text(count);
-        }
-        $(this).parent().addClass("bump");
-        setTimeout(function(){
-          $(this).parent().removeClass("bump");
-        }, 400);
-      });
-    });
+    // $(function(){
+    //   $(".increment").click(function(){
+    //     var count = parseInt($("~ .count", this).text());
+    //
+    //     if($(this).hasClass("up")) {
+    //       var count = count + 1;
+    //
+    //       $("~ .count", this).text(count);
+    //     } else {
+    //       var count = count - 1;
+    //       $("~ .count", this).text(count);
+    //     }
+    //     $(this).parent().addClass("bump");
+    //     setTimeout(function(){
+    //       $(this).parent().removeClass("bump");
+    //     }, 400);
+    //   });
+    // });
 
     $("#all-claims-btn").click(function(){
       displayAllClaims();
