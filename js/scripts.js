@@ -236,6 +236,7 @@ function displayAllClaims(){
   for (var i = 0; i<claimArray.length; i++){
     generateHTMLforClaim(claimArray[i]);
   }
+  updateAllVoteCountsAndDisplays();
 }
 
 function displayAllSources(claimID, claimObj){
@@ -258,6 +259,7 @@ function displayAllSources(claimID, claimObj){
       $("#claim" + claimID).find(".con-source-container").append(generateSourceHTML(claimObj.con.sources[i], false, i));
     }
   }
+  updateAllVoteCountsAndDisplays();
 }
 
 function getIndexOfClaimThisClickOccurredIn (jQueryObj){
@@ -283,28 +285,24 @@ function getIndexOfSupportThisClickOccurredIn (jQueryObj){
 }
 
 function testGetIndexInArrayOfClaims(){
+
   var claim1 = new Claim("Jahan", "The Federal Minimum Wage Should Be Increased!");
   // claim1 pro source
   var source1 = new Source("pbs article","http://www.pbs.org/newshour/making-sense/why-raising-the-minimum-wage-is-good-economics/", "Jahan");
   console.log(source1);
   // source1.upVote.push("Mark");
   claim1.pro.sources.push(source1);
-
-
   var source2 = new Source("Reason.com","http://reason.com/archives/2014/03/03/9-reasons-why-raising-the-minimum-wage-i" ,"Jahan");
   console.log(source2);
   source2.upVote.push("Mark");
   source2.upVote.push("Chance");
   claim1.con.sources.push(source2);
-
   var claim2 = new Claim("Oliver", "Lowering the federal corporate income tax rate does create jobs.");
   claim2.upVoteArray.push("Jahan");
   claim2.upVoteArray.push("Oliver");
-
   var source3 = new Source("Fortune.com","http://fortune.com/2011/04/08/lower-corporate-taxes-wont-create-more-jobs/", "Jahan");
   source3.upVote.push("Mark");
   source3.upVote.push("Chance");
-
    var source4 = new Source("cnbc.com","http://www.cnbc.com/2014/02/26/lowering-tax-rates-one-of-the-best-things-we-can-do-to-create-jobs-rep-paul-ryan.html", "Chance");
    claim2.con.sources.push(source3);
    claim2.pro.sources.push(source4);
@@ -399,7 +397,7 @@ function generateSourceHeaderRowHTML(){
 function generateViewAndAddSourceButtonHTML(isPro){
   if(isPro){
     return("<button class='btn btn-info view-all-btn' type='button'>View all sources</button>" +
-    "<button class='btn btn-success dropdown-toggle source-btn' type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Add Source</button>" +
+    "<button class='btn btn-danger dropdown-toggle source-btn' type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Add Source</button>" +
     "<div class='dropdown-menu dropDownSource' aria-labelledby='-source-btn'>" +
     "<form class='dropDownProSourceForm' novalidate>" +
     "<div class='form-group'>" +
@@ -417,7 +415,7 @@ function generateViewAndAddSourceButtonHTML(isPro){
     "</div>");
   } else{
     return("<button class='btn btn-info view-all-btn' type='button'>View all sources</button>" +
-    "<button class='btn btn-success dropdown-toggle source-btn' type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Add Source</button>" +
+    "<button class='btn btn-danger dropdown-toggle source-btn' type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Add Source</button>" +
     "<div class='dropdown-menu dropDownSource' aria-labelledby='-source-btn'>" +
     "<form class='dropDownConSourceForm' novalidate>" +
     "<div class='form-group'>" +
@@ -500,22 +498,18 @@ function generateHTMLforClaim(claimObj){
       // alert("No double dipping!");
     } else{
       // console.log("Here I am!");
-      console.log(jQueryObj);
       if(jQueryObj.hasClass("up")){
         // console.log("Hi hi hi");
         claimArray[claimID].upVoteArray.push(userName);
-        claimArray[claimID].updateVotes();
+        // claimArray[claimID].updateVotes();
       }
       if(jQueryObj.hasClass("down")){
         claimArray[claimID].downVoteArray.push(userName);
-        claimArray[claimID].updateVotes();
       }
-      console.log(claimArray[claimID].upVoteArray);
-      console.log(claimArray[claimID].downVoteArray);
-      console.log((claimArray[claimID].upCount - claimArray[claimID].downCount));
-      jQueryObj.parents(".claim").find(".row1").find(".count").empty();
-      jQueryObj.parents(".claim").find(".row1").find(".count").append("<h4>" + (claimArray[claimID].upCount - claimArray[claimID].downCount) + "</h4>");
     }
+    claimArray[claimID].updateVotes();
+    jQueryObj.parents(".claim").find(".row1").find(".count").empty();
+    jQueryObj.parents(".claim").find(".row1").find(".count").append("<h4>" + (claimArray[claimID].upCount - claimArray[claimID].downCount) + "</h4>");
   }
 
   function updateVoteCountsAndDisplayForClickedSource(claimID, sourceID, isPro, jQueryObj){
@@ -527,30 +521,58 @@ function generateHTMLforClaim(claimObj){
       } else{
         if(jQueryObj.hasClass("up")){
           claimArray[claimID].pro.sources[sourceID].upVote.push(userName);
-          claimArray[claimID].pro.sources[sourceID].updateVotes();
+          // claimArray[claimID].pro.sources[sourceID].updateVotes();
         }
         if(jQueryObj.hasClass("down")){
           claimArray[claimID].pro.sources[sourceID].downVote.push(userName);
-          claimArray[claimID].pro.sources[sourceID].updateVotes();
         }
-        jQueryObj.parents(".capture-me").find(".count").empty();
-        jQueryObj.parents(".capture-me").find(".count").append("<h4>" + (claimArray[claimID].pro.sources[sourceID].upCount - claimArray[claimID].pro.sources[sourceID].downCount) + "</h4>");
       }
+      claimArray[claimID].pro.sources[sourceID].updateVotes();
+      jQueryObj.parents(".capture-me").find(".count").empty();
+      jQueryObj.parents(".capture-me").find(".count").append("<h4>" + (claimArray[claimID].pro.sources[sourceID].upCount - claimArray[claimID].pro.sources[sourceID].downCount) + "</h4>");
+
     } else{
-      // con
       if($.inArray(userName,claimArray[claimID].con.sources[sourceID].upVote)>-1 || $.inArray(userName, claimArray[claimID].con.sources[sourceID].downVote)>-1){
         // alert("No double dipping!");
       } else{
         if(jQueryObj.hasClass("up")){
           claimArray[claimID].con.sources[sourceID].upVote.push(userName);
-          claimArray[claimID].con.sources[sourceID].updateVotes();
+          // claimArray[claimID].con.sources[sourceID].updateVotes();
         }
         if(jQueryObj.hasClass("down")){
           claimArray[claimID].con.sources[sourceID].downVote.push(userName);
-          claimArray[claimID].con.sources[sourceID].updateVotes();
         }
-        jQueryObj.parents(".capture-me").find(".count").empty();
-        jQueryObj.parents(".capture-me").find(".count").append("<h4>" + (claimArray[claimID].con.sources[sourceID].upCount - claimArray[claimID].con.sources[sourceID].downCount) + "</h4>");
+      }
+      claimArray[claimID].con.sources[sourceID].updateVotes();
+      jQueryObj.parents(".capture-me").find(".count").empty();
+      jQueryObj.parents(".capture-me").find(".count").append("<h4>" + (claimArray[claimID].con.sources[sourceID].upCount - claimArray[claimID].con.sources[sourceID].downCount) + "</h4>");
+    }
+  }
+
+  function updateAllVoteCountsAndDisplays(){
+    for (var i = 0; i<claimArray.length; i++){
+        claimArray[i].updateVotes();
+        console.log(claimArray[i]);
+        var jQueryObj = $("#claim" + i).find(".claim-vote").find(".up");
+        var classStrings = jQueryObj.attr("class");
+        if(classStrings){
+          updateVoteCountsAndDisplayForClickedClaim(i,jQueryObj);
+        }
+      for(var jPro = 0; jPro<claimArray[i].pro.sources.length; jPro++){
+        claimArray[i].pro.sources[jPro].updateVotes();
+        var jQueryObj = $("#claim" + i).find(".pro-source-component").find(".up");
+        var classStrings = jQueryObj.attr("class");
+        if(classStrings){
+          updateVoteCountsAndDisplayForClickedSource(i, jPro, true, jQueryObj);
+        }
+      }
+      for(var jCon = 0; jCon<claimArray[i].con.sources.length; jCon++){
+        claimArray[i].con.sources[jCon].updateVotes();
+        var jQueryObj = $("#claim" + i).find(".con-source-component").find(".up");
+        var classStrings = jQueryObj.attr("class");
+        if(classStrings){
+          updateVoteCountsAndDisplayForClickedSource(i, jCon, false, jQueryObj);
+        }
       }
     }
   }
@@ -558,9 +580,9 @@ function generateHTMLforClaim(claimObj){
   function refresh(){
     var topClaim = getClaimWithMostUpvotes(claimArray);
     // var topSource =;
-    console.log("Top ranking claim is: ", topClaim.userClaim);
     $("#claim-space").empty();
     generateHTMLforClaim(topClaim);
+    updateAllVoteCountsAndDisplays();
   }
 
   function repopulate(){
@@ -573,12 +595,11 @@ function generateHTMLforClaim(claimObj){
   // Front End
   $(function(){
     claimArray = [];
+    testGetIndexInArrayOfClaims();
     userName = $("#userName").val();
     userPassword = $("#userPassword").val();
-    testGetIndexInArrayOfClaims();
-
     refresh();
-    // testGetIndexOfSourceWithMostUpvotes();
+
 
     $("#dropDownForm").submit(function(){
       event.preventDefault();
@@ -588,11 +609,7 @@ function generateHTMLforClaim(claimObj){
         var optionalDigitalOriginOfClaim = $("input#claimLink").val();
         newestClaim = new Claim (newClaimSender, claimText);
         newestClaim.pro.sources
-        // var dummySource = new Source("There are currently no sources supporting this claim","https://www.google.com" ,"Mark");
-        // newestClaim.pro.sources.push(dummySource);
-        // newestClaim.con.sources.push(dummySource);
         claimArray.push(newestClaim);
-        console.log("got here");
         $("#claim-space").empty();
         generateHTMLforClaim(newestClaim);
       } else{
