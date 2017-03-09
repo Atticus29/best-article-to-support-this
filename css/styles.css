@@ -15,10 +15,10 @@
 }
 
 .circle .up {
-  border-radius: 10rem 10rem 0 0;
+  border-radius: 2rem 2rem 0 0;
 }
 .circle .down {
-  border-radius: 0 0 10rem 10rem;
+  border-radius: 0 0 2rem 2rem;
 }
 .circle .count {
   border-radius: 50%;
@@ -110,6 +110,8 @@ html, body {
 }
 
 .well {
+  padding: 0;
+  width: 133%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -120,6 +122,11 @@ html, body {
       -ms-flex-align: center;
           align-items: center;
   background: #F6F3E4;
+}
+
+.link-col{
+  padding: 0;
+  text-align: left;
 }
 
 h1 {
@@ -274,7 +281,7 @@ textarea {
 
 .evidenceWords{
   font-size: 150%;
-  float: top;
+  text-align: center;
 }
 
 .row-sources{

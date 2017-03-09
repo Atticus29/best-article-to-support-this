@@ -270,19 +270,26 @@ function generateSourceHTML(source, isPro){
   // var claimObj = claimArray[claimID];
   // pro
   if(isPro){
-    return ("<div class='source-component'>" +
+    return ("<div class=' row pro-source-component'>" +
+    "<div class='col-md-6 counter-col'>" +
     generateCounterHTML() +
-    "<a href='" + source.citationLink +"' target='_blank'>" + source.citationTitle +"</a>" +
-    "<br>" +
+    "</div>" +
+    "<div class='col-md-6 link-col'>" +
+    "<a href='" + source.citationLink +"' target='_blank'>" + source.citationTitle +
+    "</a>" +
+    "</div>" +
+    // "<br>" +
     "</div>");
   } else{
-    return ("<div class='source-component'>" +
+    return ("<div class=' row con-source-component'>" +
+    "<div class='col-md-6 counter-col'>" +
     generateCounterHTML() +
-    "<a href='" + source.citationLink +"' target='_blank'>" + source.citationTitle +"</a>" +
-    // "<br>" +
     "</div>" +
-    "<br>" +
-    "<br>");
+    "<div class='col-md-6 link-col'>" +
+    "<a href='" + source.citationLink +"' target='_blank'>" + source.citationTitle +"</a>" +
+    "</div>" +
+    // "<br>" +
+    "</div>");
   }
 
 }
@@ -300,21 +307,21 @@ function generateCounterHTML(){
 }
 
 function generateClaimRowHTML(claimObj){
- return("<div class='row row1'>" +
-     "<div class='col-md-offset-1 col-md-1'>" +
-     "<div class='row'>" +
-     "<div class='vote roundrect'>" +
-     "<div class='increment up'></div>" +
-     "<div class='increment down'></div>" +
-     "<div class='count'>0</div>" +
-     "</div>" +
-     "</div>" +
-     "</div>" +
-     "<div class='col-md-offset-1 col-md-6 topic'>" +
-     "<h2 class='question'><span class='claim-lead'>Claim:</span> " + claimObj.userClaim + "</h2>" +
-     "<br><h4 class='original-asker'>Originally asked by: " + claimObj.claimer + "</h4>" +
-     "</div>" +
-     "</div>"
+  return("<div class='row row1'>" +
+  "<div class='col-md-offset-1 col-md-1'>" +
+  "<div class='row'>" +
+  "<div class='vote roundrect'>" +
+  "<div class='increment up'></div>" +
+  "<div class='increment down'></div>" +
+  "<div class='count'>0</div>" +
+  "</div>" +
+  "</div>" +
+  "</div>" +
+  "<div class='col-md-offset-1 col-md-6 topic'>" +
+  "<h2 class='question'><span class='claim-lead'>Claim:</span> " + claimObj.userClaim + "</h2>" +
+  "<br><h4 class='original-asker'>Originally asked by: " + claimObj.claimer + "</h4>" +
+  "</div>" +
+  "</div>"
 );
 }
 
@@ -323,13 +330,10 @@ function generateSourceHeaderRowHTML(){
   "<div class='col-md-offset-3 col-md-3 topProSourceHeader'>" +
   "<h2 class='evidenceWords'>Evidence in favor</h2>" +
   "</div>" +
-  "<div class='col-md-offset-3 col-md-3 topConSourceHeader'>" +
+  "<div class='col-md-3 topConSourceHeader'>" +
   "<h2 class='evidenceWords'>Evidence in opposition</h2>" +
+  "</div>" +
   "</div>");
-}
-
-function generateSourceRowHTML(){
-
 }
 
 function generateViewAndAddSourceButtonHTML(){
@@ -353,7 +357,27 @@ function generateViewAndAddSourceButtonHTML(){
 }
 
 function generateCommentRowHTML(){
-
+  return("<div class='row comment-row'>" +
+  "<div class='col-md-offset-3 col-md-6 commentColumn'>" +
+  "<div class='commentsShow'>" +
+  "<h3 class='commentsExpandLink'>Comments</h3>" +
+  "</div>" +
+  "<div class='commentSection'>" +
+  "<div class='userComment'>" +
+  "<div class='userInputtedCommentList'>" +
+  "</div>" +
+  "<hr>" +
+  "<form class='commentForm' action='/html/tags/html_form_tag_action.cfm'  method='post'>" +
+  "<div>" +
+  "<textarea name='comments' class='Comment'>" +
+  "</textarea>" +
+  "</div>" +
+  "<button class='commentSubmit' type='submit' value='Submit'>Submit comment</button>" +
+  "</form>" +
+  "</div>" +
+  "</div>" +
+  "</div>" +
+  "</div>");
 }
 
 function generateHTMLforClaim(claimObj){
@@ -361,6 +385,7 @@ function generateHTMLforClaim(claimObj){
     "<div class='claim' id='claim" + getIndexInArrayOfClaims(claimObj, claimArray) + "'>" +
     generateClaimRowHTML(claimObj) +
     generateSourceHeaderRowHTML() +
+
     "<div class='row row-sources'>" +
 
     "<div class='col-md-offset-3 col-md-3 topProSource'>" +
@@ -368,45 +393,22 @@ function generateHTMLforClaim(claimObj){
     "<div class='pro-source-container'>" +
     generateSourceHTML(getSourceWithMostUpvotes(claimObj,true), true) +
     "</div>" +
+    "</div>" +
     generateViewAndAddSourceButtonHTML() +
     "</div>" +
-    "</div>"
 
     "<div class='col-md-3 topConSource'>" +
     "<div class='well'>" +
     "<div class='con-source-container'>" +
     generateSourceHTML(getSourceWithMostUpvotes(claimObj, false), false) +
     "</div>" +
+    "</div>" +
     generateViewAndAddSourceButtonHTML() +
     "</div>" +
-    "</div>" +
 
-    "<div class='row comment-row'>" +
-    "<div class='col-md-offset-3 col-md-6 commentColumn'>" +
-    "<div class='commentsShow'>" +
-    "<h3 class='commentsExpandLink'>Comments</h3>" +
     "</div>" +
-    "<div class='commentSection'>" +
-    "<div class='userComment'>" +
-    "<div class='userInputtedCommentList'>" +
-    // "<!-- //user comments here -->" +
-    "</div>" +
-    "<hr>" +
-    "<form class='commentForm' action='/html/tags/html_form_tag_action.cfm'  method='post'>" +
-    "<div>" +
-    "<textarea name='comments' class='Comment'>" +
-    "</textarea>" +
-    "</div>" +
-    "<button class='commentSubmit' type='submit' value='Submit'>Submit comment</button>" +
-    "</form>" +
-    "</div>" +
-    "</div>" +
-    "</div>" +
-    "</div>" +
-    "</div>" +
-    // "</div>" +
-    // "</div>" +
-    // "</div>" +
+    generateCommentRowHTML() +
+
     "<div>" +
     "</div>");
   }
@@ -510,7 +512,6 @@ function generateHTMLforClaim(claimObj){
       userName = $("#userName").val();
       userPassword = $("#userPassword").val();
       if(!isMissingUsernameOrPassword(userName, userPassword)){
-        // check whether the userName already exists. If it does, make registration unsuccessful and alert the user
         if(isNewUserName(userName)){
           var newUser = new User(userName, userPassword);
           validatedUsers.push(newUser);
@@ -538,8 +539,6 @@ function generateHTMLforClaim(claimObj){
       $(".commentSection").slideToggle();
     });
 
-
-
     //claimComments
     $(".commentForm").submit(function(){
       event.preventDefault();
@@ -558,152 +557,24 @@ function generateHTMLforClaim(claimObj){
       }
     });
 
-    //voting buttons
-    //topic/claim votes
-
-    // var startTopicVote = 0;
-    // $(".topicVoteUp").click(function(){
-    //   console.log("Get to topicVoteUp");
-    //   if (validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
-    //     var claimIndex = getIndexOfClaimThisClickOccurredIn($(this));
-    //     // console.log("Hey Mark!");
-    //     // console.log(claimIndex);
-    //     var voteUp = startTopicVote +=1;
-    //     $("#claim" + claimIndex).find(".topicVoteUpCount").text(voteUp);
-    //   } else {
-    //     alert("Please sign in to vote");
-    //   }
-    // });
-    //
-    // $(".topicVoteDown").click(function(){
-    //   if (validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
-    //     var voteDown = startTopicVote -=1;
-    //     $('.topicVoteUpCount').text(voteDown);
-    //   } else {
-    //     alert("Please sign in to vote")
-    //   }
-    // });
-    // //end topic/claim votes
-    //
-    // //con source votes
-    // var startConVote = 0;
-    // $(".conVoteUp").click(function(){
-    //   if (validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
-    //     var voteUp = startConVote +=1;
-    //     $('.conVoteUpCount').text(voteUp);
-
-    // New Stuff
-
-    // var startTopicVote = 0;
-    // $("#topicVoteUp").click(function(){
-    //   if (validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
-    //     var voteUp = startTopicVote +=1;
-    //     $('.topicVoteUpCount').text(voteUp);
-    //   } else {
-    //     alert("Please sign in to vote")
-    //   }
-    //
-    // });
-    // $("#topicVoteDown").click(function(){
-    //
-    //   if (validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
-    //     var voteDown = startTopicVote -=1;
-    //     $('.topicVoteUpCount').text(voteDown);
-    //   } else {
-    //     alert("Please sign in to vote")
-    //   }
-    // });
-    // //end topic/claim votes
-    //
-    // //con source votes
-    // var startConVote = 0;
-    // $(".increment").click(function(){
-    //   if (validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
-    //     var voteUp = startConVote +=1;
-    //     $('.count').text(voteUp);
-    //   } else {
-    //     alert("Please sign in to vote")
-    //   }
-    //
-    // });
-    // $("#conVoteDown").click(function(){
-    //
-    //   if (validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
-    //     var voteDown = startConVote -=1;
-    //     $('.conVoteUpCount').text(voteDown);
-    //   } else {
-    //     alert("Please sign in to vote")
-    //   }
-    // });
-    // // pro source votes
-    // var startProVote = 0;
-    // $("#proVoteUp").click(function(){
-    //   if (validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
-    //     var voteUp = startProVote +=1;
-    //     $('.proVoteUpCount').text(voteUp);
-    //   } else {
-    //     alert("Please sign in to vote")
-    //   }
-    //
-    // });
-    // $("#proVoteDown").click(function(){
-    //
-    //   if (validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
-    //     var voteDown = startProVote -=1;
-    //     $('.proVoteUpCount').text(voteDown);
-    //   } else {
-    //     alert("Please sign in to vote")
-    //   }
-    // });
-
     $(function(){
-    $(".increment").click(function(){
-      var count = parseInt($("~ .count", this).text());
+      $(".increment").click(function(){
+        var count = parseInt($("~ .count", this).text());
 
-      if($(this).hasClass("up")) {
-        var count = count + 1;
+        if($(this).hasClass("up")) {
+          var count = count + 1;
 
-         $("~ .count", this).text(count);
-      } else {
-        var count = count - 1;
-         $("~ .count", this).text(count);
-      }
-
-    // $(".conVoteDown").click(function(){
-    //   if (validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
-    //     var voteDown = startConVote -=1;
-    //     $('.conVoteUpCount').text(voteDown);
-    //   } else {
-    //     alert("Please sign in to vote")
-    //   }
-    // });
-    //
-    // // pro source votes
-    // var startProVote = 0;
-    // $(".proVoteUp").click(function(){
-    //   if (validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
-    //     var voteUp = startProVote +=1;
-    //     $('.proVoteUpCount').text(voteUp);
-    //   } else {
-    //     alert("Please sign in to vote")
-    //   }
-    // });
-    //
-    // $(".proVoteDown").click(function(){
-    //   if (validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
-    //     startProVote -=1;
-    //     var voteDown = startProVote;
-    //     $('.proVoteUpCount').text(voteDown);
-    //   } else {
-    //     alert("Please sign in to vote");
-    //   }
-      $(this).parent().addClass("bump");
-
-      setTimeout(function(){
-        $(this).parent().removeClass("bump");
-      }, 400);
+          $("~ .count", this).text(count);
+        } else {
+          var count = count - 1;
+          $("~ .count", this).text(count);
+        }
+        $(this).parent().addClass("bump");
+        setTimeout(function(){
+          $(this).parent().removeClass("bump");
+        }, 400);
+      });
     });
-  });
 
     $("#all-claims-btn").click(function(){
       displayAllClaims();
