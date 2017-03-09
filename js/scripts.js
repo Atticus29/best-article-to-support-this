@@ -346,7 +346,7 @@ function generateSourceHTML(source, isPro, indexInSources){
 }
 
 function generateCounterHTML(){
-  return ("<div class='well'>" +
+  return ("<div class='wellVote'>" +
   "<div class='vote circle'>" +
   "<div class='increment up support-vote'>" +
   "</div>" +
@@ -748,6 +748,7 @@ function generateHTMLforClaim(claimObj){
     //     }, 400);
     //   });
     // });
+
 
     $("#all-claims-btn").click(function(){
       displayAllClaims();
