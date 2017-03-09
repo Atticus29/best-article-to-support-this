@@ -210,19 +210,19 @@ function displayAllSources(claimID, claimObj){
   $("#claim" + claimID).find(".pro-source-container").empty();
   if(claimObj.pro.sources.length === 0){
     tmpSource = new Source("There are currently no sources supporting this claim","http://www.google.com" ,"Mark")
-    $("#claim" + claimID).find(".pro-source-container").append("<a href='" + tmpSource.citationLink +"' target='_blank'>" + tmpSource.citationTitle + "</a><br>")
+    $("#claim" + claimID).find(".pro-source-container").append(generateSourceHTML(tmpSource,true));
   } else{
     for (var i = 0; i<claimObj.pro.sources.length; i++){
-      $("#claim" + claimID).find(".pro-source-container").append("<a href='" + claimObj.pro.sources[i].citationLink +"' target='_blank'>" + claimObj.pro.sources[i].citationTitle + "</a><br>")
+      $("#claim" + claimID).find(".pro-source-container").append(generateSourceHTML(claimObj.pro.sources[i], true));
     }
   }
   // con
   if(claimObj.con.sources.length === 0){
     tmpSource = new Source("There are currently no sources supporting this claim","http://www.google.com" ,"Mark")
-    $("#claim" + claimID).find(".con-source-container").append("<a href='" + tmpSource.citationLink +"' target='_blank'>" + tmpSource.citationTitle + "</a><br>")
+    $("#claim" + claimID).find(".con-source-container").append(generateSourceHTML(tmpSource, false));
   } else{
     for (var i = 0; i<claimObj.con.sources.length; i++){
-      $("#claim" + claimID).find(".con-source-container").append("<a href='" + claimObj.con.sources[i].citationLink +"' target='_blank'>" + claimObj.con.sources[i].citationTitle + "</a><br>")
+      $("#claim" + claimID).find(".con-source-container").append(generateSourceHTML(claimObj.con.sources[i], false));
     }
   }
 }
@@ -266,105 +266,121 @@ function testGetIndexInArrayOfClaims(){
   var idx = getIndexInArrayOfClaims(claim4, claimArray);
 }
 
+function generateSourceHTML(source, isPro){
+  // var claimObj = claimArray[claimID];
+  // pro
+  if(isPro){
+    return ("<div class='source-component'>" +
+    generateCounterHTML() +
+    "<a href='" + source.citationLink +"' target='_blank'>" + source.citationTitle +"</a>" +
+    "<br>" +
+    "</div>");
+  } else{
+    return ("<div class='source-component'>" +
+    generateCounterHTML() +
+    "<a href='" + source.citationLink +"' target='_blank'>" + source.citationTitle +"</a>" +
+    // "<br>" +
+    "</div>" +
+    "<br>" +
+    "<br>");
+  }
+
+}
+
+function generateCounterHTML(){
+  return ("<div class='well'>" +
+  "<div class='vote circle'>" +
+  "<div class='increment up'>" +
+  "</div>" +
+  "<div class='increment down'>" +
+  "</div>" +
+  "<div class='count'>0</div>" +
+  "</div>" +
+  "</div>");
+}
+
+function generateClaimRowHTML(claimObj){
+ return("<div class='row row1'>" +
+     "<div class='col-md-offset-1 col-md-1'>" +
+     "<div class='row'>" +
+     "<div class='vote roundrect'>" +
+     "<div class='increment up'></div>" +
+     "<div class='increment down'></div>" +
+     "<div class='count'>0</div>" +
+     "</div>" +
+     "</div>" +
+     "</div>" +
+     "<div class='col-md-offset-1 col-md-6 topic'>" +
+     "<h2 class='question'><span class='claim-lead'>Claim:</span> " + claimObj.userClaim + "</h2>" +
+     "<br><h4 class='original-asker'>Originally asked by: " + claimObj.claimer + "</h4>" +
+     "</div>" +
+     "</div>"
+);
+}
+
+function generateSourceHeaderRowHTML(){
+  return("<div class='row row-source-header'>" +
+  "<div class='col-md-offset-3 col-md-3 topProSourceHeader'>" +
+  "<h2 class='evidenceWords'>Evidence in favor</h2>" +
+  "</div>" +
+  "<div class='col-md-offset-3 col-md-3 topConSourceHeader'>" +
+  "<h2 class='evidenceWords'>Evidence in opposition</h2>" +
+  "</div>");
+}
+
+function generateSourceRowHTML(){
+
+}
+
+function generateViewAndAddSourceButtonHTML(){
+  return("<button class='btn btn-info pro-view-all-btn' type='button'>View all sources</button>" +
+  "<button class='btn btn-success dropdown-toggle pro-source-btn' type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Add Source</button>" +
+  "<div class='dropdown-menu dropDownProSource' aria-labelledby='pro-source-btn'>" +
+  "<form class='dropDownProSourceForm' novalidate>" +
+  "<div class='form-group'>" +
+  "<label for='sourceTitle'>Source Title</label>" +
+  "<input class='form-control sourceTitle-pro' type='text' value='' required>" +
+  "</div>" +
+  "<div class='form-group'>" +
+  "<label for='sourceURL' class='newClaim'>Source URL</label>" +
+  "<input class='form-control sourceURL-pro' type='url' value='' required>" +
+  "</div>" +
+  "<div class='text-center'>" +
+  "<button type='submit' name='button' class='btn btn-info submitNewProSource'>Submit Source</button>" +
+  "</div>" +
+  "</form>" +
+  "</div>");
+}
+
+function generateCommentRowHTML(){
+
+}
+
 function generateHTMLforClaim(claimObj){
   $("#claim-space").prepend(
     "<div class='claim' id='claim" + getIndexInArrayOfClaims(claimObj, claimArray) + "'>" +
-    "<div class='row row1'>" +
-    "<div class='col-md-offset-1 col-md-1'>" +
-    "<div class='row topicVoteUp'>" +
-    "<h4>" +
-    "Vote up" +
-    "</h4>" +
-    "</div>" +
-    "<div class='topicVoteUpCount'>" +
-    "</div>" +
-    "<div class='row topicVoteDown'>" +
-    "<h4>" +
-    "Vote Down" +
-    "</h4>" +
-    "</div>" +
-    "<div class='topicVoteDownCount'>" +
-    "</div>" +
-    "</div>" +
-    "<div class='col-md-offset-1 col-md-6 topic'>" +
-    "<h2 class='question'><span class='claim-lead'>Claim:</span> " + claimObj.userClaim + "</h2>" +
-    "<br><h4 class='original-asker'>Originally asked by: " + claimObj.claimer + "</h4>" +
-    "</div>" +
-    "</div>" +
-    "<div class='row row-sources row2'>" +
-    "<div class='col-md-offset-3 col-md-3 topConSource'>" +
+    generateClaimRowHTML(claimObj) +
+    generateSourceHeaderRowHTML() +
     "<div class='row row-sources'>" +
+
+    "<div class='col-md-offset-3 col-md-3 topProSource'>" +
     "<div class='well'>" +
-    "<div class='row proVoteUp'>" +
-    "<h4>Vote Pro Up</h4>" +
-    "</div>" +
-    "<div class='proVoteUpCount'>" +
-    "</div>" +
-    "<div class='row proVoteDown'>" +
-    "<h4>Vote Pro Down</h4>" +
-    "</div>" +
-    "<div class='proVoteDownCount'>" +
-    "</div>" +
-    "</div>" +
-    "<h2>Evidence in favor</h2>" +
-    "</div>" +
     "<div class='pro-source-container'>" +
-    "<a href='" + getSourceWithMostUpvotes(claimObj, true).citationLink +"' target='_blank'>" + getSourceWithMostUpvotes(claimObj, true).citationTitle + "</a><br>" +
+    generateSourceHTML(getSourceWithMostUpvotes(claimObj,true), true) +
     "</div>" +
-    "<button class='btn btn-info pro-view-all-btn' type='button'>View all sources</button>" +
-    "<button class='btn btn-success dropdown-toggle pro-source-btn' type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Add Source</button>" +
-    "<div class='dropdown-menu dropDownProSource' aria-labelledby='pro-source-btn'>" +
-    "<form class='dropDownProSourceForm' novalidate>" +
-    "<div class='form-group'>" +
-    "<label for='sourceTitle'>Source Title</label>" +
-    "<input class='form-control sourceTitle-pro' type='text' value='' required>" +
+    generateViewAndAddSourceButtonHTML() +
     "</div>" +
-    "<div class='form-group'>" +
-    "<label for='sourceURL' class='newClaim'>Source URL</label>" +
-    "<input class='form-control sourceURL-pro' type='url' value='' required>" +
-    "</div>" +
-    "<div class='text-center'>" +
-    "<button type='submit' name='button' class='btn btn-info submitNewProSource'>Submit Source</button>" +
-    "</div>" +
-    "</form>" +
-    "</div>" +
-    "</div>" +
-    "<div class='col-md-3 topProSource'>" +
-    "<div class='row row-sources'>" +
+    "</div>"
+
+    "<div class='col-md-3 topConSource'>" +
     "<div class='well'>" +
-    "<div class='row conVoteUp'>" +
-    "<h4>Vote Con Up</h4>" +
-    "</div>" +
-    "<div class='conVoteUpCount'>" +
-    "</div>" +
-    "<div class='row conVoteDown'>" +
-    "<h4>Vote Con Down</h4>" +
-    "</div>" +
-    "<div class='conVoteDownCount'>" +
-    "</div>" +
-    "</div>" +
-    "<h2>Evidence in opposition</h2>" +
-    "</div>" +
     "<div class='con-source-container'>" +
-    "<a href='" + getSourceWithMostUpvotes(claimObj, false).citationLink +"' target='_blank'>" + getSourceWithMostUpvotes(claimObj, false).citationTitle + "</a><br>" +
+    generateSourceHTML(getSourceWithMostUpvotes(claimObj, false), false) +
     "</div>" +
-    "<button class='btn btn-info con-view-all-btn' type='button'>View all sources</button>" +
-    "<button class='btn btn-success dropdown-toggle con-source-btn' type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Add Source</button>" +
-    "<div class='dropdown-menu dropDownConSource' aria-labelledby='con-source-btn'>" +
-    "<form class='dropDownConSourceForm' novalidate>" +
-    "<div class='form-group'>" +
-    "<label for='sourceTitle'>Source Title</label>" +
-    "<input class='form-control sourceTitle-con' type='text' value='' required>" +
-    "</div>" +
-    "<div class='form-group'>" +
-    "<label for='sourceURL' class='newClaim'>Source URL</label>" +
-    "<input class='form-control sourceURL-con' type='url' value='' required>" +
-    "</div>" +
-    "<button type='submit' name='button' class='btn btn-info submitNewConSource'>Submit Source</button>" +
-    "</form>" +
+    generateViewAndAddSourceButtonHTML() +
     "</div>" +
     "</div>" +
-    "</div>" +
+
     "<div class='row comment-row'>" +
     "<div class='col-md-offset-3 col-md-6 commentColumn'>" +
     "<div class='commentsShow'>" +
@@ -397,6 +413,7 @@ function generateHTMLforClaim(claimObj){
 
   function refresh(){
     var topClaim = getClaimWithMostUpvotes(claimArray);
+    // var topSource =;
     console.log("Top ranking claim is: ", topClaim.userClaim);
     $("#claim-space").empty();
     generateHTMLforClaim(topClaim);
@@ -521,17 +538,7 @@ function generateHTMLforClaim(claimObj){
       $(".commentSection").slideToggle();
     });
 
-    $(".down").click(function(){
-      var idOfDownVote = $(this).attr("id");
-      console.log(thing);
-      var newidOfDownVote = new CountVotes(/*userName,*/ thing);
-      //push to this.variables.
-    });
 
-    $(".up").click(function(){
-      var thing = $(this).attr("id");
-      console.log(thing);
-    });
 
     //claimComments
     $(".commentForm").submit(function(){
@@ -553,70 +560,150 @@ function generateHTMLforClaim(claimObj){
 
     //voting buttons
     //topic/claim votes
-    var startTopicVote = 0;
-    $(".topicVoteUp").click(function(){
-      console.log("Get to topicVoteUp");
-      if (validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
-        var claimIndex = getIndexOfClaimThisClickOccurredIn($(this));
-        // console.log("Hey Mark!");
-        // console.log(claimIndex);
-        var voteUp = startTopicVote +=1;
-        $("#claim" + claimIndex).find(".topicVoteUpCount").text(voteUp);
-      } else {
-        alert("Please sign in to vote");
-      }
-    });
 
-    $(".topicVoteDown").click(function(){
-      if (validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
-        var voteDown = startTopicVote -=1;
-        $('.topicVoteUpCount').text(voteDown);
-      } else {
-        alert("Please sign in to vote")
-      }
-    });
-    //end topic/claim votes
+    // var startTopicVote = 0;
+    // $(".topicVoteUp").click(function(){
+    //   console.log("Get to topicVoteUp");
+    //   if (validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
+    //     var claimIndex = getIndexOfClaimThisClickOccurredIn($(this));
+    //     // console.log("Hey Mark!");
+    //     // console.log(claimIndex);
+    //     var voteUp = startTopicVote +=1;
+    //     $("#claim" + claimIndex).find(".topicVoteUpCount").text(voteUp);
+    //   } else {
+    //     alert("Please sign in to vote");
+    //   }
+    // });
+    //
+    // $(".topicVoteDown").click(function(){
+    //   if (validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
+    //     var voteDown = startTopicVote -=1;
+    //     $('.topicVoteUpCount').text(voteDown);
+    //   } else {
+    //     alert("Please sign in to vote")
+    //   }
+    // });
+    // //end topic/claim votes
+    //
+    // //con source votes
+    // var startConVote = 0;
+    // $(".conVoteUp").click(function(){
+    //   if (validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
+    //     var voteUp = startConVote +=1;
+    //     $('.conVoteUpCount').text(voteUp);
 
-    //con source votes
-    var startConVote = 0;
-    $(".conVoteUp").click(function(){
-      if (validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
-        var voteUp = startConVote +=1;
-        $('.conVoteUpCount').text(voteUp);
-      } else {
-        alert("Please sign in to vote")
-      }
-    });
+    // New Stuff
 
-    $(".conVoteDown").click(function(){
-      if (validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
-        var voteDown = startConVote -=1;
-        $('.conVoteUpCount').text(voteDown);
-      } else {
-        alert("Please sign in to vote")
-      }
-    });
+    // var startTopicVote = 0;
+    // $("#topicVoteUp").click(function(){
+    //   if (validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
+    //     var voteUp = startTopicVote +=1;
+    //     $('.topicVoteUpCount').text(voteUp);
+    //   } else {
+    //     alert("Please sign in to vote")
+    //   }
+    //
+    // });
+    // $("#topicVoteDown").click(function(){
+    //
+    //   if (validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
+    //     var voteDown = startTopicVote -=1;
+    //     $('.topicVoteUpCount').text(voteDown);
+    //   } else {
+    //     alert("Please sign in to vote")
+    //   }
+    // });
+    // //end topic/claim votes
+    //
+    // //con source votes
+    // var startConVote = 0;
+    // $(".increment").click(function(){
+    //   if (validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
+    //     var voteUp = startConVote +=1;
+    //     $('.count').text(voteUp);
+    //   } else {
+    //     alert("Please sign in to vote")
+    //   }
+    //
+    // });
+    // $("#conVoteDown").click(function(){
+    //
+    //   if (validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
+    //     var voteDown = startConVote -=1;
+    //     $('.conVoteUpCount').text(voteDown);
+    //   } else {
+    //     alert("Please sign in to vote")
+    //   }
+    // });
+    // // pro source votes
+    // var startProVote = 0;
+    // $("#proVoteUp").click(function(){
+    //   if (validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
+    //     var voteUp = startProVote +=1;
+    //     $('.proVoteUpCount').text(voteUp);
+    //   } else {
+    //     alert("Please sign in to vote")
+    //   }
+    //
+    // });
+    // $("#proVoteDown").click(function(){
+    //
+    //   if (validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
+    //     var voteDown = startProVote -=1;
+    //     $('.proVoteUpCount').text(voteDown);
+    //   } else {
+    //     alert("Please sign in to vote")
+    //   }
+    // });
 
-    // pro source votes
-    var startProVote = 0;
-    $(".proVoteUp").click(function(){
-      if (validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
-        var voteUp = startProVote +=1;
-        $('.proVoteUpCount').text(voteUp);
-      } else {
-        alert("Please sign in to vote")
-      }
-    });
+    $(function(){
+    $(".increment").click(function(){
+      var count = parseInt($("~ .count", this).text());
 
-    $(".proVoteDown").click(function(){
-      if (validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
-        startProVote -=1;
-        var voteDown = startProVote;
-        $('.proVoteUpCount').text(voteDown);
+      if($(this).hasClass("up")) {
+        var count = count + 1;
+
+         $("~ .count", this).text(count);
       } else {
-        alert("Please sign in to vote");
+        var count = count - 1;
+         $("~ .count", this).text(count);
       }
+
+    // $(".conVoteDown").click(function(){
+    //   if (validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
+    //     var voteDown = startConVote -=1;
+    //     $('.conVoteUpCount').text(voteDown);
+    //   } else {
+    //     alert("Please sign in to vote")
+    //   }
+    // });
+    //
+    // // pro source votes
+    // var startProVote = 0;
+    // $(".proVoteUp").click(function(){
+    //   if (validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
+    //     var voteUp = startProVote +=1;
+    //     $('.proVoteUpCount').text(voteUp);
+    //   } else {
+    //     alert("Please sign in to vote")
+    //   }
+    // });
+    //
+    // $(".proVoteDown").click(function(){
+    //   if (validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
+    //     startProVote -=1;
+    //     var voteDown = startProVote;
+    //     $('.proVoteUpCount').text(voteDown);
+    //   } else {
+    //     alert("Please sign in to vote");
+    //   }
+      $(this).parent().addClass("bump");
+
+      setTimeout(function(){
+        $(this).parent().removeClass("bump");
+      }, 400);
     });
+  });
 
     $("#all-claims-btn").click(function(){
       displayAllClaims();

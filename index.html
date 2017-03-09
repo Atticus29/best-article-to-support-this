@@ -9,7 +9,7 @@
   <title>Best Article to Support</title>
 </head>
 <body>
-  <div class="jumbotron">
+  <div id="header" class="jumbotron">
     <div id="image-and-text-box">
       <img src="img/bats.png" alt="bats" id="bats"/>
       <h1>
@@ -31,6 +31,7 @@
         </span>
       </h1>
     </div>
+  </div>
     <nav class="navbar navbar-default">
       <div class="container-fluid">
         <div class="row" id="testRow2">
@@ -89,9 +90,95 @@
         </div>
       </div>
     </nav>
-  </div>
   <div class="container">
     <div id="claim-space">
+    </div>
+  </div>
+  <div class="footer">
+    <div id="footer" class="jumbotron">
+      <!-- BUTTON TO SEE MODAL -->
+<button id="myBtn">See User Guidelines</button>
+<!--everything below belongs to modal pop-up-->
+<!-- The Modal -->
+<div id="myModal" class="modal">
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <div id="image-and-text-box">
+      <img src="img/bats.png" alt="bats" id="bats"/>
+      <h1>
+        B
+        <span class="lowerCaseH1">
+          est
+        </span>
+        A
+        <span class="lowerCaseH1">
+          rticle
+        </span>
+        T
+        <span class="lowerCaseH1">
+          o
+        </span>
+        S
+        <span class="lowerCaseH1">
+          upport
+        </span>
+      </h1>
+
+    </div>
+    <div class id="BoxUserGuidelines">
+      <h4 id="welcome">Welcome to BATS: a place to review articles and understand the world</h4>
+      <p id="guidelines">
+        Guidelines: Once logged in, upvote and downvote on the issues, sources of information, and other users' comments!
+    </div>
+    <!-- Do include screencaps of features -->
+    <div class="row">
+      <div class="col-md-5" id="part1">
+        <ul>
+          <li>You must log in as a guest before you can properly use this website</li>
+          <li>
+            Once logged in, there are many ways to rate and discuss our claims. You may either agree with or refute a claim by upvoting or downvoting.
+          </li>
+          <li>
+            For each claim or source, you may only cast one upvote or downvote
+          </li>
+          <li>
+          You can also create your own claim by using the New Claim button
+        </li>
+        <li>Claims with the highest upvote differentials are displayed first. You can click on the View All Claims button to see all recent claims. </li>
+        </ul>
+      </div>
+      <div class="col-md-5" id="part2">
+        <p>
+          (ScreenCaps go here)
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- get the modal -->
+<script>
+var modal = document.getElementById('myModal');
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn");
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+// When the user clicks the button, open the modal
+btn.onclick = function() {
+    modal.style.display = "block";
+}
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+    modal.style.display = "none";
+}
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+</script>
     </div>
   </div>
 </body>
