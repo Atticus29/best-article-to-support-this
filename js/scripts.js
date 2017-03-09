@@ -269,16 +269,16 @@ function testGetIndexInArrayOfClaims(){
 function generateHTMLforClaim(claimObj){
   $("#claim-space").prepend(
     "<div class='claim' id='claim" + getIndexInArrayOfClaims(claimObj, claimArray) + "'>" +
-    "<div class='row' id='row1'>" +
+    "<div class='row row1'>" +
     "<div class='col-md-offset-1 col-md-1'>" +
-    "<div class='row' id='topicVoteUp'>" +
+    "<div class='row topicVoteUp'>" +
     "<h4>" +
     "Vote up" +
     "</h4>" +
     "</div>" +
     "<div class='topicVoteUpCount'>" +
     "</div>" +
-    "<div class='row' id='topicVoteDown'>" +
+    "<div class='row topicVoteDown'>" +
     "<h4>" +
     "Vote Down" +
     "</h4>" +
@@ -286,21 +286,21 @@ function generateHTMLforClaim(claimObj){
     "<div class='topicVoteDownCount'>" +
     "</div>" +
     "</div>" +
-    "<div class='col-md-offset-1 col-md-6' id='topic'>" +
-    "<h2 id='question'><span class='claim-lead'>Claim:</span> " + claimObj.userClaim + "</h2>" +
+    "<div class='col-md-offset-1 col-md-6 topic'>" +
+    "<h2 class='question'><span class='claim-lead'>Claim:</span> " + claimObj.userClaim + "</h2>" +
     "<br><h4 class='original-asker'>Originally asked by: " + claimObj.claimer + "</h4>" +
     "</div>" +
     "</div>" +
-    "<div class='row row-sources' id='row2'>" +
-    "<div class='col-md-offset-3 col-md-3' id='topConSource'>" +
+    "<div class='row row-sources row2'>" +
+    "<div class='col-md-offset-3 col-md-3 topConSource'>" +
     "<div class='row row-sources'>" +
     "<div class='well'>" +
-    "<div class='row' id='proVoteUp'>" +
+    "<div class='row proVoteUp'>" +
     "<h4>Vote Pro Up</h4>" +
     "</div>" +
     "<div class='proVoteUpCount'>" +
     "</div>" +
-    "<div class='row' id='proVoteDown'>" +
+    "<div class='row proVoteDown'>" +
     "<h4>Vote Pro Down</h4>" +
     "</div>" +
     "<div class='proVoteDownCount'>" +
@@ -308,36 +308,36 @@ function generateHTMLforClaim(claimObj){
     "</div>" +
     "<h2>Evidence in favor</h2>" +
     "</div>" +
-    "<div id='pro-source-container'>" +
+    "<div class='pro-source-container'>" +
     "<a href='" + getSourceWithMostUpvotes(claimObj, true).citationLink +"' target='_blank'>" + getSourceWithMostUpvotes(claimObj, true).citationTitle + "</a><br>" +
     "</div>" +
-    "<button class='btn btn-info' type='button' id='pro-view-all-btn'>View all sources</button>" +
-    "<button class='btn btn-success dropdown-toggle' type='button' id='pro-source-btn' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Add Source</button>" +
-    "<div class='dropdown-menu' aria-labelledby='pro-source-btn' id='dropDownProSource'>" +
-    "<form id='dropDownProSourceForm' novalidate>" +
+    "<button class='btn btn-info pro-view-all-btn' type='button'>View all sources</button>" +
+    "<button class='btn btn-success dropdown-toggle pro-source-btn' type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Add Source</button>" +
+    "<div class='dropdown-menu dropDownProSource' aria-labelledby='pro-source-btn'>" +
+    "<form class='dropDownProSourceForm' novalidate>" +
     "<div class='form-group'>" +
     "<label for='sourceTitle'>Source Title</label>" +
-    "<input class='form-control' type='text' value='' id='sourceTitle-pro' required>" +
+    "<input class='form-control sourceTitle-pro' type='text' value='' required>" +
     "</div>" +
     "<div class='form-group'>" +
     "<label for='sourceURL' class='newClaim'>Source URL</label>" +
-    "<input class='form-control' type='url' value='' id='sourceURL-pro' required>" +
+    "<input class='form-control sourceURL-pro' type='url' value='' required>" +
     "</div>" +
     "<div class='text-center'>" +
-    "<button id='submitNewProSource' type='submit' name='button' class='btn btn-info'>Submit Source</button>" +
+    "<button type='submit' name='button' class='btn btn-info submitNewProSource'>Submit Source</button>" +
     "</div>" +
     "</form>" +
     "</div>" +
     "</div>" +
-    "<div class='col-md-3' id='topProSource'>" +
+    "<div class='col-md-3 topProSource'>" +
     "<div class='row row-sources'>" +
     "<div class='well'>" +
-    "<div class='row' id='conVoteUp'>" +
+    "<div class='row conVoteUp'>" +
     "<h4>Vote Con Up</h4>" +
     "</div>" +
     "<div class='conVoteUpCount'>" +
     "</div>" +
-    "<div class='row' id='conVoteDown'>" +
+    "<div class='row conVoteDown'>" +
     "<h4>Vote Con Down</h4>" +
     "</div>" +
     "<div class='conVoteDownCount'>" +
@@ -345,45 +345,45 @@ function generateHTMLforClaim(claimObj){
     "</div>" +
     "<h2>Evidence in opposition</h2>" +
     "</div>" +
-    "<div id='con-source-container'>" +
+    "<div class='con-source-container'>" +
     "<a href='" + getSourceWithMostUpvotes(claimObj, false).citationLink +"' target='_blank'>" + getSourceWithMostUpvotes(claimObj, false).citationTitle + "</a><br>" +
     "</div>" +
-    "<button class='btn btn-info' type='button' id='con-view-all-btn'>View all sources</button>" +
-    "<button class='btn btn-success dropdown-toggle' type='button' id='con-source-btn' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Add Source</button>" +
-    "<div class='dropdown-menu' aria-labelledby='con-source-btn' id='dropDownConSource'>" +
-    "<form id='dropDownConSourceForm' novalidate>" +
+    "<button class='btn btn-info con-view-all-btn' type='button'>View all sources</button>" +
+    "<button class='btn btn-success dropdown-toggle con-source-btn' type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Add Source</button>" +
+    "<div class='dropdown-menu dropDownConSource' aria-labelledby='con-source-btn'>" +
+    "<form class='dropDownConSourceForm' novalidate>" +
     "<div class='form-group'>" +
     "<label for='sourceTitle'>Source Title</label>" +
-    "<input class='form-control' type='text' value='' id='sourceTitle-con' required>" +
+    "<input class='form-control sourceTitle-con' type='text' value='' required>" +
     "</div>" +
     "<div class='form-group'>" +
     "<label for='sourceURL' class='newClaim'>Source URL</label>" +
-    "<input class='form-control' type='url' value='' id='sourceURL-con' required>" +
+    "<input class='form-control sourceURL-con' type='url' value='' required>" +
     "</div>" +
-    "<button id='submitNewConSource' type='submit' name='button' class='btn btn-info'>Submit Source</button>" +
+    "<button type='submit' name='button' class='btn btn-info submitNewConSource'>Submit Source</button>" +
     "</div>" +
     "</form>" +
     "</div>" +
     "</div>" +
     "</div>" +
     "</div>" +
-    "<div class='row' id='comment-row'>" +
-    "<div class='col-md-offset-3 col-md-6' id='commentColumn'>" +
-    "<div id='commentsShow'>" +
-    "<h3 id='commentsExpandLink'>Comments</h3>" +
+    "<div class='row comment-row'>" +
+    "<div class='col-md-offset-3 col-md-6 commentColumn'>" +
+    "<div class='commentsShow'>" +
+    "<h3 class='commentsExpandLink'>Comments</h3>" +
     "</div>" +
-    "<div id='commentSection'>" +
-    "<div id='userComment'>" +
-    "<div id='userInputtedCommentList'>" +
+    "<div class='commentSection'>" +
+    "<div class='userComment'>" +
+    "<div class='userInputtedCommentList'>" +
     // "<!-- //user comments here -->" +
     "</div>" +
     "<hr>" +
-    "<form id='commentForm' action='/html/tags/html_form_tag_action.cfm'  method='post'>" +
+    "<form class='commentForm' action='/html/tags/html_form_tag_action.cfm'  method='post'>" +
     "<div>" +
-    "<textarea name='comments' id='Comment'>" +
+    "<textarea name='comments' class='Comment'>" +
     "</textarea>" +
     "</div>" +
-    "<button id='commentSubmit' type='submit' value='Submit'>Submit comment</button>" +
+    "<button class='commentSubmit' type='submit' value='Submit'>Submit comment</button>" +
     "</form>" +
     "</div>" +
     "</div>" +
@@ -427,11 +427,14 @@ function generateHTMLforClaim(claimObj){
       }
     });
 
-    $("#claim-space").first().on("submit", "#dropDownConSourceForm", function(){
+    $("#claim-space").first().on("submit", ".dropDownConSourceForm", function(){
       event.preventDefault();
       if(!isMissingUsernameOrPassword(userName, userPassword)){
-        var sourceTitleInput = $("#sourceTitle-con").val();
-        var sourceURLinput = $("#sourceURL-con").val() ;
+        var claimID = getIndexOfClaimThisClickOccurredIn($(this));
+        console.log("claimID is " + claimID);
+        var sourceTitleInput = $(".claim" + claimID).find("input.sourceTitle-con").val();
+        console.log("sourceTitleInput is " + sourceTitleInput);
+        var sourceURLinput = $(".claim" + claimID + ".sourceURL-con").val() ;
         var newSource = new Source(sourceTitleInput, sourceURLinput, userName);
         var claimThisRefersTo = claimArray[getIndexOfClaimThisClickOccurredIn($(this))];
         console.log(claimThisRefersTo);
@@ -446,12 +449,12 @@ function generateHTMLforClaim(claimObj){
       }
     });
 
-    $("#claim-space").first().on("submit", "#dropDownProSourceForm", function(){
+    $("#claim-space").first().on("submit", ".dropDownProSourceForm", function(){
       event.preventDefault();
       if(!isMissingUsernameOrPassword(userName, userPassword)){
         console.log("got into the submission event");
-        var sourceTitleInput = $("#sourceTitle-pro").val();
-        var sourceURLinput = $("#sourceURL-pro").val() ;
+        var sourceTitleInput = $(".sourceTitle-pro").val();
+        var sourceURLinput = $(".sourceURL-pro").val() ;
         var newSource = new Source(sourceTitleInput, sourceURLinput, userName);
         var claimThisRefersTo = claimArray[getIndexOfClaimThisClickOccurredIn($(this))];
         if(claimThisRefersTo){
@@ -513,9 +516,9 @@ function generateHTMLforClaim(claimObj){
     });
 
     //for showing comment section
-    $("#commentsShow").click(function(){
+    $(".commentsShow").click(function(){
       event.preventDefault();
-      $("#commentSection").slideToggle();
+      $(".commentSection").slideToggle();
     });
 
     $(".down").click(function(){
@@ -531,14 +534,14 @@ function generateHTMLforClaim(claimObj){
     });
 
     //claimComments
-    $("#commentForm").submit(function(){
+    $(".commentForm").submit(function(){
       event.preventDefault();
       var userInputtedComment = $("#commentForm textarea");
       if (validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)) {
         if (userInputtedComment.val() === '') {
           alert("comment input field is empty")
-        } else{ $("#userInputtedCommentList").append("<p><span class= 'userSaid'>" + userName + " commented: </span>" + $("#commentForm textarea").val() + "</p>");
-        $('#commentForm textarea').val('');}
+        } else{ $(".userInputtedCommentList").append("<p><span class= 'userSaid'>" + userName + " commented: </span>" + $(".commentForm textarea").val() + "</p>");
+        $('.commentForm textarea').val('');}
       } else {
         alert("You must be logged in to comment")
       }
@@ -547,18 +550,20 @@ function generateHTMLforClaim(claimObj){
     //voting buttons
     //topic/claim votes
     var startTopicVote = 0;
-    $("#topicVoteUp").click(function(){
+    $(".topicVoteUp").click(function(){
+      console.log("Get to topicVoteUp");
       if (validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
+        var claimIndex = getIndexOfClaimThisClickOccurredIn($(this));
+        console.log("Hey Mark!");
+        console.log(claimIndex);
         var voteUp = startTopicVote +=1;
-        $('.topicVoteUpCount').text(voteUp);
+        $("#claim" + claimIndex + " .topicVoteUpCount").text(voteUp);
       } else {
-        alert("Please sign in to vote")
+        alert("Please sign in to vote");
       }
-
     });
 
-    $("#topicVoteDown").click(function(){
-
+    $(".topicVoteDown").click(function(){
       if (validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
         var voteDown = startTopicVote -=1;
         $('.topicVoteUpCount').text(voteDown);
@@ -570,7 +575,7 @@ function generateHTMLforClaim(claimObj){
 
     //con source votes
     var startConVote = 0;
-    $("#conVoteUp").click(function(){
+    $(".conVoteUp").click(function(){
       if (validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
         var voteUp = startConVote +=1;
         $('.conVoteUpCount').text(voteUp);
@@ -579,7 +584,7 @@ function generateHTMLforClaim(claimObj){
       }
     });
 
-    $("#conVoteDown").click(function(){
+    $(".conVoteDown").click(function(){
       if (validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
         var voteDown = startConVote -=1;
         $('.conVoteUpCount').text(voteDown);
@@ -590,7 +595,7 @@ function generateHTMLforClaim(claimObj){
 
     // pro source votes
     var startProVote = 0;
-    $("#proVoteUp").click(function(){
+    $(".proVoteUp").click(function(){
       if (validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
         var voteUp = startProVote +=1;
         $('.proVoteUpCount').text(voteUp);
@@ -599,12 +604,13 @@ function generateHTMLforClaim(claimObj){
       }
     });
 
-    $("#proVoteDown").click(function(){
+    $(".proVoteDown").click(function(){
       if (validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)){
-        var voteDown = startProVote -=1;
+        startProVote -=1;
+        var voteDown = startProVote;
         $('.proVoteUpCount').text(voteDown);
       } else {
-        alert("Please sign in to vote")
+        alert("Please sign in to vote");
       }
     });
 
@@ -612,7 +618,8 @@ function generateHTMLforClaim(claimObj){
       displayAllClaims();
     });
 
-    $("#pro-view-all-btn").click(function(){
+    $(".pro-view-all-btn").click(function(){
+      console.log("Mark Mark Mark Mark");
       event.preventDefault();
       var claimID = getIndexOfClaimThisClickOccurredIn($(this));
       console.log("claimID is: " + claimID);
@@ -621,7 +628,7 @@ function generateHTMLforClaim(claimObj){
       displayAllSources(claimID, currentClaim);
     });
 
-    $("#con-view-all-btn").click(function(){
+    $(".con-view-all-btn").click(function(){
       event.preventDefault();
       var claimID = getIndexOfClaimThisClickOccurredIn($(this));
       console.log("claimID is: " + claimID);

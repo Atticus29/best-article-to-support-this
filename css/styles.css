@@ -43,17 +43,17 @@ h1 {
   color: #A66200;
 }
 
-#topConSource {
+.topConSource {
   background-color: blue;
   text-align: center;
 }
 
-#topProSource {
+.topProSource {
   background-color: pink;
   text-align: center;
 }
 
-#topic {
+.topic {
   text-align: center;
   background-color: green;
 }
@@ -66,7 +66,7 @@ h1 {
   border-bottom: 20px solid #593500;
 }
 
-#dropDownNewClaimForm {
+.dropDownNewClaimForm {
   padding: 10px;
 }
 
@@ -79,8 +79,17 @@ h1 {
   text-align: right;
 }
 
+#dropdownMenuButton{
+  color: white;
+}
+
+#existing-user-welcome p{
+  color: #A66200;
+}
+
 p.navbar-brand{
   padding-left: 50%;
+  color: #A66200;
 }
 
 #testRow {
@@ -102,21 +111,21 @@ p.navbar-brand{
   margin-left: 15px;
 }
 
-#commentSection {
+.commentSection {
   text-align: left;
 }
 
-#commentForm, #comments {
+.commentForm, .comments {
   text-align: center;
   margin-top: 80px;
 }
 
-#comments {
+.comments {
   font-family:sans-serif;
   font-size:1.2em
 }
 
-#commentSection {
+.commentSection {
   display: none;
 }
 
@@ -126,7 +135,7 @@ textarea {
   text-align: left;
 }
 
-#comment-row {
+.comment-row {
   border: 3px;
 }
 
@@ -143,15 +152,15 @@ textarea {
   font-size: 16px;
 }
 
-#commentColumn {
+.commentColumn {
   background-color: orange;
 }
 
-#commentSubmit {
+.commentSubmit {
   float: right;
   border-width: thin;
 }
 
-#commentsExpandLink {
+.commentsExpandLink {
   text-decoration: underline;
 }
