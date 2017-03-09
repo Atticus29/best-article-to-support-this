@@ -587,5 +587,4 @@ function generateHTMLforClaim(claimObj){
     $("#all-claims-btn").click(function(){
       displayAllClaims();
     });
-
   });

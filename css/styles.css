@@ -44,7 +44,7 @@ h1 {
 }
 
 #topConSource {
-  background-color: blue;
+
   text-align: center;
 }
 
@@ -58,12 +58,17 @@ h1 {
   background-color: green;
 }
 
-.jumbotron {
+#header {
   text-align: center;
   /*margin-bottom: -10px;*/
   background-color: #0063A6;
   color: #A66200;
   border-bottom: 20px solid #593500;
+}
+
+#footer {
+  background-color: #3682B5;
+  margin-top: 60px;
 }
 
 #dropDownNewClaimForm {
@@ -84,10 +89,8 @@ p.navbar-brand{
 }
 
 #testRow {
-  background-color: #3682B5;
   padding-top: 15px;
   padding-bottom: 15px;
-
 }
 
 #testRow2 {
@@ -95,7 +98,7 @@ p.navbar-brand{
   padding-top: 10px;
   padding-bottom: 10px;
   padding-left: 10px;
-  border-top: 25px solid #593500;
+  border-top: 25px solid #3682B5;
 }
 
 #dropdownMenuButton {
