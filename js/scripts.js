@@ -286,35 +286,42 @@ function getIndexOfSupportThisClickOccurredIn (jQueryObj){
 }
 
 function testGetIndexInArrayOfClaims(){
-  var claim1 = new Claim("Mark", "Water is weird");
-  claim1.upVoteArray.push("Jahan");
-  var claim2 = new Claim("Chance", "Water is delicious");
-  claim2.upVoteArray.push("Jahan");
-  claim2.upVoteArray.push("Oliver");
-  var claim3 = new Claim("Oliver", "Water is suspicious");
-  claim3.upVoteArray.push("Jahan");
-  claim3.upVoteArray.push("Oliver");
-  claim3.upVoteArray.push("Chance");
-  var claim4 = new Claim("Jahan", "Water is a drug");
-  claim4.upVoteArray.push("Jahan");
-  claim4.upVoteArray.push("Oliver");
-  claim4.upVoteArray.push("Mark");
-  claim4.upVoteArray.push("Jahan");
-  var source1 = new Source("google","http:/www.google.com", "Jahan");
-  source1.upVote.push("Mark");
-  var source2 = new Source("your mom","http://www.yourmom.com" ,"Jahan");
+
+  var claim1 = new Claim("Jahan", "The Federal Minimum Wage Should Be Increased!");
+  // claim1 pro source
+  var source1 = new Source("pbs article","http://www.pbs.org/newshour/making-sense/why-raising-the-minimum-wage-is-good-economics/", "Jahan");
+  console.log(source1);
+  // source1.upVote.push("Mark");
+  claim1.pro.sources.push(source1);
+  var source2 = new Source("Reason.com","http://reason.com/archives/2014/03/03/9-reasons-why-raising-the-minimum-wage-i" ,"Jahan");
+  console.log(source2);
   source2.upVote.push("Mark");
   source2.upVote.push("Chance");
-  var source3 = new Source("I asked an old man","http://www.oldman.com", "Jahan");
+  claim1.con.sources.push(source2);
+  var claim2 = new Claim("Oliver", "Lowering the federal corporate income tax rate does create jobs.");
+  claim2.upVoteArray.push("Jahan");
+  claim2.upVoteArray.push("Oliver");
+  var source3 = new Source("Fortune.com","http://fortune.com/2011/04/08/lower-corporate-taxes-wont-create-more-jobs/", "Jahan");
   source3.upVote.push("Mark");
   source3.upVote.push("Chance");
-  claim4.con.sources.push(source1);
-  claim4.con.sources.push(source2);
-  claim4.con.sources.push(source3);
-  claimArray = [claim1, claim2, claim3, claim4];
-  var idx = getIndexInArrayOfClaims(claim4, claimArray);
-}
+   var source4 = new Source("cnbc.com","http://www.cnbc.com/2014/02/26/lowering-tax-rates-one-of-the-best-things-we-can-do-to-create-jobs-rep-paul-ryan.html", "Chance");
+   claim2.con.sources.push(source3);
+   claim2.pro.sources.push(source4);
 
+   var claim3 = new Claim("Mark", "Drinking milk is bad for humans.");
+   claim2.upVoteArray.push("Jahan");
+   claim2.upVoteArray.push("Oliver");
+
+   var source5 = new Source("nutritionstudies.com","http://nutritionstudies.org/12-frightening-facts-milk/", "Jahan");
+   source3.upVote.push("Mark");
+   source3.upVote.push("Chance");
+
+    var source6 = new Source("supercow.com","http://www.supercow.com/blog/bid/257718/6-Health-Benefits-From-Drinking-Milk", "Chance");
+    claim2.con.sources.push(source5);
+    claim2.pro.sources.push(source6);
+
+  claimArray = [claim1, claim2, claim3];
+}
 
 // HTML functions
 
@@ -391,7 +398,7 @@ function generateSourceHeaderRowHTML(){
 function generateViewAndAddSourceButtonHTML(isPro){
   if(isPro){
     return("<button class='btn btn-info view-all-btn' type='button'>View all sources</button>" +
-    "<button class='btn btn-success dropdown-toggle source-btn' type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Add Source</button>" +
+    "<button class='btn btn-danger dropdown-toggle source-btn' type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Add Source</button>" +
     "<div class='dropdown-menu dropDownSource' aria-labelledby='-source-btn'>" +
     "<form class='dropDownProSourceForm' novalidate>" +
     "<div class='form-group'>" +
@@ -403,13 +410,13 @@ function generateViewAndAddSourceButtonHTML(isPro){
     "<input class='form-control sourceURL-pro' type='url' value='' required>" +
     "</div>" +
     "<div class='text-center'>" +
-    "<button type='submit' name='button' class='btn btn-info submitNewSource'>Submit Source</button>" +
+    "<button type='submit' name='button' class='btn btn-info Source'>Submit Source</button>" +
     "</div>" +
     "</form>" +
     "</div>");
   } else{
     return("<button class='btn btn-info view-all-btn' type='button'>View all sources</button>" +
-    "<button class='btn btn-success dropdown-toggle source-btn' type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Add Source</button>" +
+    "<button class='btn btn-danger dropdown-toggle source-btn' type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Add Source</button>" +
     "<div class='dropdown-menu dropDownSource' aria-labelledby='-source-btn'>" +
     "<form class='dropDownConSourceForm' novalidate>" +
     "<div class='form-group'>" +
@@ -421,7 +428,7 @@ function generateViewAndAddSourceButtonHTML(isPro){
     "<input class='form-control sourceURL-con' type='url' value='' required>" +
     "</div>" +
     "<div class='text-center'>" +
-    "<button type='submit' name='button' class='btn btn-info submitNewSource'>Submit Source</button>" +
+    "<button type='submit' name='button' class='btn btn-info Source'>Submit Source</button>" +
     "</div>" +
     "</form>" +
     "</div>"
@@ -744,7 +751,7 @@ function generateHTMLforClaim(claimObj){
     });
 
     //claimComments
-    $(".commentForm").submit(function(){
+    $("#claim-space").on('submit', '.commentForm', function(){
       event.preventDefault();
       console.log("Got into comment form");
       var claimID = getIndexOfClaimThisClickOccurredIn($(this));
@@ -754,34 +761,14 @@ function generateHTMLforClaim(claimObj){
       if (validateLogin(userName, userPassword) && !isMissingUsernameOrPassword(userName, userPassword)) {
         if (userInputtedComment.val() === '') {
           alert("comment input field is empty")
-        } else{ $(".userInputtedCommentList").append("<p><span class= 'userSaid'>" + userName + " commented: </span>" + $(".commentForm textarea").val() + "</p>");
+        } else{ $("#claim" + claimID).find(".userInputtedCommentList").append("<p><span class= 'userSaid'>" + userName + " commented: </span>" + $("#claim" + claimID).find(".commentForm textarea").val() + "</p>");
         $('.commentForm textarea').val('');}
       } else {
         alert("You must be logged in to comment")
       }
     });
 
-    // $(function(){
-    //   $(".increment").click(function(){
-    //     var count = parseInt($("~ .count", this).text());
-    //
-    //     if($(this).hasClass("up")) {
-    //       var count = count + 1;
-    //
-    //       $("~ .count", this).text(count);
-    //     } else {
-    //       var count = count - 1;
-    //       $("~ .count", this).text(count);
-    //     }
-    //     $(this).parent().addClass("bump");
-    //     setTimeout(function(){
-    //       $(this).parent().removeClass("bump");
-    //     }, 400);
-    //   });
-    // });
-
-
-    $("#all-claims-btn").click(function(){
+      $("#all-claims-btn").click(function(){
       displayAllClaims();
     });
 
