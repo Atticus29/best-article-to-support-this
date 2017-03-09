@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Diplomata+SC');
+@import url('https://fonts.googleapis.com/css?family=Suez+One');
+@import url('https://fonts.googleapis.com/css?family=Cousine');
 
 body{
   height: 100%;
@@ -157,4 +159,55 @@ textarea {
 
 #commentsExpandLink {
   text-decoration: underline;
+}
+
+/*
+for modal*/
+h3{
+  font-family: Roboto;
+}
+
+h2{
+  font-family: Cousine;
+  font-size: 5px;
+  align: bottom;
+}
+
+#welcome, #guidelines{
+  font-family: Cousine;
+}
+#part1{
+  border-style:ridge;
+  border: gold solid 3px;
+  border-radius: 10px;
+  margin-left: 30px;
+}
+
+#part2{
+  border-style: groove;
+  border: silver solid 3px;
+  border-radius: 10px;
+}
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 77%; /* Full width */
+    height: 77%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+}
+
+.close {
+    color: black;
+    float: right;
+    font-size: 88px;
+    font-weight: bold;
+}
+
+
+#BoxUserGuidelines{
+  margin-left: 100px
 }
