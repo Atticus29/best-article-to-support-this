@@ -486,10 +486,17 @@ html, body {
     box-shadow: none;
 }
 
-/*#columns li{
-  font-family: Arial;
-  font-size: 16px;
+#screen{
+  max-width: 120%;
+
 }
+
+#columns li{
+  font-family: Arial;
+  font-size: 18px;
+}
+
+
 
 .row {
   position: center;
@@ -505,9 +512,6 @@ html, body {
 
 }
 
-#screen{
-  max-width: 110%;
 
-}
 
 }*/
