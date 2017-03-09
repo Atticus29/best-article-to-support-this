@@ -103,9 +103,7 @@
   box-sizing: border-box;
 }
 
-html, body {
-  height: 100%;
-}
+
 
 .wellVote {
   display: -webkit-box;
@@ -191,6 +189,7 @@ nav {
   border-top: 5px solid #593500;
   background-color: #3682B5;
   margin-top: 60px;
+  margin-bottom: 60px;
 }
 
 .dropDownNewClaimForm {
@@ -352,5 +351,17 @@ h2{
 
 
 #BoxUserGuidelines{
-  margin-left: 100px
+  margin-left: 100px;
+}
+
+.welcomeBox {
+    background-color: #4D90C9;
+}
+
+.container{
+  height: 100%;
+}
+
+html, body {
+  height: 100%;
 }
