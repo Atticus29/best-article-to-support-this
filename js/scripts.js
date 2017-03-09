@@ -236,6 +236,7 @@ function displayAllClaims(){
   for (var i = 0; i<claimArray.length; i++){
     generateHTMLforClaim(claimArray[i]);
   }
+  updateAllVoteCountsAndDisplays();
 }
 
 function displayAllSources(claimID, claimObj){
@@ -258,6 +259,7 @@ function displayAllSources(claimID, claimObj){
       $("#claim" + claimID).find(".con-source-container").append(generateSourceHTML(claimObj.con.sources[i], false, i));
     }
   }
+  updateAllVoteCountsAndDisplays();
 }
 
 function getIndexOfClaimThisClickOccurredIn (jQueryObj){
@@ -298,10 +300,8 @@ function testGetIndexInArrayOfClaims(){
   claim4.upVoteArray.push("Mark");
   claim1.upVoteArray.push("Jahan");
   var source1 = new Source("google","http:/www.google.com", "Jahan");
-  console.log(source1);
   source1.upVote.push("Mark");
   var source2 = new Source("your mom","http://www.yourmom.com" ,"Jahan");
-  console.log(source2);
   source2.upVote.push("Mark");
   source2.upVote.push("Chance");
   var source3 = new Source("I asked an old man","http://www.oldman.com", "Jahan");
@@ -491,22 +491,18 @@ function generateHTMLforClaim(claimObj){
       // alert("No double dipping!");
     } else{
       // console.log("Here I am!");
-      console.log(jQueryObj);
       if(jQueryObj.hasClass("up")){
         // console.log("Hi hi hi");
         claimArray[claimID].upVoteArray.push(userName);
-        claimArray[claimID].updateVotes();
+        // claimArray[claimID].updateVotes();
       }
       if(jQueryObj.hasClass("down")){
         claimArray[claimID].downVoteArray.push(userName);
-        claimArray[claimID].updateVotes();
       }
-      console.log(claimArray[claimID].upVoteArray);
-      console.log(claimArray[claimID].downVoteArray);
-      console.log((claimArray[claimID].upCount - claimArray[claimID].downCount));
-      jQueryObj.parents(".claim").find(".row1").find(".count").empty();
-      jQueryObj.parents(".claim").find(".row1").find(".count").append("<h4>" + (claimArray[claimID].upCount - claimArray[claimID].downCount) + "</h4>");
     }
+    claimArray[claimID].updateVotes();
+    jQueryObj.parents(".claim").find(".row1").find(".count").empty();
+    jQueryObj.parents(".claim").find(".row1").find(".count").append("<h4>" + (claimArray[claimID].upCount - claimArray[claimID].downCount) + "</h4>");
   }
 
   function updateVoteCountsAndDisplayForClickedSource(claimID, sourceID, isPro, jQueryObj){
@@ -518,30 +514,58 @@ function generateHTMLforClaim(claimObj){
       } else{
         if(jQueryObj.hasClass("up")){
           claimArray[claimID].pro.sources[sourceID].upVote.push(userName);
-          claimArray[claimID].pro.sources[sourceID].updateVotes();
+          // claimArray[claimID].pro.sources[sourceID].updateVotes();
         }
         if(jQueryObj.hasClass("down")){
           claimArray[claimID].pro.sources[sourceID].downVote.push(userName);
-          claimArray[claimID].pro.sources[sourceID].updateVotes();
         }
-        jQueryObj.parents(".capture-me").find(".count").empty();
-        jQueryObj.parents(".capture-me").find(".count").append("<h4>" + (claimArray[claimID].pro.sources[sourceID].upCount - claimArray[claimID].pro.sources[sourceID].downCount) + "</h4>");
       }
+      claimArray[claimID].pro.sources[sourceID].updateVotes();
+      jQueryObj.parents(".capture-me").find(".count").empty();
+      jQueryObj.parents(".capture-me").find(".count").append("<h4>" + (claimArray[claimID].pro.sources[sourceID].upCount - claimArray[claimID].pro.sources[sourceID].downCount) + "</h4>");
+
     } else{
-      // con
       if($.inArray(userName,claimArray[claimID].con.sources[sourceID].upVote)>-1 || $.inArray(userName, claimArray[claimID].con.sources[sourceID].downVote)>-1){
         // alert("No double dipping!");
       } else{
         if(jQueryObj.hasClass("up")){
           claimArray[claimID].con.sources[sourceID].upVote.push(userName);
-          claimArray[claimID].con.sources[sourceID].updateVotes();
+          // claimArray[claimID].con.sources[sourceID].updateVotes();
         }
         if(jQueryObj.hasClass("down")){
           claimArray[claimID].con.sources[sourceID].downVote.push(userName);
-          claimArray[claimID].con.sources[sourceID].updateVotes();
         }
-        jQueryObj.parents(".capture-me").find(".count").empty();
-        jQueryObj.parents(".capture-me").find(".count").append("<h4>" + (claimArray[claimID].con.sources[sourceID].upCount - claimArray[claimID].con.sources[sourceID].downCount) + "</h4>");
+      }
+      claimArray[claimID].con.sources[sourceID].updateVotes();
+      jQueryObj.parents(".capture-me").find(".count").empty();
+      jQueryObj.parents(".capture-me").find(".count").append("<h4>" + (claimArray[claimID].con.sources[sourceID].upCount - claimArray[claimID].con.sources[sourceID].downCount) + "</h4>");
+    }
+  }
+
+  function updateAllVoteCountsAndDisplays(){
+    for (var i = 0; i<claimArray.length; i++){
+        claimArray[i].updateVotes();
+        console.log(claimArray[i]);
+        var jQueryObj = $("#claim" + i).find(".claim-vote").find(".up");
+        var classStrings = jQueryObj.attr("class");
+        if(classStrings){
+          updateVoteCountsAndDisplayForClickedClaim(i,jQueryObj);
+        }
+      for(var jPro = 0; jPro<claimArray[i].pro.sources.length; jPro++){
+        claimArray[i].pro.sources[jPro].updateVotes();
+        var jQueryObj = $("#claim" + i).find(".pro-source-component").find(".up");
+        var classStrings = jQueryObj.attr("class");
+        if(classStrings){
+          updateVoteCountsAndDisplayForClickedSource(i, jPro, true, jQueryObj);
+        }
+      }
+      for(var jCon = 0; jCon<claimArray[i].con.sources.length; jCon++){
+        claimArray[i].con.sources[jCon].updateVotes();
+        var jQueryObj = $("#claim" + i).find(".con-source-component").find(".up");
+        var classStrings = jQueryObj.attr("class");
+        if(classStrings){
+          updateVoteCountsAndDisplayForClickedSource(i, jCon, false, jQueryObj);
+        }
       }
     }
   }
@@ -549,9 +573,9 @@ function generateHTMLforClaim(claimObj){
   function refresh(){
     var topClaim = getClaimWithMostUpvotes(claimArray);
     // var topSource =;
-    console.log("Top ranking claim is: ", topClaim.userClaim);
     $("#claim-space").empty();
     generateHTMLforClaim(topClaim);
+    updateAllVoteCountsAndDisplays();
   }
 
   function repopulate(){
@@ -564,12 +588,11 @@ function generateHTMLforClaim(claimObj){
   // Front End
   $(function(){
     claimArray = [];
+    testGetIndexInArrayOfClaims();
     userName = $("#userName").val();
     userPassword = $("#userPassword").val();
-    testGetIndexInArrayOfClaims();
-
     refresh();
-    // testGetIndexOfSourceWithMostUpvotes();
+
 
     $("#dropDownForm").submit(function(){
       event.preventDefault();
@@ -579,11 +602,7 @@ function generateHTMLforClaim(claimObj){
         var optionalDigitalOriginOfClaim = $("input#claimLink").val();
         newestClaim = new Claim (newClaimSender, claimText);
         newestClaim.pro.sources
-        // var dummySource = new Source("There are currently no sources supporting this claim","https://www.google.com" ,"Mark");
-        // newestClaim.pro.sources.push(dummySource);
-        // newestClaim.con.sources.push(dummySource);
         claimArray.push(newestClaim);
-        console.log("got here");
         $("#claim-space").empty();
         generateHTMLforClaim(newestClaim);
       } else{
@@ -707,9 +726,10 @@ function generateHTMLforClaim(claimObj){
     });
 
     //for showing comment section
-    $(".commentsShow").click(function(){
+    $("#claim-space").on('click', '.commentsShow', function(){
       event.preventDefault();
-      $(".commentSection").slideToggle();
+      var claimID = getIndexOfClaimThisClickOccurredIn($(this));
+      $("#claim" + claimID).find(".commentSection").slideToggle();
     });
 
     //claimComments
@@ -770,5 +790,13 @@ function generateHTMLforClaim(claimObj){
     //   var currentClaim = claimArray[claimID];
     //   displayAllSources(claimID, currentClaim);
     // });
+
+    $("#myBtn").click(function(){
+      $("#bodyBackground").addClass("modalBackground");
+    })
+
+    $(".close").click(function(){
+      $("#bodyBackground").removeClass();
+    })
 
   });

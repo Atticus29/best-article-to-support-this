@@ -10,9 +10,9 @@
 </head>
 <body>
   <div id="left"></div>
-<div id="right"></div>
-<div id="top"></div>
-<div id="bottom"></div>
+  <div id="right"></div>
+  <div id="top"></div>
+  <div id="bot`tom"></div>
   <div id="header" class="jumbotron">
     <div id="image-and-text-box">
       <img src="img/bats.png" alt="bats" id="bats"/>
@@ -98,10 +98,11 @@
     <div id="claim-space">
     </div>
   </div>
+</div><!--CLOSES bodyBackground-->
   <div class="footer">
     <div id="footer" class="jumbotron">
       <!-- BUTTON TO SEE MODAL -->
-<button id="myBtn">See User Guidelines</button>
+<button id="myBtn" data-target="#myModal">See User Guidelines</button>
 <!--everything below belongs to modal pop-up-->
 <!-- The Modal -->
 <div id="myModal" class="modal">
@@ -129,41 +130,46 @@
             upport
           </span>
         </h1>
-
-      </div>
-      <div class="welcomeBox" >
-      <div id="BoxUserGuidelines">
-        <h4 id="welcome">Welcome to BATS: a place to review articles and understand the world</h4>
+    </div>
+    <div class="welcomeBox" >
+      <div class id="BoxUserGuidelines">
+        <h3 id="welcome">Welcome to BATS: a place to review articles and understand the world</h3>
         <p id="guidelines">
           Guidelines: Once logged in, upvote and downvote on the issues, sources of information, and other users' comments!
       </div>
       <!-- Do include screencaps of features -->
-      <div class="row">
+      <div class="row" id="columns">
         <div class="col-md-5" id="part1">
           <ul>
             <li>You must log in as a guest before you can properly use this website</li>
+            <br>
             <li>
               Once logged in, there are many ways to rate and discuss our claims. You may either agree with or refute a claim by upvoting or downvoting.
             </li>
+            <br>
             <li>
               For each claim or source, you may only cast one upvote or downvote
             </li>
+            <br>
             <li>
             You can also create your own claim by using the New Claim button
           </li>
+          <br>
           <li>Claims with the highest upvote differentials are displayed first. You can click on the View All Claims button to see all recent claims. </li>
+          <br>
           </ul>
+
+
         </div>
-      </div>
-        <div class="col-md-5" id="part2">
-          <p>
-            (ScreenCaps go here)
-          </p>
+          <div class="col-md-5" id="part2">
+            <p>
+              (ScreenCaps go here)
+            </p>
+          </div>
         </div>
       </div>
   </div>
 </div>
-
 <!-- get the modal -->
 <script>
 var modal = document.getElementById('myModal');
@@ -185,7 +191,9 @@ window.onclick = function(event) {
         modal.style.display = "none";
     }
 }
-
+  // $("#myBtn").click(function(){
+  //   $("#myModal").modal({backdrop: true});
+  // })
 </script>
     </div>
   </div>
