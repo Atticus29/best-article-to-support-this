@@ -562,13 +562,13 @@ function generateHTMLforClaim(claimObj){
           jQueryObj.parents(".claim").find(".row1").find(".count").append("<h4>" + (claimArray[i].upCount - claimArray[i].downCount) + "</h4>");
         }
         if(claimArray[i].pro.sources.length<1){
-          console.log(claimArray[i]);
+          // console.log(claimArray[i]);
           alert("Something has gone wrong: You have a claim with no default source");
         }
       for(var jPro = 0; jPro<claimArray[i].pro.sources.length; jPro++){
         claimArray[i].pro.sources[jPro].updateVotes();
-        console.log("Pro source " + claimArray[i].pro.sources[jPro].citationTitle +  " has " + claimArray[i].pro.sources[jPro].downCount + " downvotes and " + claimArray[i].pro.sources[jPro].upCount + " upvotes");
-        console.log("Upvoters for the source are " + claimArray[i].pro.sources[jPro].upVote + " and downvoters for the source are " + claimArray[i].pro.sources[jPro].downVote);
+        // console.log("Pro source " + claimArray[i].pro.sources[jPro].citationTitle +  " has " + claimArray[i].pro.sources[jPro].downCount + " downvotes and " + claimArray[i].pro.sources[jPro].upCount + " upvotes");
+        // console.log("Upvoters for the source are " + claimArray[i].pro.sources[jPro].upVote + " and downvoters for the source are " + claimArray[i].pro.sources[jPro].downVote);
         $("#source-" + jPro).find(".pro-source-component").find(".count").empty();
         $("#source-" + jPro).find(".pro-source-component").find(".count").append("<h4>" + (claimArray[i].pro.sources[jPro].upCount - claimArray[i].pro.sources[jPro].downCount) + "</h4>");
       }
@@ -619,10 +619,11 @@ function generateHTMLforClaim(claimObj){
         var claimText = $("input#claimQuestion").val();
         var optionalDigitalOriginOfClaim = $("input#claimLink").val();
         newestClaim = new Claim (newClaimSender, claimText);
-        newestClaim.pro.sources
+        console.log("Got here");
+        // newestClaim.pro.sources
         claimArray.push(newestClaim);
-        $("#claim-space").empty();
-        generateHTMLforClaim(newestClaim);
+        // $("#claim-space").empty();
+        // generateHTMLforClaim(newestClaim);
       } else{
         console.log("You forgot to log in");
       }
