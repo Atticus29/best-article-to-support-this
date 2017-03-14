@@ -252,6 +252,7 @@ function displayAllSources(claimID, claimObj){
     }
   }
   // con
+  $("#claim" + claimID).find(".con-source-container").empty();
   if(claimObj.con.sources.length === 0){
     tmpSource = new Source("There are currently no sources supporting this claim","http://www.google.com" ,"Mark")
     $("#claim" + claimID).find(".con-source-container").append(generateSourceHTML(tmpSource, false, 0));
